@@ -1,3 +1,4 @@
+import { UsersComponent } from './../../users/users.component';
 import { ModesComponent } from './../../modes/modes.component';
 import { HelpComponent } from './../../help/help.component';
 import { Routes } from '@angular/router';
@@ -21,5 +22,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'help',           component: HelpComponent},
-    { path: 'modes',           component: ModesComponent}
+    { path: 'modes', component: ModesComponent },
+    { path: 'users', component: UsersComponent }
 ];

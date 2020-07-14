@@ -1,3 +1,4 @@
+import { UsersComponent } from './../../users/users.component';
 import { ModesComponent } from './../../modes/modes.component';
 import { HelpComponent } from './../../help/help.component';
 import { NgModule } from '@angular/core';
@@ -36,7 +37,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
     MapsComponent,
     NotificationsComponent,
     HelpComponent,
-    ModesComponent
+    ModesComponent,
+    UsersComponent
   ]
 })
 
