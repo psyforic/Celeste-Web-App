@@ -5,7 +5,15 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">List of Modes Available</h4>
+        <div class="row">
+        <div class="col-sm-10 col-lg-10">
+         <h4 class="card-title">List of Modes Available</h4>
+        </div>
+        <div class="col-sm-2 col-lg-2">
+          <button type="button" class="btn btn-primary" (click)="open(content)">New Modde</button>
+        </div>
+        </div>
+
         </div>
         <div class="card-body">
           <div class="table">
@@ -24,7 +32,7 @@
               <tbody>
                 <tr>
                   <td>
-                    Sunlight mode
+                    Sunrise
                   </td>
                   <td>
                     12-June-2020
@@ -41,7 +49,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Sunlight mode
+                    Mid-Morning
                   </td>
                   <td>
                     12-June-2020
@@ -50,7 +58,7 @@
                     <div ngbDropdown class="dropdown" placement="bottom-right">
                       <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
                       <div ngbDropdownMenu>
-                        <a class="dropdown-item" href="#">Edit</a>
+                        <a class="dropdown-item" (click)="open(content)">Edit</a>
                        <a class="dropdown-item" href="#">Delete</a>
                       </div>
                   </div>
@@ -58,7 +66,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Sunlight mode
+                    Mid-day
                   </td>
                   <td>
                     12-June-2020
@@ -67,7 +75,7 @@
                     <div ngbDropdown class="dropdown" placement="bottom-right">
                       <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
                       <div ngbDropdownMenu>
-                        <a class="dropdown-item" href="#">Edit</a>
+                        <a class="dropdown-item" (click)="open(content)">Edit</a>
                        <a class="dropdown-item" href="#">Delete</a>
                       </div>
                   </div>
@@ -75,7 +83,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Sunlight mode
+                    Sunset
                   </td>
                   <td>
                     12-June-2020
@@ -84,29 +92,13 @@
                     <div ngbDropdown class="dropdown" placement="bottom-right">
                       <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
                       <div ngbDropdownMenu>
-                        <a class="dropdown-item" href="#">Edit</a>
+                        <a class="dropdown-item" (click)="open(content)">Edit</a>
                        <a class="dropdown-item" href="#">Delete</a>
                       </div>
                   </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    Sunlight mode
-                  </td>
-                  <td>
-                    12-June-2020
-                  </td>
-                  <td>
-                    <div ngbDropdown class="dropdown" placement="bottom-right">
-                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
-                      <div ngbDropdownMenu>
-                        <a class="dropdown-item" href="#">Edit</a>
-                       <a class="dropdown-item" href="#">Delete</a>
-                      </div>
-                  </div>
-                  </td>
-                </tr>
+
               </tbody>
             </table>
           </div>
@@ -127,7 +119,57 @@
   </div>
   <div class="modal-body">
     <form>
+  <ngb-tabset type="pills" [orientation]="currentOrientation">
+  <ngb-tab title="Mode Details">
+    <ng-template ngbTabContent>
+      <div class="row" style="margin-top: 15px">
+      <div class="col-sm-10 col-lg-10">
+      <div class="form-group">
+          <input type="text" value="" placeholder="Mode Name" class="form-control" />
+      </div>
+  </div>
+      </div>
 
+       <div class="row" style="margin-top: 5px">
+      <div class="col-sm-10 col-lg-10">
+      <div class="form-group">
+          <input type="text" value="" placeholder="Mode Description" class="form-control" />
+      </div>
+  </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab>
+    <ng-template ngbTabTitle>Assign Mode</ng-template>
+    <ng-template ngbTabContent>
+    <p style="margin-top:20px;">Assign mode to a user</p>
+    <div class="form-check" style="margin-top:10px;">
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="">
+        Yanga Ntondini
+        <span class="form-check-sign"></span>
+    </label>
+</div>
+<div class="form-check">
+
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="">
+        Sipho Ximbi
+        <span class="form-check-sign"></span>
+    </label>
+</div>
+
+<div class="form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="">
+        Lundi Mapundu
+        <span class="form-check-sign"></span>
+    </label>
+</div>
+    </ng-template>
+  </ngb-tab>
+
+</ngb-tabset>
     </form>
   </div>
   <div class="modal-footer">
