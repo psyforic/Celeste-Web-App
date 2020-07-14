@@ -1,0 +1,136 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">List of Modes Available</h4>
+        </div>
+        <div class="card-body">
+          <div class="table">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  Mode
+                </th>
+                <th>
+                  Date Created
+                </th>
+                <th style="width: 310px;">
+                  Actions
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Sunlight mode
+                  </td>
+                  <td>
+                    12-June-2020
+                  </td>
+                  <td>
+                    <div ngbDropdown class="dropdown" placement="bottom-right">
+                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
+                      <div ngbDropdownMenu>
+                        <a class="dropdown-item" (click)="open(content)">Edit</a>
+                       <a class="dropdown-item" href="#">Delete</a>
+                      </div>
+                  </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Sunlight mode
+                  </td>
+                  <td>
+                    12-June-2020
+                  </td>
+                  <td>
+                    <div ngbDropdown class="dropdown" placement="bottom-right">
+                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
+                      <div ngbDropdownMenu>
+                        <a class="dropdown-item" href="#">Edit</a>
+                       <a class="dropdown-item" href="#">Delete</a>
+                      </div>
+                  </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Sunlight mode
+                  </td>
+                  <td>
+                    12-June-2020
+                  </td>
+                  <td>
+                    <div ngbDropdown class="dropdown" placement="bottom-right">
+                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
+                      <div ngbDropdownMenu>
+                        <a class="dropdown-item" href="#">Edit</a>
+                       <a class="dropdown-item" href="#">Delete</a>
+                      </div>
+                  </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Sunlight mode
+                  </td>
+                  <td>
+                    12-June-2020
+                  </td>
+                  <td>
+                    <div ngbDropdown class="dropdown" placement="bottom-right">
+                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
+                      <div ngbDropdownMenu>
+                        <a class="dropdown-item" href="#">Edit</a>
+                       <a class="dropdown-item" href="#">Delete</a>
+                      </div>
+                  </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Sunlight mode
+                  </td>
+                  <td>
+                    12-June-2020
+                  </td>
+                  <td>
+                    <div ngbDropdown class="dropdown" placement="bottom-right">
+                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
+                      <div ngbDropdownMenu>
+                        <a class="dropdown-item" href="#">Edit</a>
+                       <a class="dropdown-item" href="#">Delete</a>
+                      </div>
+                  </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Configure Mode</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-light" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
