@@ -26,6 +26,7 @@ namespace Celeste.MultiTenancy
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
         private readonly IAbpZeroDbMigrator _abpZeroDbMigrator;
+        private readonly IRepository<Tenant, int> _tenantRepository;
 
         public TenantAppService(
             IRepository<Tenant, int> repository,
@@ -40,6 +41,7 @@ namespace Celeste.MultiTenancy
             _editionManager = editionManager;
             _userManager = userManager;
             _roleManager = roleManager;
+            _tenantRepository = repository;
             _abpZeroDbMigrator = abpZeroDbMigrator;
         }
 
@@ -104,6 +106,22 @@ namespace Celeste.MultiTenancy
             entity.Name = updateInput.Name;
             entity.TenancyName = updateInput.TenancyName;
             entity.IsActive = updateInput.IsActive;
+            entity.Email = updateInput.Email;
+            entity.FirstName = updateInput.FirstName;
+            entity.LastName = updateInput.LastName;
+        }
+ 
+        public async Task UpdateTenantDetails(TenantDto input)
+        {
+            var tenant = await _tenantRepository.FirstOrDefaultAsync(input.Id);
+            if (tenant != null)
+            {
+                var tenantId = tenant.Id;
+                MapToEntity(input, tenant);
+                tenant.Id = tenantId;
+                await _tenantRepository.UpdateAsync(tenant);
+
+            }
         }
 
         public override async Task DeleteAsync(EntityDto<int> input)

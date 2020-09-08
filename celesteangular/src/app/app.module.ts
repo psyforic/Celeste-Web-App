@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ModesComponent } from './modes/modes.component';
 import { UsersComponent } from './users/users.component';
+import { RegisterTenantComponent } from '../account/tenantRegister/register-tenant.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -27,7 +28,7 @@ import { UsersComponent } from './users/users.component';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
+    AdminLayoutComponent
 
   ],
   providers: [],

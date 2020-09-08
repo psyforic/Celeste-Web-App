@@ -1,25 +1,33 @@
-using System.ComponentModel.DataAnnotations;
-using Abp.Authorization.Users;
-using Abp.AutoMapper;
+﻿using Abp.Authorization.Users;
 using Abp.MultiTenancy;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Celeste.MultiTenancy.Dto
 {
-    [AutoMapTo(typeof(Tenant))]
-    public class CreateTenantDto
+   public class RegisterTenantInput
     {
         [Required]
         [StringLength(AbpTenantBase.MaxTenancyNameLength)]
         [RegularExpression(AbpTenantBase.TenancyNameRegex)]
         public string TenancyName { get; set; }
 
-        [Required]
-        [StringLength(AbpTenantBase.MaxNameLength)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(AbpTenantBase.MaxNameLength)]
         public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(AbpTenantBase.MaxNameLength)]
         public string LastName { get; set; }
-        public string Rooms { get; set; }
+
+
+        [Required]
+        [StringLength(AbpTenantBase.MaxNameLength)]
+        public string Password { get; set; }
 
         [Required]
         [StringLength(AbpUserBase.MaxEmailAddressLength)]
@@ -28,6 +36,8 @@ namespace Celeste.MultiTenancy.Dto
         [StringLength(AbpTenantBase.MaxConnectionStringLength)]
         public string ConnectionString { get; set; }
 
-        public bool IsActive {get; set;}
+        public bool IsActive { get; set; }
+
+        public string Email { get; set; }
     }
 }

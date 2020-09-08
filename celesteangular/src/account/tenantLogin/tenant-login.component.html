@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active"> Home / Organization </h2>
+
+        <!-- Icon -->
+        <!-- <div class="fadeIn first">
+            <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+        </div> -->
+
+        <!-- Login Form -->
+        <form (ngSubmit)="login()">
+            <input type="text" id="login" class="fadeIn first" name="login" placeholder="Home/Organization">
+            <input type="submit" class="fadeIn fourth" value="Continue">
+        </form>
+        <div id="formFooter">
+            <a [routerLink]="['../register-tenant']" class="underlineHover" href="#">Don't have an account? Create Account</a>
+        </div>
+    </div>
+</div>
