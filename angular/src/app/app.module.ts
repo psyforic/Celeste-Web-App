@@ -34,6 +34,7 @@ import { ComponentsModule } from './components/components.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModesComponent } from './modes/modes.component';
 import { HelpComponent } from './help/help.component';
+import { RegisterTenantComponent } from '../account/register-tenant/register-tenant.component';
 @NgModule({
   declarations: [
     AppComponent,
