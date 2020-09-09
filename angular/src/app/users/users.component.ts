@@ -14,6 +14,7 @@ import {
 import { CreateUserDialogComponent } from './create-user/create-user-dialog.component';
 import { EditUserDialogComponent } from './edit-user/edit-user-dialog.component';
 import { ResetPasswordDialogComponent } from './reset-password/reset-password.component';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 class PagedUsersRequestDto extends PagedRequestDto {
   keyword: string;
@@ -29,32 +30,36 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
   keyword = '';
   isActive: boolean | null;
   advancedFiltersVisible = false;
+  closeResult = '';
+  currentOrientation = 'horizontal';
 
   constructor(
     injector: Injector,
     private _userService: UserServiceProxy,
-    private _modalService: BsModalService
+    private _modalService: BsModalService,
+    private modalService: NgbModal
   ) {
     super(injector);
   }
 
-  createUser(): void {
-    this.showCreateOrEditUserDialog();
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
-  editUser(user: UserDto): void {
-    this.showCreateOrEditUserDialog(user.id);
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
-  public resetPassword(user: UserDto): void {
-    this.showResetPasswordUserDialog(user.id);
-  }
-
-  clearFilters(): void {
-    this.keyword = '';
-    this.isActive = undefined;
-    this.getDataPage(1);
-  }
 
   protected list(
     request: PagedUsersRequestDto,

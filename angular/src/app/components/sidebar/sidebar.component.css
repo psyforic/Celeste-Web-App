@@ -1,0 +1,8 @@
+.top-background {
+    background-color: #035f58;
+}
+
+.sidebar[data-color="#035F58"]:after,
+.off-canvas-sidebar[data-color="#035F58"]:after {
+    background-color: #035f58;
+}

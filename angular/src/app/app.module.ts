@@ -28,17 +28,12 @@ import { CreateUserDialogComponent } from '@app/users/create-user/create-user-di
 import { EditUserDialogComponent } from '@app/users/edit-user/edit-user-dialog.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
-// layout
-import { HeaderComponent } from './layout/header.component';
-import { HeaderLeftNavbarComponent } from './layout/header-left-navbar.component';
-import { HeaderLanguageMenuComponent } from './layout/header-language-menu.component';
-import { HeaderUserMenuComponent } from './layout/header-user-menu.component';
-import { FooterComponent } from './layout/footer.component';
-import { SidebarComponent } from './layout/sidebar.component';
-import { SidebarLogoComponent } from './layout/sidebar-logo.component';
-import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
-import { SidebarMenuComponent } from './layout/sidebar-menu.component';
-
+import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { ComponentsModule } from './components/components.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModesComponent } from './modes/modes.component';
+import { HelpComponent } from './help/help.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,22 +49,17 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     EditRoleDialogComponent,
     // users
     UsersComponent,
+    ModesComponent,
+    HelpComponent,
     CreateUserDialogComponent,
     EditUserDialogComponent,
     ChangePasswordComponent,
     ResetPasswordDialogComponent,
-    // layout
-    HeaderComponent,
-    HeaderLeftNavbarComponent,
-    HeaderLanguageMenuComponent,
-    HeaderUserMenuComponent,
-    FooterComponent,
-    SidebarComponent,
-    SidebarLogoComponent,
-    SidebarUserPanelComponent,
-    SidebarMenuComponent
+    AdminLayoutComponent
+
   ],
   imports: [
+    ComponentsModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -83,6 +73,7 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
+    NgbModule,
   ],
   providers: [],
   entryComponents: [
