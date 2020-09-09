@@ -37,7 +37,10 @@ h2 {
     flex-direction: column;
     justify-content: center;
     width: 100%;
+    color: #035F58;
     background-color: #046968;
+    opacity: inherit;
+    background: linear-gradient(rgb(5, 106, 105, 5), rgba(5, 106, 105, 5)), 100% / cover fixed;
     min-height: 100%;
     padding: 20px;
 }

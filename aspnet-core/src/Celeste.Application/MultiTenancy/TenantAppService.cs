@@ -110,7 +110,18 @@ namespace Celeste.MultiTenancy
             entity.FirstName = updateInput.FirstName;
             entity.LastName = updateInput.LastName;
         }
- 
+        public async Task UpdateTenantAsync(UpdateTenantDto input)
+        {
+            var tenant = await _tenantRepository.FirstOrDefaultAsync(input.TenantDto.Id);
+            if (tenant != null)
+            {
+                var tenantId = tenant.Id;
+                MapToEntity(input.TenantDto, tenant);
+                tenant.Id = tenantId;
+                await _tenantRepository.UpdateAsync(tenant);
+
+            }
+        }
         public async Task UpdateTenantDetails(TenantDto input)
         {
             var tenant = await _tenantRepository.FirstOrDefaultAsync(input.Id);

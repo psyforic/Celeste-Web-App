@@ -17,9 +17,17 @@ namespace Celeste.MultiTenancy.Dto
         [StringLength(AbpTenantBase.MaxNameLength)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(AbpTenantBase.MaxNameLength)]
         public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(AbpTenantBase.MaxNameLength)]
         public string LastName { get; set; }
+
         public string Rooms { get; set; }
+
+        public string Email { get; set; }
 
         [Required]
         [StringLength(AbpUserBase.MaxEmailAddressLength)]
