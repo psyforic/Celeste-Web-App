@@ -1,3 +1,4 @@
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +19,7 @@ import { AccountFooterComponent } from './layout/account-footer.component';
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
 import { RegisterTenantComponent } from './register-tenant/register-tenant.component';
+import { TenantLoginComponent } from './tenant-login/tenant-login.component';
 
 @NgModule({
     imports: [
@@ -41,7 +43,8 @@ import { RegisterTenantComponent } from './register-tenant/register-tenant.compo
         // tenant
         TenantChangeComponent,
         TenantChangeDialogComponent,
-        RegisterTenantComponent
+        RegisterTenantComponent,
+        TenantLoginComponent
     ],
     entryComponents: [
         // tenant

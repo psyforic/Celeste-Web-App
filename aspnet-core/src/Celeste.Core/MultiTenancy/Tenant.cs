@@ -11,12 +11,10 @@ namespace Celeste.MultiTenancy
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-
         public virtual ICollection<User> Users { get; set; }
         public Tenant()
         {            
         }
-
         public Tenant(string tenancyName, string name)
             : base(tenancyName, name)
         {

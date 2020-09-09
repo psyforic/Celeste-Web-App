@@ -3,108 +3,70 @@
     <div id="formContent">
         <!-- Tabs Titles -->
         <h2 class="active"> Sign In </h2>
-
-        <!-- Icon -->
-        <!-- <div class="fadeIn first">
-              <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
-          </div> -->
-
-        <!-- Login Form -->
-        <form #loginForm="ngForm" (ngSubmit)="login()">
-            <input type="text" id="login" class="fadeIn first" name="login" placeholder="Email address">
-            <input type="password" id="password" class="fadeIn first" name="login" placeholder="Password">
+        <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
+            <input type="text" id="login" class="fadeIn first" #userNameOrEmailAddressModel="ngModel" #userNameOrEmailAddressEl [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress" name="userNameOrEmailAddress" placeholder="Email address">
+            <input type="password" id="password" class="fadeIn first" name="password" placeholder="Password" [(ngModel)]="authService.authenticateModel.password" #passwordModel="ngModel" #passwordEl>
+            <div class="col-md-4" style="padding: 15px 32px;">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe" [(ngModel)]="authService.rememberMe" />
+                    <label for="rememberMe" class="custom-control-label">
+            {{ "RememberMe" | localize }}
+          </label>
+                </div>
+            </div>
             <input type="submit" class="fadeIn fourth" value="Log In" [disabled]="!loginForm.form.valid || submitting">
-            <!-- <button type="submit" class="fadeIn fourth btn btn-primary btn-block" [disabled]="!loginForm.form.valid || submitting">
-                {{ "LogIn" | localize }}
-              </button> -->
         </form>
-
-        <!-- Remind Passowrd -->
         <div id="formFooter">
             <a class="underlineHover" href="#">Forgot Password?</a>
         </div>
-
     </div>
 </div>
-<!-- <h4 class="text-center mb-3">{{ "LogIn" | localize }}</h4>
-  <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
-    <div class="form-group">
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          name="userNameOrEmailAddress"
-          [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress"
-          [placeholder]="'UserNameOrEmail' | localize"
-          required
-          maxlength="256"
-          #userNameOrEmailAddressModel="ngModel"
-          #userNameOrEmailAddressEl
-        />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-user"></span>
-          </div>
+<!-- <div>
+    <h4 class="text-center mb-3">{{ "LogIn" | localize }}</h4>
+    <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" name="userNameOrEmailAddress" [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress" [placeholder]="'UserNameOrEmail' | localize" required maxlength="256" #userNameOrEmailAddressModel="ngModel" #userNameOrEmailAddressEl
+                />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <abp-validation-summary [control]="userNameOrEmailAddressModel" [controlEl]="userNameOrEmailAddressEl">
+            </abp-validation-summary>
         </div>
-      </div>
-      <abp-validation-summary
-        [control]="userNameOrEmailAddressModel"
-        [controlEl]="userNameOrEmailAddressEl"
-      ></abp-validation-summary>
-    </div>
-    <div class="form-group">
-      <div class="input-group">
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          [(ngModel)]="authService.authenticateModel.password"
-          [placeholder]="'Password' | localize"
-          required
-          maxlength="32"
-          #passwordModel="ngModel"
-          #passwordEl
-        />
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-lock"></span>
-          </div>
+        <div class="form-group">
+            <div class="input-group">
+                <input type="password" class="form-control" name="password" [(ngModel)]="authService.authenticateModel.password" [placeholder]="'Password' | localize" required maxlength="32" #passwordModel="ngModel" #passwordEl />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <abp-validation-summary [control]="passwordModel" [controlEl]="passwordEl"></abp-validation-summary>
         </div>
-      </div>
-      <abp-validation-summary
-        [control]="passwordModel"
-        [controlEl]="passwordEl"
-      ></abp-validation-summary>
-    </div>
-    <div class="form-group row">
-      <div class="col-md-8">
-        <div class="custom-control custom-checkbox">
-          <input
-            type="checkbox"
-            class="custom-control-input"
-            id="rememberMe"
-            name="rememberMe"
-            [(ngModel)]="authService.rememberMe"
-          />
-          <label for="rememberMe" class="custom-control-label">
+        <div class="form-group row">
+            <div class="col-md-8">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe" [(ngModel)]="authService.rememberMe" />
+                    <label for="rememberMe" class="custom-control-label">
             {{ "RememberMe" | localize }}
           </label>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <button
-          type="submit"
-          class="btn btn-primary btn-block"
-          [disabled]="!loginForm.form.valid || submitting"
-        >
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid || submitting">
           {{ "LogIn" | localize }}
         </button>
-      </div>
-    </div>
-  </form>
-  <p *ngIf="isSelfRegistrationAllowed" class="mb-1">
-    <a [routerLink]="['../register']">
-      <i class="fa fa-plus-circle"></i> {{ "Register" | localize }}
-    </a>
-  </p> -->
-<!-- </div> -->
+            </div>
+        </div>
+    </form>
+    <p *ngIf="isSelfRegistrationAllowed" class="mb-1">
+        <a [routerLink]="['../register']">
+            <i class="fa fa-plus-circle"></i> {{ "Register" | localize }}
+        </a>
+    </p>
+</div> -->

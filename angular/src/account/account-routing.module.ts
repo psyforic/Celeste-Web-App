@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AccountComponent } from './account.component';
 import { RegisterTenantComponent } from './register-tenant/register-tenant.component';
+import { TenantLoginComponent } from './tenant-login/tenant-login.component';
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { RegisterTenantComponent } from './register-tenant/register-tenant.compo
                 children: [
                     { path: 'login', component: LoginComponent },
                     { path: 'register', component: RegisterComponent },
-                    { path: 'register-tenant', component: RegisterTenantComponent }
+                    { path: 'register-tenant', component: RegisterTenantComponent },
+                    { path: 'tenant-login', component: TenantLoginComponent }
                 ]
             }
         ])

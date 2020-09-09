@@ -25,6 +25,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit, After
   constructor(
     injector: Injector,
     private _accountService: AccountServiceProxy,
+    // private tenant: RegisterTe,
     private _router: Router,
     formBuilder: FormBuilder,
     private authService: AppAuthService

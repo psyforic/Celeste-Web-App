@@ -1,0 +1,23 @@
+<div [@routerTransition]>
+    <div class="wrapper">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Home / Organization </h2>
+
+            <!-- Icon -->
+            <!-- <div class="fadeIn first">
+            <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+        </div> -->
+            <!-- Login Form -->
+            <form autocomplete="off" #changeTenantForm="ngForm" (ngSubmit)="save()">
+                <input type="text" id="login" class="fadeIn first" placeholder="Home/Organization" id="tenancyName" name="tenancyName" [(ngModel)]="tenancyName" maxlength="64">
+                <input type="submit" class="fadeIn fourth" value="Continue" [disabled]="!changeTenantForm.form.valid">
+            </form>
+
+            <div id="formFooter">
+                <a [routerLink]="['../register-tenant']" class="underlineHover" href="#">Don't have an account?Create
+                    Account</a>
+            </div>
+        </div>
+    </div>
+</div>
