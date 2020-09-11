@@ -2,6 +2,7 @@
 <div class="wrapper">
     <div id="formContent">
         <!-- Tabs Titles -->
+        <!----Sign up here-->
         <h2 class="active"> Sign In </h2>
         <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
             <input type="text" id="login" class="fadeIn first" #userNameOrEmailAddressModel="ngModel" #userNameOrEmailAddressEl [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress" name="userNameOrEmailAddress" placeholder="Email address">
