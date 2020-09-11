@@ -8,6 +8,11 @@ namespace Celeste.Authorization.Users
     public class User : AbpUser<User>
     {
         public const string DefaultPassword = "123qwe";
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
+        public string Suburb { get; set; }
+        public string PostalCode { get; set; }
 
         public static string CreateRandomPassword()
         {

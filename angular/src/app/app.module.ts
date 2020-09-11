@@ -49,12 +49,13 @@ import { HelpComponent } from './help/help.component';
     EditRoleDialogComponent,
     // users
     UsersComponent,
-    ModesComponent,
-    HelpComponent,
     CreateUserDialogComponent,
     EditUserDialogComponent,
     ChangePasswordComponent,
     ResetPasswordDialogComponent,
+
+    ModesComponent,
+    HelpComponent,
     AdminLayoutComponent
 
   ],

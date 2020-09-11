@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ using Celeste.Authorization.Roles;
 using Celeste.Authorization.Users;
 using Celeste.Roles.Dto;
 using Celeste.Users.Dto;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +35,7 @@ namespace Celeste.Users
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IAbpSession _abpSession;
         private readonly LogInManager _logInManager;
+        private readonly IWebHostEnvironment _environment;
 
         public UserAppService(
             IRepository<User, long> repository,
@@ -41,6 +44,7 @@ namespace Celeste.Users
             IRepository<Role> roleRepository,
             IPasswordHasher<User> passwordHasher,
             IAbpSession abpSession,
+            IWebHostEnvironment environment,
             LogInManager logInManager)
             : base(repository)
         {
@@ -50,6 +54,7 @@ namespace Celeste.Users
             _passwordHasher = passwordHasher;
             _abpSession = abpSession;
             _logInManager = logInManager;
+            _environment = environment;
         }
 
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
@@ -71,6 +76,25 @@ namespace Celeste.Users
             }
 
             CurrentUnitOfWork.SaveChanges();
+
+            //send an email here
+            string body = string.Empty;
+
+            //using streamreader for reading my html template   
+
+            var path = Path.Combine(_environment.WebRootPath, "EmailTemplate/send-invite.html");
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            string link = "http://localhost:4200/";
+            body = body.Replace("#Name", input.Name + " " + input.Surname);
+            body = body.Replace("#Link", link);
+            body = body.Replace("#Password", input.Password);
+            body = body.Replace("#Username", input.UserName);
+            Emailer.Send(to: input.EmailAddress, subject: "Celeste New Account!", body: body, isBodyHtml: true);
 
             return MapToEntityDto(user);
         }

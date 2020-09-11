@@ -10,7 +10,7 @@
          <h4 class="card-title">List of Users</h4>
         </div>
         <div class="col-sm-2 col-lg-2">
-          <button type="button" class="btn btn-primary" (click)="open(userContent)">New User</button>
+          <button type="button" class="btn btn-primary" (click)="createUser()">New User</button>
         </div>
         </div>
 
@@ -33,72 +33,26 @@
                 </th>
               </thead>
               <tbody>
-                <tr>
+                <tr *ngFor="let user of users">
                   <td>
-                    yangantondini
+                    {{user.userName}}
                   </td>
                   <td>
-                  yanga@celeste.co.za
+                    {{user.fullName}}
                   </td>
                   <td>
-                  Admin
+                    {{user.emailAddress}}
                   </td>
-
                   <td>
                     <div ngbDropdown class="dropdown" placement="bottom-right">
                       <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
                       <div ngbDropdownMenu>
-                        <a class="dropdown-item" (click)="open(userContent)">Edit</a>
+                        <a class="dropdown-item" (click)="editUser(user)">Edit</a>
                        <a class="dropdown-item" href="#">Delete</a>
                       </div>
                   </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    siphoximbi
-                  </td>
-                  <td>
-                  sipho@celeste.co.za
-                  </td>
-                  <td>
-                  General
-                  </td>
-
-                  <td>
-                    <div ngbDropdown class="dropdown" placement="bottom-right">
-                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
-                      <div ngbDropdownMenu>
-                        <a class="dropdown-item" (click)="open(userContent)">Edit</a>
-                       <a class="dropdown-item" href="#">Delete</a>
-                      </div>
-                  </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    lundimapundu
-                  </td>
-                  <td>
-                  lundi@celeste.co.za
-                  </td>
-                  <td>
-                  General
-                  </td>
-
-                  <td>
-                    <div ngbDropdown class="dropdown" placement="bottom-right">
-                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
-                      <div ngbDropdownMenu>
-                        <a class="dropdown-item" (click)="open(userContent)">Edit</a>
-                       <a class="dropdown-item" href="#">Delete</a>
-                      </div>
-                  </div>
-                  </td>
-                </tr>
-
-
-
               </tbody>
             </table>
           </div>
@@ -110,7 +64,7 @@
 
 
 
-<ng-template #userContent let-modal>
+<ng-template #userContent let-modal> -->
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Configure User</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -118,14 +72,15 @@
     </button>
   </div>
   <div class="modal-body">
-    <form>
+
+    <form *ngIf="active" #createUserForm="ngForm" [formGroup]="frm_create_user" id="frm_create_user" novalidate (ngSubmit)="save()">
   <ngb-tabset type="pills" [orientation]="currentOrientation">
   <ngb-tab title="Basic Info">
     <ng-template ngbTabContent>
       <div class="row" style="margin-top: 15px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Username" class="form-control" />
+          <input type="text" value="" placeholder="Username" formControlName="userName" class="form-control" />
       </div>
       </div>
       </div>
@@ -133,7 +88,7 @@
       <div class="row" style="margin-top: 5px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Full Name" class="form-control"/>
+          <input type="text" value="" placeholder="Full Name" formControlName="fullName" class="form-control"/>
       </div>
       </div>
       </div>
@@ -141,7 +96,7 @@
       <div class="row" style="margin-top: 5px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Email" class="form-control"/>
+          <input type="text" value="" placeholder="Email" formControlName="emailAddress" class="form-control"/>
       </div>
       </div>
       </div>
@@ -149,7 +104,7 @@
       <div class="row" style="margin-top: 5px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Phone" class="form-control"/>
+          <input type="text" value="" placeholder="Phone" formControlName="cellphoneNumber" class="form-control"/>
       </div>
       </div>
       </div>
@@ -161,7 +116,7 @@
       <div class="row" style="margin-top: 15px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Address Line 1" class="form-control" />
+          <input type="text" value="" placeholder="Street address" formControlName="address" class="form-control" />
       </div>
       </div>
       </div>
@@ -169,7 +124,7 @@
       <div class="row" style="margin-top: 5px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Address Line 2" class="form-control"/>
+          <input type="text" value="" placeholder="Suburb" formControlName="suburb" class="form-control"/>
       </div>
       </div>
       </div>
@@ -177,15 +132,7 @@
       <div class="row" style="margin-top: 5px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Suburb" class="form-control"/>
-      </div>
-      </div>
-      </div>
-
-      <div class="row" style="margin-top: 5px">
-      <div class="col-sm-10 col-lg-10">
-      <div class="form-group">
-          <input type="text" value="" placeholder="City" class="form-control"/>
+          <input type="text" value="" placeholder="City" formControlName="city" class="form-control"/>
       </div>
       </div>
       </div>
@@ -193,14 +140,14 @@
        <div class="row" style="margin-top: 5px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Postal Code" class="form-control"/>
+          <input type="text" value="" placeholder="Postal Code" formControlName="postalCode" class="form-control"/>
       </div>
       </div>
       </div>
        <div class="row" style="margin-top: 5px">
       <div class="col-sm-10 col-lg-10">
       <div class="form-group">
-          <input type="text" value="" placeholder="Province" class="form-control"/>
+          <input type="text" value="" placeholder="Province" formControlName="province" class="form-control"/>
       </div>
       </div>
       </div>

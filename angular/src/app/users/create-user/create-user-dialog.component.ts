@@ -15,6 +15,7 @@ import {
   RoleDto
 } from '@shared/service-proxies/service-proxies';
 import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   templateUrl: './create-user-dialog.component.html'
@@ -22,6 +23,10 @@ import { AbpValidationError } from '@shared/components/validation/abp-validation
 export class CreateUserDialogComponent extends AppComponentBase
   implements OnInit {
   saving = false;
+  frm_create_user: FormGroup;
+  isLoading = false;
+  active = false;
+  currentOrientation = 'horizontal';
   user = new CreateUserDto();
   roles: RoleDto[] = [];
   checkedRolesMap: { [key: string]: boolean } = {};

@@ -36,5 +36,13 @@ namespace Celeste.Users.Dto
         public DateTime CreationTime { get; set; }
 
         public string[] RoleNames { get; set; }
+
+
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
+        public string Suburb { get; set; }
+        public string PostalCode { get; set; }
+        public string CellphoneNumber { get; set; }
     }
 }
