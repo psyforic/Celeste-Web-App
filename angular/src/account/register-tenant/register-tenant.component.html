@@ -3,24 +3,24 @@
         <div id="formContent">
             <h2 class="active">Sign Up</h2>
             <form [formGroup]="form_register" (ngSubmit)="save()">
-                <div class="form-group">
-                    <input type="text" formControlName="firstName" class="fadeIn first form-control" name="login" placeholder="Full Name">
-                </div>
-                <div class="form-group">
-                    <input type="text" formControlName="lastName" class="fadeIn first form-control" name="login" placeholder="Full Name">
-                </div>
-                <div class="form-group">
-                    <input type="text" formControlName="tenancyName" class="fadeIn first form-control" name="login" placeholder="Organization">
-                </div>
-                <div class="form-group">
-                    <input type="text" formControlName="adminEmailAddress" class="fadeIn first form-control" name="login" placeholder="Email address">
-                </div>
-                <div class="form-group">
-                    <input type="password" formControlName="password" class="fadeIn first form-control" name="login" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <input type="password" formControlName="confirmPassword" class="fadeIn first form-control" name="login" placeholder="Confirm password">
-                </div>
+
+                <input type="text" formControlName="firstName" class="fadeIn first form-control" name="login" placeholder="First Name">
+
+
+                <input type="text" formControlName="lastName" class="fadeIn first form-control" name="login" placeholder="Last Name">
+
+
+                <input type="text" formControlName="tenancyName" class="fadeIn first form-control" name="login" placeholder="Organization">
+
+
+                <input type="text" formControlName="adminEmailAddress" class="fadeIn first form-control" name="login" placeholder="Email address">
+
+
+                <input type="password" formControlName="password" class="fadeIn first form-control" name="login" placeholder="Password">
+
+
+                <input type="password" formControlName="confirmPassword" class="fadeIn first form-control" name="login" placeholder="Confirm password">
+
                 <input type="submit" class="fadeIn fourth" value="Sign Up">
             </form>
             <div id="formFooter">

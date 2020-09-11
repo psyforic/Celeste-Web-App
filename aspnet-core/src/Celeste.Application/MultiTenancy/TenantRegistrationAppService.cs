@@ -42,7 +42,7 @@ namespace Celeste.MultiTenancy
                    input.Password,
                    input.AdminEmailAddress,
                    null,
-                   false
+                   true
                );
 
                 var tenant = await _tenantManager.GetByIdAsync(tenantId);

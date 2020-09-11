@@ -6,7 +6,7 @@
         <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
             <input type="text" id="login" class="fadeIn first" #userNameOrEmailAddressModel="ngModel" #userNameOrEmailAddressEl [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress" name="userNameOrEmailAddress" placeholder="Email address">
             <input type="password" id="password" class="fadeIn first" name="password" placeholder="Password" [(ngModel)]="authService.authenticateModel.password" #passwordModel="ngModel" #passwordEl>
-            <div class="col-md-4" style="padding: 15px 32px;">
+            <div class="col-md-3" style="padding: 15px 32px;">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe" [(ngModel)]="authService.rememberMe" />
                     <label for="rememberMe" class="custom-control-label">

@@ -67,14 +67,12 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit 
     this._tenantRegistrationService.registerTenant(this.tenant)
       .pipe(
         finalize(() => {
-          console.log(this.tenant);
           this.saving = false;
         })
       )
       .subscribe((result: TenantDto) => {
-        console.log(this.tenant);
         this.saving = true;
-        this._router.navigate(['account/login']);
+        this._router.navigate(['account/tenant-login']);
 
       });
   }

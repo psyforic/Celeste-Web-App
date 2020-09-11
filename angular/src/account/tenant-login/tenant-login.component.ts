@@ -27,14 +27,12 @@ export class TenantLoginComponent extends AppComponentBase {
   save(): void {
     if (!this.tenancyName) {
       abp.multiTenancy.setTenantIdCookie(undefined);
-
       location.reload();
       return;
     }
 
     const input = new IsTenantAvailableInput();
     input.tenancyName = this.tenancyName;
-
     this.saving = true;
     this._accountService
       .isTenantAvailable(input)
@@ -48,6 +46,7 @@ export class TenantLoginComponent extends AppComponentBase {
           case AppTenantAvailabilityState.Available:
             abp.multiTenancy.setTenantIdCookie(result.tenantId);
             window.location.href = '/account/login';
+            console.log(this.tenancyName);
             // this._router.navigate(['account/login']);
             return;
           case AppTenantAvailabilityState.InActive:
