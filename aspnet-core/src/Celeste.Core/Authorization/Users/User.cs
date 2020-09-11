@@ -19,7 +19,8 @@ namespace Celeste.Authorization.Users
             return Guid.NewGuid().ToString("N").Truncate(16);
         }
 
-        public static User CreateTenantAdminUser(int tenantId, string emailAddress)
+        public static User CreateTenantAdminUser(int tenantId, string emailAddress, string name = "admin",
+            string surname = "admin", string username = "admin")
         {
             var user = new User
             {

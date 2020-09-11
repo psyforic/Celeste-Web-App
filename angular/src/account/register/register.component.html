@@ -1,5 +1,34 @@
 ﻿<div [@routerTransition]>
-  <h4 class="text-center mb-3">{{ "Register" | localize }}</h4>
+    <div class="wrapper">
+        <div class="overlay">
+            <div id="formContent">
+                <h2 class="active">Sign Up</h2>
+
+                <form autocomplete="off" #registerForm="ngForm" (ngSubmit)="save()">>
+
+                    <input type="text" class="fadeIn first" name="name" placeholder="Full Name" [(ngModel)]="model.name" #nameModel="ngModel" #nameEl>
+
+
+                    <input type="text" id="password" class="fadeIn first" name="organization" placeholder="Organization">
+
+                    <input type="text" id="login" class="fadeIn first" name="emailAddress" placeholder="Email address" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" [(ngModel)]="model.emailAddress" #emailAddressModel="ngModel" #emailAddressEl>
+
+                    <input type="text" id="password" class="fadeIn first" name="password" placeholder="Password" [(ngModel)]="model.password" #passwordModel="ngModel" #passwordEl>
+
+
+                    <input type="text" id="password" class="fadeIn first" name="login" placeholder="Confirm password">
+
+
+                    <button type="submit" class="fadeIn fourth" value="Sign Up" [disabled]="!registerForm.form.valid || saving"></button>
+
+                </form>
+                <div id="formFooter">
+                    <a [routerLink]="[ '../tenant-login']" class="underlineHover" href="#">Already have an account?Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <h4 class="text-center mb-3">{{ "Register" | localize }}</h4>
   <form autocomplete="off" #registerForm="ngForm" (ngSubmit)="save()">
     <div class="form-group">
       <div class="input-group">
@@ -10,6 +39,7 @@
           placeholder="{{ 'Name' | localize }}"
           required
           maxlength="64"
+
           [(ngModel)]="model.name"
           #nameModel="ngModel"
           #nameEl
@@ -143,5 +173,5 @@
         </button>
       </div>
     </div>
-  </form>
+  </form> -->
 </div>

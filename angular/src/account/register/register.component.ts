@@ -1,33 +1,50 @@
-import { Component, Injector } from '@angular/core';
+import { AfterViewInit, Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { AppComponentBase } from '@shared/app-component-base';
 import {
   AccountServiceProxy,
+  CreateTenantDto,
   RegisterInput,
   RegisterOutput
 } from '@shared/service-proxies/service-proxies';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
   animations: [accountModuleAnimation()]
 })
-export class RegisterComponent extends AppComponentBase {
+export class RegisterComponent extends AppComponentBase implements OnInit, AfterViewInit {
   model: RegisterInput = new RegisterInput();
+  tenant: CreateTenantDto = new CreateTenantDto();
   saving = false;
-
+  form_register: FormGroup;
   constructor(
     injector: Injector,
     private _accountService: AccountServiceProxy,
+    // private tenant: RegisterTe,
     private _router: Router,
+    formBuilder: FormBuilder,
     private authService: AppAuthService
   ) {
     super(injector);
   }
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
+  }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   save(): void {
+
+
+
+
+
     this.saving = true;
     this._accountService
       .register(this.model)

@@ -1,6 +1,7 @@
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -17,6 +18,8 @@ import { AccountFooterComponent } from './layout/account-footer.component';
 // tenants
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
+import { RegisterTenantComponent } from './register-tenant/register-tenant.component';
+import { TenantLoginComponent } from './tenant-login/tenant-login.component';
 
 @NgModule({
     imports: [
@@ -25,6 +28,7 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         HttpClientModule,
         HttpClientJsonpModule,
         SharedModule,
+        ReactiveFormsModule,
         ServiceProxyModule,
         AccountRoutingModule,
         ModalModule.forChild()
@@ -39,6 +43,8 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         // tenant
         TenantChangeComponent,
         TenantChangeDialogComponent,
+        RegisterTenantComponent,
+        TenantLoginComponent
     ],
     entryComponents: [
         // tenant
