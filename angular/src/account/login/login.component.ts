@@ -11,7 +11,7 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
 })
 export class LoginComponent extends AppComponentBase {
   submitting = false;
-
+  enabled = false;
   constructor(
     injector: Injector,
     public authService: AppAuthService,
