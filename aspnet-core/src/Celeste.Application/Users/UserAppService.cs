@@ -24,12 +24,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Celeste.Users
 {
-    [AbpAuthorize(PermissionNames.Pages_Users)]
+  //  [AbpAuthorize(PermissionNames.Pages_Users)]
     public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
     {
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
         private readonly IRepository<Role> _roleRepository;
+        private readonly IRepository<User, long> _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IAbpSession _abpSession;
         private readonly LogInManager _logInManager;
@@ -47,6 +48,7 @@ namespace Celeste.Users
             _userManager = userManager;
             _roleManager = roleManager;
             _roleRepository = roleRepository;
+            _userRepository = repository;
             _passwordHasher = passwordHasher;
             _abpSession = abpSession;
             _logInManager = logInManager;
@@ -189,6 +191,14 @@ namespace Celeste.Users
             CurrentUnitOfWork.SaveChanges();
             return true;
         }
+
+        //public async Task GetUser(int userId)
+        //{
+        //    var user = await _userRepository.GetAll()
+        //        .Where(x => x.Id == userId)
+        //        .FirstOrDefaultAsync();
+        //    return user;
+        //}
 
         public async Task<bool> ResetPassword(ResetPasswordDto input)
         {
