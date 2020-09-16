@@ -26,7 +26,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Celeste.Users
 {
-    [AbpAuthorize(PermissionNames.Pages_Users)]
+  //  [AbpAuthorize(PermissionNames.Pages_Users)]
     public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
     {
         private readonly UserManager _userManager;
@@ -52,6 +52,7 @@ namespace Celeste.Users
             _userManager = userManager;
             _roleManager = roleManager;
             _roleRepository = roleRepository;
+            _userRepository = repository;
             _passwordHasher = passwordHasher;
             _abpSession = abpSession;
             _logInManager = logInManager;

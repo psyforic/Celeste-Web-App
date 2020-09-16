@@ -7,7 +7,7 @@ using Celeste.Authorization.Users;
 
 namespace Celeste.Users.Dto
 {
-    [AutoMapTo(typeof(User))]
+   // [AutoMapTo(typeof(User))]
     public class CreateUserDto : IShouldNormalize
     {
         [Required]
