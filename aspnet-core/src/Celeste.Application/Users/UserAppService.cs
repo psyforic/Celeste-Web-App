@@ -32,6 +32,7 @@ namespace Celeste.Users
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
         private readonly IRepository<Role> _roleRepository;
+        private readonly IRepository<User, long> _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IAbpSession _abpSession;
         private readonly LogInManager _logInManager;
@@ -213,6 +214,8 @@ namespace Celeste.Users
             CurrentUnitOfWork.SaveChanges();
             return true;
         }
+
+        
 
         public async Task<bool> ResetPassword(ResetPasswordDto input)
         {
