@@ -3,7 +3,7 @@ import { enableProdMode } from '@angular/core';
 import { environment } from './environments/environment';
 import { RootModule } from './root.module';
 import { hmrBootstrap } from './hmr';
-
+import '@angular/compiler';
 import 'moment/min/locales.min';
 import 'moment-timezone';
 

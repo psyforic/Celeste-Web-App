@@ -13,6 +13,7 @@ namespace Celeste
         public override void PreInitialize()
         {
             Configuration.Authorization.Providers.Add<CelesteAuthorizationProvider>();
+            Configuration.Modules.AbpAutoMapper().Configurators.Add(CustomDtoMapper.CreateMappings);
         }
 
         public override void Initialize()

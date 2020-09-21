@@ -18,7 +18,9 @@ using Celeste.Authorization;
 using Celeste.Authorization.Accounts;
 using Celeste.Authorization.Roles;
 using Celeste.Authorization.Users;
+using Celeste.Modes.UserModes;
 using Celeste.Roles.Dto;
+using Celeste.UserModes;
 using Celeste.Users.Dto;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +33,7 @@ namespace Celeste.Users
     {
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
+        private readonly UserModesManager _userModesManager;
         private readonly IRepository<Role> _roleRepository;
         private readonly IRepository<User, long> _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
@@ -42,7 +45,8 @@ namespace Celeste.Users
             IRepository<User, long> repository,
             UserManager userManager,
             RoleManager roleManager,
-            IRepository<Role> roleRepository,
+            UserModesManager userModesManager,
+        IRepository<Role> roleRepository,
             IPasswordHasher<User> passwordHasher,
             IAbpSession abpSession,
             IWebHostEnvironment environment,
@@ -57,6 +61,7 @@ namespace Celeste.Users
             _abpSession = abpSession;
             _logInManager = logInManager;
             _environment = environment;
+            _userModesManager = userModesManager;
         }
 
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
@@ -76,6 +81,20 @@ namespace Celeste.Users
             {
                 CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
             }
+
+            if (user.Id > 0)
+            {
+                if (input.UserModes != null && input.UserModes.Count > 0)
+                {
+                    foreach (var mode in input.UserModes)
+                    {
+                        var mappedMode = ObjectMapper.Map<UserMode>(mode);
+                        mappedMode.UserId = user.Id;
+                        await _userModesManager.CreateAsync(mappedMode);
+                    }
+                }
+            }
+           
 
             CurrentUnitOfWork.SaveChanges();
 
@@ -216,7 +235,22 @@ namespace Celeste.Users
             return true;
         }
 
-        
+        public async Task<ListResultDto<UserDto>> GetUserModes()
+        {
+            var users = await _userRepository.GetAll()
+                .Include(x => x.UserModes)
+                .ToListAsync();
+            return new ListResultDto<UserDto>(ObjectMapper.Map<List<UserDto>>(users));
+        }
+        public async Task<UserDto> GetUserandModes(long id)
+        {
+            var user = await _userRepository.GetAll()
+                .Where(x => x.Id == id)
+                .Include(x => x.UserModes)
+                .FirstOrDefaultAsync();
+          
+            return ObjectMapper.Map<UserDto>(user);
+        }
 
         public async Task<bool> ResetPassword(ResetPasswordDto input)
         {

@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.Authorization.Users;
 using Abp.AutoMapper;
 using Celeste.Authorization.Users;
+using Celeste.Modes.Dto;
+using Celeste.UserModes.Dto;
 
 namespace Celeste.Users.Dto
 {
@@ -44,5 +47,6 @@ namespace Celeste.Users.Dto
         public string Suburb { get; set; }
         public string PostalCode { get; set; }
         public string CellphoneNumber { get; set; }
+        public virtual List<UserModeListDto> UserModes { get; set; }
     }
 }

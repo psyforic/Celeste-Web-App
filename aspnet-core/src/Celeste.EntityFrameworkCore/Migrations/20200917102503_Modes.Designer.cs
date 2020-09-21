@@ -4,14 +4,16 @@ using Celeste.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Celeste.Migrations
 {
     [DbContext(typeof(CelesteDbContext))]
-    partial class CelesteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200917102503_Modes")]
+    partial class Modes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1536,17 +1538,41 @@ namespace Celeste.Migrations
                     b.Property<string>("Command")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Icon")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1626,51 +1652,6 @@ namespace Celeste.Migrations
                     b.HasIndex("TenancyName");
 
                     b.ToTable("AbpTenants");
-                });
-
-            modelBuilder.Entity("Celeste.UserModes.UserMode", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid>("ModeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TenantId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserModes");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
@@ -1890,21 +1871,6 @@ namespace Celeste.Migrations
                     b.HasOne("Celeste.Authorization.Users.User", "LastModifierUser")
                         .WithMany()
                         .HasForeignKey("LastModifierUserId");
-                });
-
-            modelBuilder.Entity("Celeste.UserModes.UserMode", b =>
-                {
-                    b.HasOne("Celeste.Modes.Mode", "Mode")
-                        .WithMany()
-                        .HasForeignKey("ModeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Celeste.Authorization.Users.User", "User")
-                        .WithMany("Modes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>

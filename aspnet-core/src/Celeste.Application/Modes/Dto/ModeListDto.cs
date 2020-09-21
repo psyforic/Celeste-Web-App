@@ -1,14 +1,14 @@
-﻿using Abp.Domain.Entities;
-using Abp.Domain.Entities.Auditing;
+﻿using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
+using Celeste.MultiTenancy.Dto;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Celeste.Modes
+namespace Celeste.Modes.Dto
 {
-    [Table("Mode")]
-    public class Mode : Entity<Guid>
+    [AutoMapFrom(typeof(Mode))]
+    public class ModeListDto : EntityDto<Guid>
     {
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }

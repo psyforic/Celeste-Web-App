@@ -205,6 +205,299 @@ export class ConfigurationServiceProxy {
 }
 
 @Injectable()
+export class ModeServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: string | undefined): Observable<ModeListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Mode/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<ModeListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModeListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<ModeListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModeListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModeListDto>(<any>null);
+    }
+
+    /**
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getAll(maxResultCount: number | undefined, skipCount: number | undefined): Observable<ModeListDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Mode/GetAll?";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<ModeListDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModeListDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<ModeListDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModeListDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModeListDtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreateModeInput | undefined): Observable<ModeListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Mode/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<ModeListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModeListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<ModeListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModeListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModeListDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: GetModeOutput | undefined): Observable<ModeListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Mode/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<ModeListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModeListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<ModeListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModeListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModeListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Mode/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2414,6 +2707,405 @@ export interface IChangeUiThemeInput {
     theme: string;
 }
 
+export class TenantDto implements ITenantDto {
+    tenancyName: string;
+    name: string;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    email: string | undefined;
+    isActive: boolean;
+    id: number;
+
+    constructor(data?: ITenantDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.tenancyName = _data["tenancyName"];
+            this.name = _data["name"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.email = _data["email"];
+            this.isActive = _data["isActive"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): TenantDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
+        data["name"] = this.name;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["email"] = this.email;
+        data["isActive"] = this.isActive;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TenantDto {
+        const json = this.toJSON();
+        let result = new TenantDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantDto {
+    tenancyName: string;
+    name: string;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    email: string | undefined;
+    isActive: boolean;
+    id: number;
+}
+
+export class ModeListDto implements IModeListDto {
+    startTime: moment.Moment;
+    endTime: moment.Moment;
+    name: string | undefined;
+    command: string | undefined;
+    icon: string | undefined;
+    tenant: TenantDto;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: string;
+
+    constructor(data?: IModeListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
+            this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
+            this.name = _data["name"];
+            this.command = _data["command"];
+            this.icon = _data["icon"];
+            this.tenant = _data["tenant"] ? TenantDto.fromJS(_data["tenant"]) : <any>undefined;
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): ModeListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModeListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["name"] = this.name;
+        data["command"] = this.command;
+        data["icon"] = this.icon;
+        data["tenant"] = this.tenant ? this.tenant.toJSON() : <any>undefined;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): ModeListDto {
+        const json = this.toJSON();
+        let result = new ModeListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IModeListDto {
+    startTime: moment.Moment;
+    endTime: moment.Moment;
+    name: string | undefined;
+    command: string | undefined;
+    icon: string | undefined;
+    tenant: TenantDto;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: string;
+}
+
+export class ModeListDtoPagedResultDto implements IModeListDtoPagedResultDto {
+    totalCount: number;
+    items: ModeListDto[] | undefined;
+
+    constructor(data?: IModeListDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ModeListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ModeListDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModeListDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ModeListDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new ModeListDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IModeListDtoPagedResultDto {
+    totalCount: number;
+    items: ModeListDto[] | undefined;
+}
+
+export class CreateModeInput implements ICreateModeInput {
+    startTime: moment.Moment;
+    endTime: moment.Moment;
+    name: string | undefined;
+    command: string | undefined;
+    icon: string | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: string;
+
+    constructor(data?: ICreateModeInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
+            this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
+            this.name = _data["name"];
+            this.command = _data["command"];
+            this.icon = _data["icon"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateModeInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateModeInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["name"] = this.name;
+        data["command"] = this.command;
+        data["icon"] = this.icon;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): CreateModeInput {
+        const json = this.toJSON();
+        let result = new CreateModeInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateModeInput {
+    startTime: moment.Moment;
+    endTime: moment.Moment;
+    name: string | undefined;
+    command: string | undefined;
+    icon: string | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: string;
+}
+
+export class GetModeOutput implements IGetModeOutput {
+    startTime: moment.Moment;
+    endTime: moment.Moment;
+    name: string | undefined;
+    command: string | undefined;
+    icon: string | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: string;
+
+    constructor(data?: IGetModeOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
+            this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
+            this.name = _data["name"];
+            this.command = _data["command"];
+            this.icon = _data["icon"];
+            this.isDeleted = _data["isDeleted"];
+            this.deleterUserId = _data["deleterUserId"];
+            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GetModeOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetModeOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
+        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["name"] = this.name;
+        data["command"] = this.command;
+        data["icon"] = this.icon;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): GetModeOutput {
+        const json = this.toJSON();
+        let result = new GetModeOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetModeOutput {
+    startTime: moment.Moment;
+    endTime: moment.Moment;
+    name: string | undefined;
+    command: string | undefined;
+    icon: string | undefined;
+    isDeleted: boolean;
+    deleterUserId: number | undefined;
+    deletionTime: moment.Moment | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: string;
+}
+
 export class CreateRoleDto implements ICreateRoleDto {
     name: string;
     displayName: string;
@@ -3301,73 +3993,6 @@ export interface ICreateTenantDto {
     adminEmailAddress: string;
     connectionString: string | undefined;
     isActive: boolean;
-}
-
-export class TenantDto implements ITenantDto {
-    tenancyName: string;
-    name: string;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    email: string | undefined;
-    isActive: boolean;
-    id: number;
-
-    constructor(data?: ITenantDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.tenancyName = _data["tenancyName"];
-            this.name = _data["name"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
-            this.email = _data["email"];
-            this.isActive = _data["isActive"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): TenantDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TenantDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["tenancyName"] = this.tenancyName;
-        data["name"] = this.name;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
-        data["email"] = this.email;
-        data["isActive"] = this.isActive;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): TenantDto {
-        const json = this.toJSON();
-        let result = new TenantDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITenantDto {
-    tenancyName: string;
-    name: string;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    email: string | undefined;
-    isActive: boolean;
-    id: number;
 }
 
 export class UpdateTenantDto implements IUpdateTenantDto {

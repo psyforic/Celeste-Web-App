@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using Celeste.Modes;
+using Celeste.UserModes;
 
 namespace Celeste.Authorization.Users
 {
@@ -13,7 +15,7 @@ namespace Celeste.Authorization.Users
         public string Province { get; set; }
         public string Suburb { get; set; }
         public string PostalCode { get; set; }
-
+        public ICollection<UserMode> UserModes { get; }
         public static string CreateRandomPassword()
         {
             return Guid.NewGuid().ToString("N").Truncate(16);
