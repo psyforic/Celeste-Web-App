@@ -23,16 +23,19 @@
                   Username
                 </th>
                 <th>
-                  Email
+                  Full Name
                 </th>
                   <th>
-                  Role
+                   Email
                 </th>
                 <th style="width: 310px;">
                   Actions
                 </th>
               </thead>
               <tbody>
+                <div class="loading-spinner" *ngIf="isLoading">
+                  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+              </div>
                 <tr *ngFor="let user of users">
                   <td>
                     {{user.userName}}

@@ -10,8 +10,8 @@ namespace Celeste.Modes
     [Table("Mode")]
     public class Mode : Entity<Guid>
     {
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
         public string Name { get; set; }
         public string Command { get; set; }
         public string Icon { get; set; }

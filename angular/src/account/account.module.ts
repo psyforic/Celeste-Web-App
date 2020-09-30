@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -35,6 +36,7 @@ import { TenantLoginComponent } from './tenant-login/tenant-login.component';
     ],
     declarations: [
         AccountComponent,
+        SpinnerComponent,
         LoginComponent,
         RegisterComponent,
         AccountLanguagesComponent,

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Celeste.Authorization.Users;
 using Celeste.Modes;
 using Celeste.Modes.Dto;
 using Celeste.UserModes;
 using Celeste.UserModes.Dto;
+using Celeste.Users.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +22,12 @@ namespace Celeste
             configuration.CreateMap<Mode, CreateModeInput>();
             configuration.CreateMap<CreateModeInput, Mode>();
 
+            configuration.CreateMap<Mode, GetModeOutput>();
+            configuration.CreateMap<GetModeOutput, Mode>();
+
+            configuration.CreateMap<GetModeOutput, Mode>();
+            configuration.CreateMap<Mode, GetModeOutput>();
+
             // UserModes
 
             configuration.CreateMap<UserMode, UserModeListDto>();
@@ -27,6 +35,13 @@ namespace Celeste
 
             configuration.CreateMap<UserModeListDto, UserMode>();
             configuration.CreateMap<UserMode, UserModeListDto>();
+
+            // User 
+            configuration.CreateMap<UpdateUserDto, User>();
+            configuration.CreateMap<User, UpdateUserDto>();
+
+            configuration.CreateMap<User, UpdateUserDto>();
+            configuration.CreateMap<UpdateUserDto, User>();
         }
     }
 }

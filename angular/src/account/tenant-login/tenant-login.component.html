@@ -12,6 +12,9 @@
             <form autocomplete="off" #changeTenantForm="ngForm" (ngSubmit)="save()">
                 <input type="text" id="login" class="fadeIn first" placeholder="Home/Organization" id="tenancyName" name="tenancyName" [(ngModel)]="tenancyName" maxlength="64">
                 <input type="submit" class="fadeIn fourth" value="Continue" [disabled]="!changeTenantForm.form.valid">
+                <div class="loading-spinner" *ngIf="isLoading">
+                    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+                </div>
             </form>
 
             <div id="formFooter">

@@ -15,7 +15,11 @@
           </label>
                 </div>
             </div>
+
             <input type="submit" class="fadeIn fourth" value="Log In" [disabled]="!loginForm.form.valid || submitting">
+            <div class="loading-spinner" *ngIf="isLoading">
+                <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+            </div>
         </form>
         <div id="formFooter">
             <a class="underlineHover" href="#">Forgot Password?</a>

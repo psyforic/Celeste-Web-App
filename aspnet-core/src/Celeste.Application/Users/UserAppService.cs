@@ -19,6 +19,7 @@ using Celeste.Authorization.Accounts;
 using Celeste.Authorization.Roles;
 using Celeste.Authorization.Users;
 using Celeste.Modes.UserModes;
+using Celeste.MultiTenancy;
 using Celeste.Roles.Dto;
 using Celeste.UserModes;
 using Celeste.Users.Dto;
@@ -40,6 +41,7 @@ namespace Celeste.Users
         private readonly IAbpSession _abpSession;
         private readonly LogInManager _logInManager;
         private readonly IWebHostEnvironment _environment;
+        private readonly IRepository<Tenant> _tenantRepository;
 
         public UserAppService(
             IRepository<User, long> repository,
@@ -49,7 +51,8 @@ namespace Celeste.Users
         IRepository<Role> roleRepository,
             IPasswordHasher<User> passwordHasher,
             IAbpSession abpSession,
-            IWebHostEnvironment environment,
+            IRepository<Tenant> tenantRepository,
+        IWebHostEnvironment environment,
             LogInManager logInManager)
             : base(repository)
         {
@@ -62,6 +65,7 @@ namespace Celeste.Users
             _logInManager = logInManager;
             _environment = environment;
             _userModesManager = userModesManager;
+            _tenantRepository = tenantRepository;
         }
 
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
@@ -72,7 +76,7 @@ namespace Celeste.Users
 
             user.TenantId = AbpSession.TenantId;
             user.IsEmailConfirmed = true;
-
+            var tenant = await _tenantRepository.FirstOrDefaultAsync(user.TenantId.Value);
             await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
 
             CheckErrors(await _userManager.CreateAsync(user, input.Password));
@@ -113,6 +117,8 @@ namespace Celeste.Users
             string link = "http://localhost:4200/";
             body = body.Replace("#Name", input.Name + " " + input.Surname);
             body = body.Replace("#Link", link);
+            if (tenant != null)
+                body = body.Replace("#Domain", tenant.TenancyName);
             body = body.Replace("#Password", input.Password);
             body = body.Replace("#Username", input.UserName);
             Emailer.Send(to: input.EmailAddress, subject: "Celeste New Account!", body: body, isBodyHtml: true);
@@ -189,6 +195,19 @@ namespace Celeste.Users
             return Repository.GetAllIncluding(x => x.Roles)
                 .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) || x.EmailAddress.Contains(input.Keyword))
                 .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
+        }
+
+        public async Task<UpdateUserDto> UpdateUser(long id, UpdateUserDto input)
+        {
+            var user = await _userRepository.FirstOrDefaultAsync(id);
+            if (user != null)
+            {
+                ObjectMapper.Map(input, user);
+                user.Id = id;
+                await _userRepository.UpdateAsync(user);
+                return ObjectMapper.Map<UpdateUserDto>(user);
+            }
+            return null;
         }
 
         protected override async Task<User> GetEntityByIdAsync(long id)

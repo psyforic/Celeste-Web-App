@@ -2227,6 +2227,67 @@ export class UserServiceProxy {
     }
 
     /**
+     * @param id (optional) 
+     * @param body (optional) 
+     * @return Success
+     */
+    updateUser(id: number | undefined, body: UpdateUserDto | undefined): Observable<UpdateUserDto> {
+        let url_ = this.baseUrl + "/api/services/app/User/UpdateUser?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateUser(<any>response_);
+                } catch (e) {
+                    return <Observable<UpdateUserDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UpdateUserDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdateUser(response: HttpResponseBase): Observable<UpdateUserDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UpdateUserDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UpdateUserDto>(<any>null);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -2280,6 +2341,113 @@ export class UserServiceProxy {
             }));
         }
         return _observableOf<boolean>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getUserModes(): Observable<UserDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetUserModes";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetUserModes(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetUserModes(<any>response_);
+                } catch (e) {
+                    return <Observable<UserDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetUserModes(response: HttpResponseBase): Observable<UserDtoListResultDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserDtoListResultDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getUserandModes(id: number | undefined): Observable<UserDto> {
+        let url_ = this.baseUrl + "/api/services/app/User/GetUserandModes?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetUserandModes(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetUserandModes(<any>response_);
+                } catch (e) {
+                    return <Observable<UserDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetUserandModes(response: HttpResponseBase): Observable<UserDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserDto>(<any>null);
     }
 
     /**
@@ -2459,6 +2627,299 @@ export class UserServiceProxy {
             }));
         }
         return _observableOf<UserDtoPagedResultDto>(<any>null);
+    }
+}
+
+@Injectable()
+export class UserModesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: string | undefined): Observable<UserModeListDto> {
+        let url_ = this.baseUrl + "/api/services/app/UserModes/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<UserModeListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserModeListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<UserModeListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserModeListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserModeListDto>(<any>null);
+    }
+
+    /**
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @return Success
+     */
+    getAll(maxResultCount: number | undefined, skipCount: number | undefined): Observable<UserModeListDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/UserModes/GetAll?";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&"; 
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<UserModeListDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserModeListDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<UserModeListDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserModeListDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserModeListDtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: CreateUserMode | undefined): Observable<UserModeListDto> {
+        let url_ = this.baseUrl + "/api/services/app/UserModes/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<UserModeListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserModeListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<UserModeListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserModeListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserModeListDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: GetUserModeOutput | undefined): Observable<UserModeListDto> {
+        let url_ = this.baseUrl + "/api/services/app/UserModes/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json", 
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<UserModeListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserModeListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<UserModeListDto> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserModeListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserModeListDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/UserModes/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",			
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
     }
 }
 
@@ -2707,87 +3168,12 @@ export interface IChangeUiThemeInput {
     theme: string;
 }
 
-export class TenantDto implements ITenantDto {
-    tenancyName: string;
-    name: string;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    email: string | undefined;
-    isActive: boolean;
-    id: number;
-
-    constructor(data?: ITenantDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.tenancyName = _data["tenancyName"];
-            this.name = _data["name"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
-            this.email = _data["email"];
-            this.isActive = _data["isActive"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): TenantDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TenantDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["tenancyName"] = this.tenancyName;
-        data["name"] = this.name;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
-        data["email"] = this.email;
-        data["isActive"] = this.isActive;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): TenantDto {
-        const json = this.toJSON();
-        let result = new TenantDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface ITenantDto {
-    tenancyName: string;
-    name: string;
-    firstName: string | undefined;
-    lastName: string | undefined;
-    email: string | undefined;
-    isActive: boolean;
-    id: number;
-}
-
 export class ModeListDto implements IModeListDto {
-    startTime: moment.Moment;
-    endTime: moment.Moment;
+    startTime: string | undefined;
+    endTime: string | undefined;
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
-    tenant: TenantDto;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
     id: string;
 
     constructor(data?: IModeListDto) {
@@ -2801,19 +3187,11 @@ export class ModeListDto implements IModeListDto {
 
     init(_data?: any) {
         if (_data) {
-            this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
-            this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
+            this.startTime = _data["startTime"];
+            this.endTime = _data["endTime"];
             this.name = _data["name"];
             this.command = _data["command"];
             this.icon = _data["icon"];
-            this.tenant = _data["tenant"] ? TenantDto.fromJS(_data["tenant"]) : <any>undefined;
-            this.isDeleted = _data["isDeleted"];
-            this.deleterUserId = _data["deleterUserId"];
-            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
             this.id = _data["id"];
         }
     }
@@ -2827,19 +3205,11 @@ export class ModeListDto implements IModeListDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
-        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["startTime"] = this.startTime;
+        data["endTime"] = this.endTime;
         data["name"] = this.name;
         data["command"] = this.command;
         data["icon"] = this.icon;
-        data["tenant"] = this.tenant ? this.tenant.toJSON() : <any>undefined;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
         return data; 
     }
@@ -2853,19 +3223,11 @@ export class ModeListDto implements IModeListDto {
 }
 
 export interface IModeListDto {
-    startTime: moment.Moment;
-    endTime: moment.Moment;
+    startTime: string | undefined;
+    endTime: string | undefined;
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
-    tenant: TenantDto;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
     id: string;
 }
 
@@ -2925,18 +3287,11 @@ export interface IModeListDtoPagedResultDto {
 }
 
 export class CreateModeInput implements ICreateModeInput {
-    startTime: moment.Moment;
-    endTime: moment.Moment;
+    startTime: string | undefined;
+    endTime: string | undefined;
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
     id: string;
 
     constructor(data?: ICreateModeInput) {
@@ -2950,18 +3305,11 @@ export class CreateModeInput implements ICreateModeInput {
 
     init(_data?: any) {
         if (_data) {
-            this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
-            this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
+            this.startTime = _data["startTime"];
+            this.endTime = _data["endTime"];
             this.name = _data["name"];
             this.command = _data["command"];
             this.icon = _data["icon"];
-            this.isDeleted = _data["isDeleted"];
-            this.deleterUserId = _data["deleterUserId"];
-            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
             this.id = _data["id"];
         }
     }
@@ -2975,18 +3323,11 @@ export class CreateModeInput implements ICreateModeInput {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
-        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["startTime"] = this.startTime;
+        data["endTime"] = this.endTime;
         data["name"] = this.name;
         data["command"] = this.command;
         data["icon"] = this.icon;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
         return data; 
     }
@@ -3000,34 +3341,20 @@ export class CreateModeInput implements ICreateModeInput {
 }
 
 export interface ICreateModeInput {
-    startTime: moment.Moment;
-    endTime: moment.Moment;
+    startTime: string | undefined;
+    endTime: string | undefined;
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
     id: string;
 }
 
 export class GetModeOutput implements IGetModeOutput {
-    startTime: moment.Moment;
-    endTime: moment.Moment;
+    startTime: string | undefined;
+    endTime: string | undefined;
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
     id: string;
 
     constructor(data?: IGetModeOutput) {
@@ -3041,18 +3368,11 @@ export class GetModeOutput implements IGetModeOutput {
 
     init(_data?: any) {
         if (_data) {
-            this.startTime = _data["startTime"] ? moment(_data["startTime"].toString()) : <any>undefined;
-            this.endTime = _data["endTime"] ? moment(_data["endTime"].toString()) : <any>undefined;
+            this.startTime = _data["startTime"];
+            this.endTime = _data["endTime"];
             this.name = _data["name"];
             this.command = _data["command"];
             this.icon = _data["icon"];
-            this.isDeleted = _data["isDeleted"];
-            this.deleterUserId = _data["deleterUserId"];
-            this.deletionTime = _data["deletionTime"] ? moment(_data["deletionTime"].toString()) : <any>undefined;
-            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
-            this.lastModifierUserId = _data["lastModifierUserId"];
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            this.creatorUserId = _data["creatorUserId"];
             this.id = _data["id"];
         }
     }
@@ -3066,18 +3386,11 @@ export class GetModeOutput implements IGetModeOutput {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["startTime"] = this.startTime ? this.startTime.toISOString() : <any>undefined;
-        data["endTime"] = this.endTime ? this.endTime.toISOString() : <any>undefined;
+        data["startTime"] = this.startTime;
+        data["endTime"] = this.endTime;
         data["name"] = this.name;
         data["command"] = this.command;
         data["icon"] = this.icon;
-        data["isDeleted"] = this.isDeleted;
-        data["deleterUserId"] = this.deleterUserId;
-        data["deletionTime"] = this.deletionTime ? this.deletionTime.toISOString() : <any>undefined;
-        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
-        data["lastModifierUserId"] = this.lastModifierUserId;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        data["creatorUserId"] = this.creatorUserId;
         data["id"] = this.id;
         return data; 
     }
@@ -3091,18 +3404,11 @@ export class GetModeOutput implements IGetModeOutput {
 }
 
 export interface IGetModeOutput {
-    startTime: moment.Moment;
-    endTime: moment.Moment;
+    startTime: string | undefined;
+    endTime: string | undefined;
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
-    isDeleted: boolean;
-    deleterUserId: number | undefined;
-    deletionTime: moment.Moment | undefined;
-    lastModificationTime: moment.Moment | undefined;
-    lastModifierUserId: number | undefined;
-    creationTime: moment.Moment;
-    creatorUserId: number | undefined;
     id: string;
 }
 
@@ -3995,6 +4301,73 @@ export interface ICreateTenantDto {
     isActive: boolean;
 }
 
+export class TenantDto implements ITenantDto {
+    tenancyName: string;
+    name: string;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    email: string | undefined;
+    isActive: boolean;
+    id: number;
+
+    constructor(data?: ITenantDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.tenancyName = _data["tenancyName"];
+            this.name = _data["name"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.email = _data["email"];
+            this.isActive = _data["isActive"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): TenantDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TenantDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenancyName"] = this.tenancyName;
+        data["name"] = this.name;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["email"] = this.email;
+        data["isActive"] = this.isActive;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TenantDto {
+        const json = this.toJSON();
+        let result = new TenantDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITenantDto {
+    tenancyName: string;
+    name: string;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    email: string | undefined;
+    isActive: boolean;
+    id: number;
+}
+
 export class UpdateTenantDto implements IUpdateTenantDto {
     tenantDto: TenantDto;
 
@@ -4427,6 +4800,61 @@ export interface IExternalAuthenticateResultModel {
     waitingForActivation: boolean;
 }
 
+export class UserModeListDto implements IUserModeListDto {
+    tenantId: number;
+    modeId: string;
+    userId: number;
+    id: string;
+
+    constructor(data?: IUserModeListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.tenantId = _data["tenantId"];
+            this.modeId = _data["modeId"];
+            this.userId = _data["userId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserModeListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserModeListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["modeId"] = this.modeId;
+        data["userId"] = this.userId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): UserModeListDto {
+        const json = this.toJSON();
+        let result = new UserModeListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserModeListDto {
+    tenantId: number;
+    modeId: string;
+    userId: number;
+    id: string;
+}
+
 export class CreateUserDto implements ICreateUserDto {
     userName: string;
     name: string;
@@ -4440,6 +4868,7 @@ export class CreateUserDto implements ICreateUserDto {
     suburb: string | undefined;
     postalCode: string | undefined;
     cellphoneNumber: string | undefined;
+    userModes: UserModeListDto[] | undefined;
     password: string;
 
     constructor(data?: ICreateUserDto) {
@@ -4469,6 +4898,11 @@ export class CreateUserDto implements ICreateUserDto {
             this.suburb = _data["suburb"];
             this.postalCode = _data["postalCode"];
             this.cellphoneNumber = _data["cellphoneNumber"];
+            if (Array.isArray(_data["userModes"])) {
+                this.userModes = [] as any;
+                for (let item of _data["userModes"])
+                    this.userModes.push(UserModeListDto.fromJS(item));
+            }
             this.password = _data["password"];
         }
     }
@@ -4498,6 +4932,11 @@ export class CreateUserDto implements ICreateUserDto {
         data["suburb"] = this.suburb;
         data["postalCode"] = this.postalCode;
         data["cellphoneNumber"] = this.cellphoneNumber;
+        if (Array.isArray(this.userModes)) {
+            data["userModes"] = [];
+            for (let item of this.userModes)
+                data["userModes"].push(item.toJSON());
+        }
         data["password"] = this.password;
         return data; 
     }
@@ -4523,6 +4962,7 @@ export interface ICreateUserDto {
     suburb: string | undefined;
     postalCode: string | undefined;
     cellphoneNumber: string | undefined;
+    userModes: UserModeListDto[] | undefined;
     password: string;
 }
 
@@ -4542,6 +4982,7 @@ export class UserDto implements IUserDto {
     suburb: string | undefined;
     postalCode: string | undefined;
     cellphoneNumber: string | undefined;
+    userModes: UserModeListDto[] | undefined;
     id: number;
 
     constructor(data?: IUserDto) {
@@ -4574,6 +5015,11 @@ export class UserDto implements IUserDto {
             this.suburb = _data["suburb"];
             this.postalCode = _data["postalCode"];
             this.cellphoneNumber = _data["cellphoneNumber"];
+            if (Array.isArray(_data["userModes"])) {
+                this.userModes = [] as any;
+                for (let item of _data["userModes"])
+                    this.userModes.push(UserModeListDto.fromJS(item));
+            }
             this.id = _data["id"];
         }
     }
@@ -4606,6 +5052,11 @@ export class UserDto implements IUserDto {
         data["suburb"] = this.suburb;
         data["postalCode"] = this.postalCode;
         data["cellphoneNumber"] = this.cellphoneNumber;
+        if (Array.isArray(this.userModes)) {
+            data["userModes"] = [];
+            for (let item of this.userModes)
+                data["userModes"].push(item.toJSON());
+        }
         data["id"] = this.id;
         return data; 
     }
@@ -4634,6 +5085,7 @@ export interface IUserDto {
     suburb: string | undefined;
     postalCode: string | undefined;
     cellphoneNumber: string | undefined;
+    userModes: UserModeListDto[] | undefined;
     id: number;
 }
 
@@ -4731,6 +5183,101 @@ export interface IChangeUserLanguageDto {
     languageName: string;
 }
 
+export class UpdateUserDto implements IUpdateUserDto {
+    userName: string | undefined;
+    name: string | undefined;
+    surname: string | undefined;
+    emailAddress: string | undefined;
+    address: string | undefined;
+    city: string | undefined;
+    province: string | undefined;
+    suburb: string | undefined;
+    postalCode: string | undefined;
+    cellphoneNumber: string | undefined;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+
+    constructor(data?: IUpdateUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userName = _data["userName"];
+            this.name = _data["name"];
+            this.surname = _data["surname"];
+            this.emailAddress = _data["emailAddress"];
+            this.address = _data["address"];
+            this.city = _data["city"];
+            this.province = _data["province"];
+            this.suburb = _data["suburb"];
+            this.postalCode = _data["postalCode"];
+            this.cellphoneNumber = _data["cellphoneNumber"];
+            this.isActive = _data["isActive"];
+            this.fullName = _data["fullName"];
+            this.lastLoginTime = _data["lastLoginTime"] ? moment(_data["lastLoginTime"].toString()) : <any>undefined;
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): UpdateUserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateUserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["emailAddress"] = this.emailAddress;
+        data["address"] = this.address;
+        data["city"] = this.city;
+        data["province"] = this.province;
+        data["suburb"] = this.suburb;
+        data["postalCode"] = this.postalCode;
+        data["cellphoneNumber"] = this.cellphoneNumber;
+        data["isActive"] = this.isActive;
+        data["fullName"] = this.fullName;
+        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        return data; 
+    }
+
+    clone(): UpdateUserDto {
+        const json = this.toJSON();
+        let result = new UpdateUserDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUpdateUserDto {
+    userName: string | undefined;
+    name: string | undefined;
+    surname: string | undefined;
+    emailAddress: string | undefined;
+    address: string | undefined;
+    city: string | undefined;
+    province: string | undefined;
+    suburb: string | undefined;
+    postalCode: string | undefined;
+    cellphoneNumber: string | undefined;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+}
+
 export class ChangePasswordDto implements IChangePasswordDto {
     currentPassword: string;
     newPassword: string;
@@ -4776,6 +5323,57 @@ export class ChangePasswordDto implements IChangePasswordDto {
 export interface IChangePasswordDto {
     currentPassword: string;
     newPassword: string;
+}
+
+export class UserDtoListResultDto implements IUserDtoListResultDto {
+    items: UserDto[] | undefined;
+
+    constructor(data?: IUserDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(UserDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UserDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): UserDtoListResultDto {
+        const json = this.toJSON();
+        let result = new UserDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserDtoListResultDto {
+    items: UserDto[] | undefined;
 }
 
 export class ResetPasswordDto implements IResetPasswordDto {
@@ -4882,6 +5480,171 @@ export class UserDtoPagedResultDto implements IUserDtoPagedResultDto {
 export interface IUserDtoPagedResultDto {
     totalCount: number;
     items: UserDto[] | undefined;
+}
+
+export class UserModeListDtoPagedResultDto implements IUserModeListDtoPagedResultDto {
+    totalCount: number;
+    items: UserModeListDto[] | undefined;
+
+    constructor(data?: IUserModeListDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(UserModeListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UserModeListDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserModeListDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): UserModeListDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new UserModeListDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserModeListDtoPagedResultDto {
+    totalCount: number;
+    items: UserModeListDto[] | undefined;
+}
+
+export class CreateUserMode implements ICreateUserMode {
+    tenantId: number;
+    modeId: string;
+    userId: number;
+    id: string;
+
+    constructor(data?: ICreateUserMode) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.tenantId = _data["tenantId"];
+            this.modeId = _data["modeId"];
+            this.userId = _data["userId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateUserMode {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateUserMode();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["modeId"] = this.modeId;
+        data["userId"] = this.userId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): CreateUserMode {
+        const json = this.toJSON();
+        let result = new CreateUserMode();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateUserMode {
+    tenantId: number;
+    modeId: string;
+    userId: number;
+    id: string;
+}
+
+export class GetUserModeOutput implements IGetUserModeOutput {
+    tenantId: number;
+    modeId: string;
+    userId: number;
+    id: string;
+
+    constructor(data?: IGetUserModeOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.tenantId = _data["tenantId"];
+            this.modeId = _data["modeId"];
+            this.userId = _data["userId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): GetUserModeOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetUserModeOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["modeId"] = this.modeId;
+        data["userId"] = this.userId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): GetUserModeOutput {
+        const json = this.toJSON();
+        let result = new GetUserModeOutput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IGetUserModeOutput {
+    tenantId: number;
+    modeId: string;
+    userId: number;
+    id: string;
 }
 
 export class ApiException extends Error {

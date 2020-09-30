@@ -1,31 +1,65 @@
 <div class="wrapper">
-    <div class="overlay">
-        <div id="formContent">
-            <h2 class="active">Sign Up</h2>
-            <form [formGroup]="form_register" (ngSubmit)="save()">
+  <div class="overlay">
+    <div id="formContent">
+      <h2 class="active">Sign Up</h2>
+      <form [formGroup]="form_register" (ngSubmit)="save()">
+        <input
+          type="text"
+          formControlName="firstName"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="First Name"
+        />
 
-                <input type="text" formControlName="firstName" class="fadeIn first form-control" name="login" placeholder="First Name">
+        <input
+          type="text"
+          formControlName="lastName"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Last Name"
+        />
 
+        <input
+          type="text"
+          formControlName="tenancyName"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Organization"
+        />
 
-                <input type="text" formControlName="lastName" class="fadeIn first form-control" name="login" placeholder="Last Name">
+        <input
+          type="text"
+          formControlName="adminEmailAddress"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Email address"
+        />
 
-
-                <input type="text" formControlName="tenancyName" class="fadeIn first form-control" name="login" placeholder="Organization">
-
-
-                <input type="text" formControlName="adminEmailAddress" class="fadeIn first form-control" name="login" placeholder="Email address">
-
-
-                <input type="password" formControlName="password" class="fadeIn first form-control" name="login" placeholder="Password">
-
-
-                <input type="password" formControlName="confirmPassword" class="fadeIn first form-control" name="login" placeholder="Confirm password">
-
-                <input type="submit" class="fadeIn fourth" value="Sign Up">
-            </form>
-            <div id="formFooter">
-                <a [routerLink]="[ '../tenant-login']" class="underlineHover" href="#">Already have an account?Login</a>
-            </div>
+        <input
+          type="password"
+          formControlName="password"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Password"
+        />
+        <div class="loading-spinner" *ngIf="isLoading">
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
         </div>
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Confirm password"
+        />
+
+        <input type="submit" class="fadeIn fourth" value="Sign Up" />
+      </form>
+      <div id="formFooter">
+        <a [routerLink]="['../tenant-login']" class="underlineHover" href="#"
+          >Already have an account?Login</a
+        >
+      </div>
     </div>
+  </div>
 </div>

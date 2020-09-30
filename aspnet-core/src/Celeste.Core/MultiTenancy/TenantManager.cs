@@ -98,7 +98,7 @@ namespace Celeste.MultiTenancy
                     //Create admin user for the tenant
                     var adminUser = User.CreateTenantAdminUser(tenant.Id, adminEmailAddress,adminName,adminSurname);
                     //adminUser.ShouldChangePasswordOnNextLogin = shouldChangePasswordOnNextLogin;
-                    adminUser.IsActive = false;
+                    adminUser.IsActive = true;
 
                     if (adminPassword.IsNullOrEmpty())
                     {

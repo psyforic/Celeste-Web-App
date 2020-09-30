@@ -119,7 +119,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
 
     request.keyword = this.keyword;
     request.isActive = this.isActive;
-
+    this.isLoading = true;
     this._userService
       .getAll(
         request.keyword,
@@ -130,6 +130,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
       .pipe(
         finalize(() => {
           finishedCallback();
+          this.isLoading = false;
         })
       )
       .subscribe((result: UserDtoPagedResultDto) => {

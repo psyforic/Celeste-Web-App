@@ -12,6 +12,7 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
 export class LoginComponent extends AppComponentBase {
   submitting = false;
   enabled = false;
+  isLoading = false;
   constructor(
     injector: Injector,
     public authService: AppAuthService,
@@ -34,6 +35,10 @@ export class LoginComponent extends AppComponentBase {
 
   login(): void {
     this.submitting = true;
-    this.authService.authenticate(() => (this.submitting = false));
+    this.isLoading = true;
+    this.authService.authenticate(() => {
+      this.submitting = false;
+      this.isLoading = false;
+    });
   }
 }

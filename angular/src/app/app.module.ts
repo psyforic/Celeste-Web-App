@@ -1,3 +1,6 @@
+import { ChartsModule } from './home/charts/charts.module';
+import { EditModeDialogComponent } from './modes/edit-mode/edit-mode-dialog.component';
+import { CreateModeDialogComponent } from './modes/create-mode/create-mode-dialog.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,6 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModesComponent } from './modes/modes.component';
 import { HelpComponent } from './help/help.component';
 import { RegisterTenantComponent } from '../account/register-tenant/register-tenant.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,8 +58,12 @@ import { RegisterTenantComponent } from '../account/register-tenant/register-ten
     EditUserDialogComponent,
     ChangePasswordComponent,
     ResetPasswordDialogComponent,
-
+    // Modes
     ModesComponent,
+    CreateModeDialogComponent,
+    EditModeDialogComponent,
+
+    //
     HelpComponent,
     AdminLayoutComponent
 
@@ -64,11 +72,12 @@ import { RegisterTenantComponent } from '../account/register-tenant/register-ten
     ComponentsModule,
     CommonModule,
     FormsModule,
+    ChartsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgApexchartsModule,
     HttpClientJsonpModule,
     ModalModule.forChild(),
-    BsDropdownModule,
     CollapseModule,
     TabsModule,
     AppRoutingModule,

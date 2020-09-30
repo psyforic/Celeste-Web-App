@@ -32,6 +32,7 @@
               }
             ],
             "styles": [
+              "src/styles.scss",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "node_modules/ngx-toastr/toastr.css",
               "src/assets/scss/now-ui-dashboard.scss",
@@ -39,6 +40,7 @@
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.min.js",
+              "node_modules/apexcharts/dist/apexcharts.min.js",
               "node_modules/moment/min/moment.min.js",
               "node_modules/@aspnet/signalr/dist/browser/signalr.min.js",
               "node_modules/sweetalert2/dist/sweetalert2.js",

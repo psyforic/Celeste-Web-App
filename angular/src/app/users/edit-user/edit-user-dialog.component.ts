@@ -21,6 +21,7 @@ import {
 export class EditUserDialogComponent extends AppComponentBase
   implements OnInit {
   saving = false;
+  isLoading = false;
   user = new UserDto();
   roles: RoleDto[] = [];
   checkedRolesMap: { [key: string]: boolean } = {};
@@ -75,7 +76,7 @@ export class EditUserDialogComponent extends AppComponentBase
 
   save(): void {
     this.saving = true;
-
+    this.isLoading = true;
     this.user.roleNames = this.getCheckedRoles();
 
     this._userService
@@ -83,6 +84,7 @@ export class EditUserDialogComponent extends AppComponentBase
       .pipe(
         finalize(() => {
           this.saving = false;
+          this.isLoading = false;
         })
       )
       .subscribe(() => {

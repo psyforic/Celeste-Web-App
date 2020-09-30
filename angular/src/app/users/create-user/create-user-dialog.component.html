@@ -9,7 +9,7 @@
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
   <div class="modal-body">
-    <tabset type="pills">
+    <tabset [justified]="'center'">
       <tab [heading]="'UserDetails' | localize" class="pt-3 px-2">
         <div class="form-group row required">
           <label class="col-md-3 col-form-label" for="name">
@@ -128,6 +128,9 @@
               [customValidationErrors]="confirmPasswordValidationErrors"
             ></abp-validation-summary>
           </div>
+          <div class="loading-spinner" *ngIf="isLoading">
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        </div>
         </div>
         <div class="form-group row required">
           <label class="col-md-3 col-form-label" for="emailAddress">
@@ -303,11 +306,29 @@
           </ng-container>
         </div>
       </tab>
+      <tab [heading]="'Modes' | localize" class="pt-3 px-2">
+        <div class="form-group row mb-0">
+          <ng-container *ngFor="let mode of modes; let i = index">
+            <div class="col-md-6">
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  [id]="'mode_' + i"
+                  [checked]="isRoleChecked(mode.command)"
+                  (change)="onChangedCheckox($event, mode)"
+                />
+                <label class="custom-control-label" [for]="'mode_' + i">
+                  {{ mode.name }}
+                </label>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </tab>
     </tabset>
   </div>
   <abp-modal-footer
-    [cancelDisabled]="saving"
-    [saveDisabled]="!createUserModal.form.valid || saving"
-    (onCancelClick)="bsModalRef.hide()"
+     (onCancelClick)="bsModalRef.hide()"
   ></abp-modal-footer>
 </form>

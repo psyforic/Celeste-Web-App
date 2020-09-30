@@ -18,10 +18,11 @@ import { HelpComponent } from './help/help.component';
                 path: '',
                 component: AppComponent,
                 children: [
-                    { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
-                    { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
-                    { path: 'help', component: HelpComponent,  },
-                    { path: 'modes', component: ModesComponent, },
+                    { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard], canLoad: [AppRouteGuard] },
+                    { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard],
+                    canLoad: [AppRouteGuard] },
+                    { path: 'help', component: HelpComponent,  canLoad: [AppRouteGuard]  },
+                    { path: 'modes', component: ModesComponent, canLoad: [AppRouteGuard]  },
                 ]
             }
         ])

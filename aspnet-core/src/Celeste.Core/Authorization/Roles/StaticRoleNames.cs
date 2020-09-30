@@ -10,6 +10,7 @@ namespace Celeste.Authorization.Roles
         public static class Tenants
         {
             public const string Admin = "Admin";
+            public const string SubUser = "SubUser";
         }
     }
 }

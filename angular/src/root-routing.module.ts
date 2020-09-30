@@ -12,6 +12,11 @@ const routes: Routes = [
         path: 'app',
         loadChildren: () => import('app/app.module').then(m => m.AppModule), // Lazy load app module
         data: { preload: true }
+    },
+    {
+        path: 'host',
+        loadChildren: () => import('host/host.module').then(m => m.HostModule), // Lazy load app module
+        data: { preload: true }
     }
 ];
 

@@ -1,3 +1,4 @@
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -14,11 +15,13 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     NgbModule
   ],
   declarations: [
+    LoadingSpinnerComponent,
     FooterComponent,
     NavbarComponent,
     SidebarComponent
   ],
   exports: [
+    LoadingSpinnerComponent,
     FooterComponent,
     NavbarComponent,
     SidebarComponent

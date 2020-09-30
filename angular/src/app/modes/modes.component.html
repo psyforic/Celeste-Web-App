@@ -12,25 +12,30 @@
               <button
                 type="button"
                 class="btn btn-primary"
-
+                (click)="createMode()"
               >
                 New Mode
               </button>
             </div>
           </div>
+
         </div>
         <div class="card-body">
           <div class="table">
+
             <table class="table">
               <thead class="text-primary">
-                <th>Mode</th>
-                <th>Date Created</th>
+                <th>Mode Name</th>
+                <th>Mode Command</th>
                 <th style="width: 310px">Action</th>
               </thead>
               <tbody>
-                <tr>
-                  <td>Example</td>
-                  <td>Example 2</td>
+                <div class="loading-spinner" *ngIf="isLoading">
+                  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+              </div>
+                <tr *ngFor="let mode of modes">
+                  <td>{{mode.name}}</td>
+                  <td>{{mode.command}}</td>
                   <td>
                     <div ngbDropdown class="dropdown" placement="bottom-right">
                       <button
@@ -41,6 +46,7 @@
                       </button>
                       <div ngbDropdownMenu>
                         <a class="dropdown-item"
+                        (click)="editMode(mode)"
                           >Edit</a
                         >
                         <a class="dropdown-item" href="#">Delete</a>
@@ -57,7 +63,7 @@
   </div>
 </div>
 
-<ng-template #content let-modal>
+<!-- <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Configure Mode</h4>
     <button
@@ -141,4 +147,4 @@
       Save
     </button>
   </div>
-</ng-template>
+</ng-template> -->

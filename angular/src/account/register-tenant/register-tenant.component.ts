@@ -13,6 +13,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class RegisterTenantComponent extends AppComponentBase implements OnInit {
   saving = false;
+  isLoading = false;
   form_register: FormGroup;
   passwordPattern: '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}';
   tenant: CreateTenantDto = new CreateTenantDto();
@@ -56,6 +57,7 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit 
   save() {
     // const tenancyName = (this.form_register.get('tenancyName').value).replace(/\s/g, '');
     this.saving = true;
+    this.isLoading = true;
     this.tenant.email = this.form_register.get('adminEmailAddress').value;
     this.tenant.adminEmailAddress = this.form_register.get('adminEmailAddress').value;
     this.tenant.tenancyName = this.form_register.get('tenancyName').value;
@@ -68,10 +70,12 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit 
       .pipe(
         finalize(() => {
           this.saving = false;
+          this.isLoading = false;
         })
       )
       .subscribe((result: TenantDto) => {
         this.saving = true;
+        this.isLoading = false;
         this._router.navigate(['account/tenant-login']);
 
       });

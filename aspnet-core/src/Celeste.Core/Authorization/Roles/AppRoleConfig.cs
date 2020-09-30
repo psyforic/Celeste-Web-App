@@ -24,6 +24,13 @@ namespace Celeste.Authorization.Roles
                     MultiTenancySides.Tenant
                 )
             );
+            roleManagementConfig.StaticRoles.Add(
+              new StaticRoleDefinition(
+                  StaticRoleNames.Tenants.SubUser,
+                  MultiTenancySides.Tenant
+              )
+          );
+
         }
     }
 }

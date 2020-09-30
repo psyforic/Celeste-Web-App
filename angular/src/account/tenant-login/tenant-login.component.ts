@@ -15,6 +15,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class TenantLoginComponent extends AppComponentBase {
   saving = false;
+  isLoading = false;
   tenancyName = '';
   active: boolean = false;
   constructor(
@@ -26,19 +27,19 @@ export class TenantLoginComponent extends AppComponentBase {
 
   save(): void {
     if (!this.tenancyName) {
-      abp.multiTenancy.setTenantIdCookie(undefined);
-      location.reload();
-      return;
+      window.location.href = '/account/login';
     }
 
     const input = new IsTenantAvailableInput();
     input.tenancyName = this.tenancyName;
     this.saving = true;
+    this.isLoading = true;
     this._accountService
       .isTenantAvailable(input)
       .pipe(
         finalize(() => {
           this.saving = false;
+          this.isLoading = false;
         })
       )
       .subscribe((result: IsTenantAvailableOutput) => {
