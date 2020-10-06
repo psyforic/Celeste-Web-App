@@ -20,24 +20,9 @@
                                 <th style="width: 310px">Action</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Slack</td>
-                                    <td>Sive M</td>
-                                    <td>
-                                        <div ngbDropdown class="dropdown" placement="bottom-right">
-                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
-                        Select Action
-                      </button>
-                                            <div ngbDropdownMenu>
-                                                <a class="dropdown-item">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>SAMSUNG</td>
-                                    <td>Prem D</td>
+                                <tr *ngFor="let tenant of tenants">
+                                    <td>{{tenant.tenancyName}}</td>
+                                    <td>{{tenant.firstName}} {{tenant.lastName}}</td>
                                     <td>
                                         <div ngbDropdown class="dropdown" placement="bottom-right">
                                             <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
