@@ -4,7 +4,7 @@
             <div id="formContent">
                 <h2 class="active">Sign Up</h2>
 
-                <form autocomplete="off" #registerForm="ngForm" (ngSubmit)="save()">>
+                <form autocomplete="off" #registerForm="ngForm" (ngSubmit)="save()">
 
                     <input type="text" class="fadeIn first" name="name" placeholder="Full Name" [(ngModel)]="model.name" #nameModel="ngModel" #nameEl>
 
@@ -19,7 +19,7 @@
                     <input type="text" id="password" class="fadeIn first" name="login" placeholder="Confirm password">
 
 
-                    <button type="submit" class="fadeIn fourth" value="Sign Up" [disabled]="!registerForm.form.valid || saving"></button>
+                    <input type="submit" class="fadeIn fourth" value="Sign Up" [disabled]="!registerForm.form.valid || saving"/>
 
                 </form>
                 <div id="formFooter">
