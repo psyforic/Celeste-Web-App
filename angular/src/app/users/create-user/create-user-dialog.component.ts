@@ -89,13 +89,9 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
   onRoleChange(role: RoleDto, $event) {
     this.checkedRolesMap[role.normalizedName] = $event.target.checked;
   }
-  onModeChange(role: RoleDto, $event) {
-    this.checkedRolesMap[role.normalizedName] = $event.target.checked;
-  }
 
   onChangedCheckox($event, mode: ModeListDto) {
     const index = this.selectedModes.findIndex(x => x === mode);
-
     if (index === -1) {
       this.selectedModes.push(mode);
     } else {
@@ -113,12 +109,10 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
     return roles;
   }
 
-
   save(): void {
     this.saving = true;
     this.isLoading = true;
     this.user.roleNames = this.getCheckedRoles();
-
     this.user.userModes = this.selectedModes.map(mode => {
       const userModeInput = new UserModeListDto();
       userModeInput.modeId = mode.id;

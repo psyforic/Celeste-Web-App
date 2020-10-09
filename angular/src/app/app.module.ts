@@ -39,6 +39,9 @@ import { ModesComponent } from './modes/modes.component';
 import { HelpComponent } from './help/help.component';
 import { RegisterTenantComponent } from '../account/register-tenant/register-tenant.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { AbpModule } from 'abp-ng2-module';
+import { ConfirmationDialogService } from './confirmation-dialog/confirmation-dialog.service';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +65,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     ModesComponent,
     CreateModeDialogComponent,
     EditModeDialogComponent,
-
+    ConfirmationDialogComponent,
     //
     HelpComponent,
     AdminLayoutComponent
@@ -80,13 +83,14 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     ModalModule.forChild(),
     CollapseModule,
     TabsModule,
+    AbpModule,
     AppRoutingModule,
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
-    NgbModule,
+    NgbModule
   ],
-  providers: [],
+  providers: [ConfirmationDialogService],
   entryComponents: [
     // tenants
     CreateTenantDialogComponent,
@@ -98,6 +102,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     CreateUserDialogComponent,
     EditUserDialogComponent,
     ResetPasswordDialogComponent,
+    ConfirmationDialogComponent,
   ],
 })
-export class AppModule {}
+export class AppModule { }

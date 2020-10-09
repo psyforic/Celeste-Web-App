@@ -6,6 +6,7 @@ import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listin
 import { finalize } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CreateModeDialogComponent } from './create-mode/create-mode-dialog.component';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
 
 
 class PagedModesRequestDto extends PagedRequestDto {
@@ -17,10 +18,11 @@ class PagedModesRequestDto extends PagedRequestDto {
   selector: 'app-modes',
   templateUrl: './modes.component.html',
   styleUrls: ['./modes.component.css'],
+  animations: [appModuleAnimation()],
   providers: [ModeServiceProxy]
 })
 export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
-    closeResult = '';
+  closeResult = '';
   currentOrientation = 'horizontal';
   isLoading = false;
   modes: ModeListDto[] = [];
@@ -31,58 +33,58 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
     private _modalService: BsModalService,
     injector: Injector,
     private _ModeService: ModeServiceProxy
-    ) {
-      super(injector);
-    }
+  ) {
+    super(injector);
+  }
 
-    createMode(): void {
-      this.showCreateOrEditUserDialog();
-    }
+  createMode(): void {
+    this.showCreateOrEditUserDialog();
+  }
 
-    editMode(mode: ModeListDto): void {
-      this.showCreateOrEditUserDialog(mode.id);
-    }
-// tslint:disable-next-line: member-ordering
-protected delete(entity: ModeListDto): void {
-  abp.message.confirm(
+  editMode(mode: ModeListDto): void {
+    this.showCreateOrEditUserDialog(mode.id);
+  }
+  // tslint:disable-next-line: member-ordering
+  protected delete(entity: ModeListDto): void {
+    abp.message.confirm(
       'You want to Delete ' + entity.name + '?', '',
       (result: boolean) => {
-          if (result) {
-              this._ModeService.delete(entity.id)
-                  .pipe(finalize(() => {
-                      this.isLoading = false;
-                  }))
-                  .subscribe(() => {
-                      abp.notify.success('Deleted Successfully');
-                      this.refresh();
-                  });
-          }
+        if (result) {
+          this._ModeService.delete(entity.id)
+            .pipe(finalize(() => {
+              this.isLoading = false;
+            }))
+            .subscribe(() => {
+              abp.notify.success('Deleted Successfully');
+              this.refresh();
+            });
+        }
       }
-  );
-}
+    );
+  }
 
-protected list(
-  request: PagedModesRequestDto,
-  pageNumber: number,
-  finishedCallback: Function
-): void {
-  this.isLoading = true;
-  request.keyword = this.keyword;
-  request.isActive = this.isActive;
+  protected list(
+    request: PagedModesRequestDto,
+    pageNumber: number,
+    finishedCallback: Function
+  ): void {
+    this.isLoading = true;
+    request.keyword = this.keyword;
+    request.isActive = this.isActive;
 
-  this._ModeService.getAll(request.maxResultCount, request.skipCount)
-        .pipe(
-            finalize(() => {
-                finishedCallback();
-                this.isLoading = false;
-            })
-        )
-    .subscribe((result: any) => {
-      this.modes = result.items;
-      console.log(this.modes);
-      this.showPaging(result, pageNumber);
-    });
-}
+    this._ModeService.getAll(request.maxResultCount, request.skipCount)
+      .pipe(
+        finalize(() => {
+          finishedCallback();
+          this.isLoading = false;
+        })
+      )
+      .subscribe((result: any) => {
+        this.modes = result.items;
+        console.log(this.modes);
+        this.showPaging(result, pageNumber);
+      });
+  }
   private showCreateOrEditUserDialog(id?: any): void {
     let createOrEditUserDialog: BsModalRef;
     if (!id) {

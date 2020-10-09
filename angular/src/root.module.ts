@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -9,16 +9,17 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import * as _ from 'lodash';
 
-import { AbpHttpInterceptor } from 'abp-ng2-module';
-
+import { AbpHttpInterceptor, AbpModule } from 'abp-ng2-module';
 import { SharedModule } from '@shared/shared.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { RootRoutingModule } from './root-routing.module';
 import { AppConsts } from '@shared/AppConsts';
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
-
 import { RootComponent } from './root.component';
 import { AppInitializer } from './app-initializer';
+import { PlatformLocation, registerLocaleData } from '@angular/common';
+import { AppSessionService } from '@shared/session/app-session.service';
+
 
 export function getCurrentLanguage(): string {
   if (abp.localization.currentLanguage.name) {
@@ -37,6 +38,8 @@ export function getCurrentLanguage(): string {
     SharedModule.forRoot(),
     ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
+    AbpModule,
+
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
     ServiceProxyModule,

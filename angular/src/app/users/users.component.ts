@@ -17,6 +17,8 @@ import { EditUserDialogComponent } from './edit-user/edit-user-dialog.component'
 import { ResetPasswordDialogComponent } from './reset-password/reset-password.component';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import * as _ from 'lodash';
+import { ConfirmationDialogService } from '@app/confirmation-dialog/confirmation-dialog.service';
 
 class PagedUsersRequestDto extends PagedRequestDto {
   keyword: string;
@@ -28,10 +30,10 @@ class PagedUsersRequestDto extends PagedRequestDto {
   animations: [appModuleAnimation()]
 })
 export class UsersComponent extends PagedListingComponentBase<UserDto> {
-    frm_create_user: FormGroup;
-    isLoading = false;
-    active = false;
-    saving = false;
+  frm_create_user: FormGroup;
+  isLoading = false;
+  active = false;
+  saving = false;
   users: UserDto[] = [];
   user: CreateUserDto = null;
   keyword = '';
@@ -45,6 +47,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     private _userService: UserServiceProxy,
     private _modalService: BsModalService,
     private modalService: NgbModal,
+    private confirmationDialog: ConfirmationDialogService,
     private fb: FormBuilder
   ) {
     super(injector);
@@ -65,29 +68,29 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     this.user.password = '123qwe';
     this.saving = true;
     this._userService.create(this.user)
-        .pipe(
-            finalize(() => {
-                this.saving = false;
-                this.isLoading = false;
-            })
-        )
-        .subscribe(() => {
-            this.notify.success(this.l('SavedSuccessfully'));
-        });
-}
+      .pipe(
+        finalize(() => {
+          this.saving = false;
+          this.isLoading = false;
+        })
+      )
+      .subscribe(() => {
+        this.notify.success(this.l('SavedSuccessfully'));
+      });
+  }
   initializeForm() {
     this.frm_create_user = this.fb.group({
-        userName: ['', Validators.required],
-        fullName: ['', Validators.required],
-        emailAddress: ['', Validators.required],
-        cellphoneNumber: ['', Validators.required],
-        address: ['', Validators.required],
-        suburb: ['', Validators.required],
-        city: ['', Validators.required],
-        postalCode: ['', Validators.required],
-        province: ['', Validators.required],
+      userName: ['', Validators.required],
+      fullName: ['', Validators.required],
+      emailAddress: ['', Validators.required],
+      cellphoneNumber: ['', Validators.required],
+      address: ['', Validators.required],
+      suburb: ['', Validators.required],
+      city: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      province: ['', Validators.required],
     });
-}
+  }
   // tslint:disable-next-line: member-ordering
   createUser(): void {
     this.showCreateOrEditUserDialog();
@@ -96,21 +99,20 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
   editUser(user: UserDto): void {
     this.showCreateOrEditUserDialog(user.id);
   }
-  // tslint:disable-next-line: member-ordering
-  protected delete(user: UserDto): void {
-    abp.message.confirm(
-      this.l('UserDeleteWarningMessage', user.fullName),
-      undefined,
-      (result: boolean) => {
-        if (result) {
+  delete(user: UserDto): void {
+    this.confirmationDialog.confirm('Delete user', 'Are you sure you want to delete ' + user.fullName)
+      .then((confirmed) => {
+        if (confirmed) {
           this._userService.delete(user.id).subscribe(() => {
-            abp.notify.success(this.l('SuccessfullyDeleted'));
+            _.remove(this.users, user);
             this.refresh();
           });
         }
-      }
-    );
+      });
+
   }
+
+
   protected list(
     request: PagedUsersRequestDto,
     pageNumber: number,
@@ -149,9 +151,6 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
       return `with: ${reason}`;
     }
   }
-
-
-
 
   private showResetPasswordUserDialog(id?: number): void {
     this._modalService.show(ResetPasswordDialogComponent, {

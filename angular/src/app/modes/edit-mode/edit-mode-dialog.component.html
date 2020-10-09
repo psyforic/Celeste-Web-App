@@ -1,16 +1,55 @@
-<form
-  class="form-horizontal"
-  autocomplete="off"
-  #editModeModal="ngForm"
-  (ngSubmit)="save()"
->
-  <abp-modal-header
-    [title]="'EditMode' | localize"
-    (onCloseClick)="bsModalRef.hide()"
-  ></abp-modal-header>
-  <div class="modal-body">
-        <div class="form-group row required">
-          <label class="col-md-3 col-form-label" for="name">
+<form class="form-horizontal" autocomplete="off" #editModeModal="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="'List of Users' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="main-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Assign
+                                    </th>
+                                    <th>
+                                        Username
+                                    </th>
+                                    <th>
+                                        Full Name
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <div class="loading-spinner" *ngIf="isLoading">
+                                        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+                                    </div>
+                                    <tr *ngFor="let user of users">
+                                        <td>
+                                            <input [checked]="isUserChecked(user.id)" type="checkbox">
+                                        </td>
+                                        <td>
+                                            {{user.userName}}
+                                        </td>
+                                        <td>
+                                            {{user.fullName}}
+                                        </td>
+                                        <td>
+                                            {{user.emailAddress}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <label class="col-md-3 col-form-label" for="name">
             {{ "Mode Name" | localize }}
           </label>
           <div class="col-md-9">
@@ -100,10 +139,6 @@
                 [control]="startModel"
                 [controlEl]="startEl"
               ></abp-validation-summary>
-            </div>
-          </div>
-  </div>
-  <abp-modal-footer
-     (onCancelClick)="bsModalRef.hide()"
-  ></abp-modal-footer>
+            </div> -->
+    <abp-modal-footer (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

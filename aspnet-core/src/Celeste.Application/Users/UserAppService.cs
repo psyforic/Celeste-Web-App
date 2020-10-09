@@ -29,7 +29,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Celeste.Users
 {
-  //  [AbpAuthorize(PermissionNames.Pages_Users)]
+    //  [AbpAuthorize(PermissionNames.Pages_Users)]
     public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
     {
         private readonly UserManager _userManager;
@@ -98,7 +98,7 @@ namespace Celeste.Users
                     }
                 }
             }
-           
+
 
             CurrentUnitOfWork.SaveChanges();
 
@@ -125,7 +125,11 @@ namespace Celeste.Users
 
             return MapToEntityDto(user);
         }
-
+        public async override Task<UserDto> GetAsync(EntityDto<long> input)
+        {
+            var user = await _userRepository.GetAllIncluding(x => x.UserModes).FirstOrDefaultAsync(x => x.Id == input.Id);
+            return ObjectMapper.Map<UserDto>(user);
+        }
         public override async Task<UserDto> UpdateAsync(UserDto input)
         {
             CheckUpdatePermission();
@@ -188,6 +192,11 @@ namespace Celeste.Users
             userDto.RoleNames = roles.ToArray();
 
             return userDto;
+        }
+        public async Task<ListResultDto<UserDto>> GetAllUsers()
+        {
+            var users = await _userRepository.GetAll().ToListAsync();
+            return new ListResultDto<UserDto>(ObjectMapper.Map<List<UserDto>>(users));
         }
 
         protected override IQueryable<User> CreateFilteredQuery(PagedUserResultRequestDto input)
@@ -267,7 +276,7 @@ namespace Celeste.Users
                 .Where(x => x.Id == id)
                 .Include(x => x.UserModes)
                 .FirstOrDefaultAsync();
-          
+
             return ObjectMapper.Map<UserDto>(user);
         }
 
@@ -292,6 +301,7 @@ namespace Celeste.Users
             if (!roles.Contains(StaticRoleNames.Tenants.Admin))
             {
                 throw new UserFriendlyException("Only administrators may reset passwords.");
+
             }
 
             var user = await _userManager.GetUserByIdAsync(input.UserId);
