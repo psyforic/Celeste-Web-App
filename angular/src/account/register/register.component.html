@@ -13,10 +13,10 @@
 
                     <input type="text" id="login" class="fadeIn first" name="emailAddress" placeholder="Email address" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$" [(ngModel)]="model.emailAddress" #emailAddressModel="ngModel" #emailAddressEl>
 
-                    <input type="text" id="password" class="fadeIn first" name="password" placeholder="Password" [(ngModel)]="model.password" #passwordModel="ngModel" #passwordEl>
+                    <input type="password" id="password" class="fadeIn first" name="password" placeholder="Password" [(ngModel)]="model.password" #passwordModel="ngModel" #passwordEl>
 
 
-                    <input type="text" id="password" class="fadeIn first" name="login" placeholder="Confirm password">
+                    <input type="password" id="password" class="fadeIn first" name="login" placeholder="Confirm password">
 
 
                     <input type="submit" class="fadeIn fourth" value="Sign Up" [disabled]="!registerForm.form.valid || saving"/>

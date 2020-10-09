@@ -13,13 +13,11 @@
                             <button type="button" class="btn btn-primary" (click)="createUser()">New User</button>
                         </div>
                     </div>
-
                 </div>
                 <div class="card-body">
                     <div class="table">
                         <table class="table">
                             <thead class=" text-primary">
-
                                 <th>
                                     Username
                                 </th>
@@ -37,7 +35,7 @@
                                 <div class="loading-spinner" *ngIf="isLoading">
                                     <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
                                 </div>
-                                <tr *ngFor="let user of users">
+                                <tr *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p}">
                                     <td>
                                         {{user.userName}}
                                     </td>
@@ -49,16 +47,22 @@
                                     </td>
                                     <td>
                                         <div ngbDropdown class="dropdown" placement="bottom-right">
-                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
+                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select
+                                                Action</button>
                                             <div ngbDropdownMenu>
-                                                <a href="javascript:void(0);" class="dropdown-item" (click)="editUser(user)">Edit</a>
-                                                <a href="javascript:void(0);" class="dropdown-item" (click)="delete(user)">Delete</a>
+                                                <a href="javascript:void(0);" class="dropdown-item"
+                                                    (click)="editUser(user)">Edit</a>
+                                                <a href="javascript:void(0);" class="dropdown-item"
+                                                    (click)="delete(user)">Delete</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="row" style="display: flex; margin-left: 0cm;">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,19 +73,21 @@
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Configure User</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
 
-        <form *ngIf="active" #createUserForm="ngForm" [formGroup]="frm_create_user" id="frm_create_user" novalidate (ngSubmit)="save()">
+        <form *ngIf="active" #createUserForm="ngForm" [formGroup]="frm_create_user" id="frm_create_user" novalidate
+            (ngSubmit)="save()">
             <ngb-tabset type="pills" [orientation]="currentOrientation">
                 <ngb-tab title="Basic Info">
                     <ng-template ngbTabContent>
                         <div class="row" style="margin-top: 15px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Username" formControlName="userName" class="form-control" />
+                                    <input type="text" value="" placeholder="Username" formControlName="userName"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -89,7 +95,8 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Full Name" formControlName="fullName" class="form-control" />
+                                    <input type="text" value="" placeholder="Full Name" formControlName="fullName"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -97,7 +104,8 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Email" formControlName="emailAddress" class="form-control" />
+                                    <input type="text" value="" placeholder="Email" formControlName="emailAddress"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -105,7 +113,8 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Phone" formControlName="cellphoneNumber" class="form-control" />
+                                    <input type="text" value="" placeholder="Phone" formControlName="cellphoneNumber"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -117,7 +126,8 @@
                         <div class="row" style="margin-top: 15px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Street address" formControlName="address" class="form-control" />
+                                    <input type="text" value="" placeholder="Street address" formControlName="address"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -125,7 +135,8 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Suburb" formControlName="suburb" class="form-control" />
+                                    <input type="text" value="" placeholder="Suburb" formControlName="suburb"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -133,7 +144,8 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="City" formControlName="city" class="form-control" />
+                                    <input type="text" value="" placeholder="City" formControlName="city"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -141,14 +153,16 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Postal Code" formControlName="postalCode" class="form-control" />
+                                    <input type="text" value="" placeholder="Postal Code" formControlName="postalCode"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Province" formControlName="province" class="form-control" />
+                                    <input type="text" value="" placeholder="Province" formControlName="province"
+                                        class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -160,33 +174,33 @@
                         <p style="margin-top:20px;">Assign mode to user</p>
                         <div class="form-check" style="margin-top:10px;">
                             <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" value="">
-        Sunrise
-        <span class="form-check-sign"></span>
-    </label>
+                                <input class="form-check-input" type="checkbox" value="">
+                                Sunrise
+                                <span class="form-check-sign"></span>
+                            </label>
                         </div>
                         <div class="form-check">
 
                             <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" value="">
-        Mid-morning
-        <span class="form-check-sign"></span>
-    </label>
+                                <input class="form-check-input" type="checkbox" value="">
+                                Mid-morning
+                                <span class="form-check-sign"></span>
+                            </label>
                         </div>
 
                         <div class="form-check">
                             <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" value="">
-        Mid-day
-        <span class="form-check-sign"></span>
-    </label>
+                                <input class="form-check-input" type="checkbox" value="">
+                                Mid-day
+                                <span class="form-check-sign"></span>
+                            </label>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" value="">
-       Sunset
-        <span class="form-check-sign"></span>
-    </label>
+                                <input class="form-check-input" type="checkbox" value="">
+                                Sunset
+                                <span class="form-check-sign"></span>
+                            </label>
                         </div>
                     </ng-template>
                 </ngb-tab>
@@ -194,17 +208,17 @@
                     <ng-template ngbTabContent>
                         <div class="form-check">
                             <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" value="">
-        Admin
-        <span class="form-check-sign"></span>
-    </label>
+                                <input class="form-check-input" type="checkbox" value="">
+                                Admin
+                                <span class="form-check-sign"></span>
+                            </label>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-        <input class="form-check-input" type="checkbox" value="">
-       General
-        <span class="form-check-sign"></span>
-    </label>
+                                <input class="form-check-input" type="checkbox" value="">
+                                General
+                                <span class="form-check-sign"></span>
+                            </label>
                         </div>
                     </ng-template>
                 </ngb-tab>

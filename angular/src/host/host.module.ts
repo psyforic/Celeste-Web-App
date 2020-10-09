@@ -1,3 +1,4 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { HostRoutingModule } from './host-routing.module';
 import { TicketsComponent } from './tickets/tickets.component';
 import { ModesComponent } from './modes/modes.component';

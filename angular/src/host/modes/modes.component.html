@@ -1,5 +1,8 @@
 <div class="panel-header panel-header-sm"></div>
 <div class="main-content">
+    <div class="loading-spinner" *ngIf="isLoading">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -9,11 +12,13 @@
                             <h4 class="card-title">List of Modes</h4>
                         </div>
                         <div class="col-sm-2 col-lg-2">
-                            <button type="button" class="btn btn-primary">New Mode</button>
+                            <button  type="button" class="btn btn-primary">New Mode</button>
                         </div>
                     </div>
                 </div>
+              
                 <div class="card-body">
+                    
                     <div class="table">
                         <table class="table">
                             <thead class="text-primary">
@@ -27,12 +32,9 @@
                                     <td>{{mode.command}}</td>
                                     <td>
                                         <div ngbDropdown class="dropdown" placement="bottom-right">
-                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
-                        Select Action
-                      </button>
+                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
                                             <div ngbDropdownMenu>
                                                 <a class="dropdown-item">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
                                             </div>
                                         </div>
                                     </td>

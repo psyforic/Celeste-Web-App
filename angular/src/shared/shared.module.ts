@@ -1,3 +1,4 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -17,6 +18,7 @@ import { LayoutStoreService } from './layout/layout-store.service';
 
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
+import { SpinnerComponent } from 'account/loading-spinner/loading-spinner.component';
 
 @NgModule({
     imports: [
@@ -29,6 +31,7 @@ import { EqualValidator } from './directives/equal-validator.directive';
         AbpValidationSummaryComponent,
         AbpModalHeaderComponent,
         AbpModalFooterComponent,
+        SpinnerComponent,
         LocalizePipe,
         BusyDirective,
         EqualValidator
@@ -38,6 +41,7 @@ import { EqualValidator } from './directives/equal-validator.directive';
         AbpValidationSummaryComponent,
         AbpModalHeaderComponent,
         AbpModalFooterComponent,
+        SpinnerComponent,
         LocalizePipe,
         BusyDirective,
         EqualValidator

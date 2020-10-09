@@ -24,6 +24,7 @@ class PagedUsersRequestDto extends PagedRequestDto {
 })
 export class EditModeDialogComponent extends AppComponentBase
   implements OnInit {
+  p: number = 1;
   keyword = '';
   isActive: boolean | null;
   active = false;
@@ -70,6 +71,7 @@ export class EditModeDialogComponent extends AppComponentBase
     });
   }
   getUsers() {
+    
     this.isLoading = true;
     this._userService.getAllUsers()
       .pipe(finalize(() => {
@@ -83,4 +85,8 @@ export class EditModeDialogComponent extends AppComponentBase
   getCheckedUsers() {
 
   }
+  isUserChecked() {
+
+  }
+
 }

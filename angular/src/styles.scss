@@ -10,3 +10,19 @@
     align-items: center;
     justify-content: center;
 }
+
+.content-end{
+    display: flex;
+    justify-content: flex-end;
+}
+.content-center{
+    display: flex;
+    justify-content: center;
+}
+.content-start{
+    display: flex;
+    justify-content: flex-start;
+}
+.ngx-pagination .current{
+    background: #035F58 !important;
+}

@@ -30,6 +30,7 @@ class PagedUsersRequestDto extends PagedRequestDto {
   animations: [appModuleAnimation()]
 })
 export class UsersComponent extends PagedListingComponentBase<UserDto> {
+  p: number = 1;
   frm_create_user: FormGroup;
   isLoading = false;
   active = false;
@@ -115,7 +116,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
 
   protected list(
     request: PagedUsersRequestDto,
-    pageNumber: number,
+    p: number,
     finishedCallback: Function
   ): void {
 
@@ -138,7 +139,7 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
       .subscribe((result: UserDtoPagedResultDto) => {
         console.log(this.users);
         this.users = result.items;
-        this.showPaging(result, pageNumber);
+        this.showPaging(result, p);
       });
   }
 

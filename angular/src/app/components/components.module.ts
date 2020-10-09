@@ -15,13 +15,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     NgbModule
   ],
   declarations: [
-    LoadingSpinnerComponent,
     FooterComponent,
     NavbarComponent,
     SidebarComponent
   ],
   exports: [
-    LoadingSpinnerComponent,
     FooterComponent,
     NavbarComponent,
     SidebarComponent

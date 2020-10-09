@@ -24,11 +24,12 @@ class PagedTenantsRequestDto extends PagedRequestDto {
   animations: [appModuleAnimation()]
 })
 export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
+  p: number = 1;
   tenants: TenantDto[] = [];
   keyword = '';
   isActive: boolean | null;
   advancedFiltersVisible = false;
-
+  isLoading = false;
   constructor(
     injector: Injector,
     private _tenantService: TenantServiceProxy,
@@ -39,12 +40,12 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
 
   list(
     request: PagedTenantsRequestDto,
-    pageNumber: number,
+    p: number,
     finishedCallback: Function
   ): void {
     request.keyword = this.keyword;
     request.isActive = this.isActive;
-
+    this.isLoading = false;
     this._tenantService
       .getAll(
         request.keyword,
@@ -55,11 +56,12 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
       .pipe(
         finalize(() => {
           finishedCallback();
+          this.isLoading = false;
         })
       )
       .subscribe((result: TenantDtoPagedResultDto) => {
         this.tenants = result.items;
-        this.showPaging(result, pageNumber);
+        this.showPaging(result, p);
       });
   }
 

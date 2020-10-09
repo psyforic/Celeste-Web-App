@@ -1,55 +1,53 @@
 <div class="panel-header panel-header-sm"></div>
 <div class="main-content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-sm-10 col-lg-10">
-                            <h4 class="card-title">List of Modes Available</h4>
-                        </div>
-                        <div class="col-sm-2 col-lg-2">
-                            <button type="button" class="btn btn-primary" (click)="createMode()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-10 col-lg-10">
+              <h4 class="card-title">List of Modes Available</h4>
+            </div>
+            <div class="col-sm-2 col-lg-2">
+              <button type="button" class="btn btn-primary" (click)="createMode()">
                 New Mode
               </button>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="card-body">
-                    <div class="table">
-
-                        <table class="table">
-                            <thead class="text-primary">
-                                <th>Mode Name</th>
-                                <th>Mode Command</th>
-                                <th style="width: 310px">Action</th>
-                            </thead>
-                            <tbody>
-                                <div class="loading-spinner" *ngIf="isLoading">
-                                    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-                                </div>
-                                <tr *ngFor="let mode of modes">
-                                    <td>{{mode.name}}</td>
-                                    <td>{{mode.command}}</td>
-                                    <td>
-                                        <div ngbDropdown class="dropdown" placement="bottom-right">
-                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
-                        Select Action
-                      </button>
-                                            <div ngbDropdownMenu>
-                                                <a href="javascript:void(0);" class="dropdown-item" (click)="editMode(mode)">Assign To User(s)</a>
-                                                <a href="javascript:void(0);" class="dropdown-item" (click)="delete(mode)">Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
+          </div>
         </div>
+        <div class="card-body">
+          <div class="table">
+            <table class="table">
+              <thead class="text-primary">
+                <th>Mode Name</th>
+                <th>Mode Command</th>
+                <th style="width: 310px">Action</th>
+              </thead>
+              <tbody>
+                <div class="loading-spinner" *ngIf="isLoading">
+                  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+                </div>
+                <tr *ngFor="let mode of modes">
+                  <td>{{ mode.name }}</td>
+                  <td>{{ mode.command }}</td>
+                  <td>
+                    <div ngbDropdown class="dropdown" placement="bottom-right">
+                      <button class="btn btn-success dropdown-toggle" ngbDropdownToggle> Select Action</button>
+                      <div ngbDropdownMenu>
+                        <a href="javascript:void(0);" class="dropdown-item" (click)="editMode(mode)">Assign To User(s)</a>
+                        <a href="javascript:void(0);" class="dropdown-item" (click)="delete(mode)">Delete</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- <ng-template #content let-modal>

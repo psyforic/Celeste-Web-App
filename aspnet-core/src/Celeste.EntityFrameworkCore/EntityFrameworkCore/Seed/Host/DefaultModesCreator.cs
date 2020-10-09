@@ -37,8 +37,8 @@ namespace Celeste.EntityFrameworkCore.Seed.Host
                     new Mode
                     {
                       Command="<<200",
-                      Name="Mid-Morining",
-                       StartTime="09:00",
+                      Name="Mid-Morning",
+                      StartTime="09:00",
                       EndTime="12:00",
                     },
                      new Mode

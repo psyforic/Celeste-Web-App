@@ -91,7 +91,7 @@ export class EditUserDialogComponent extends AppComponentBase
     const modes: UserModeListDto[] = [];
     _.forEach(this.checkedModesMap, function (value, mode) {
       if (value) {
-       // modes.push(mode);
+        // modes.push(mode);
       }
     });
     return modes;

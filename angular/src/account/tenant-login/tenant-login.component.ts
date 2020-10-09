@@ -17,7 +17,7 @@ export class TenantLoginComponent extends AppComponentBase {
   saving = false;
   isLoading = false;
   tenancyName = '';
-  active: boolean = false;
+  active = false;
   constructor(
     injector: Injector,
     private _accountService: AccountServiceProxy,
@@ -27,6 +27,7 @@ export class TenantLoginComponent extends AppComponentBase {
 
   save(): void {
     if (!this.tenancyName) {
+      abp.multiTenancy.setTenantIdCookie(null);
       window.location.href = '/account/login';
     }
 

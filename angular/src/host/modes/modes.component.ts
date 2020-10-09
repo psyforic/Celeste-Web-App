@@ -1,4 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
+import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { ModeListDto, ModeServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs/operators';
@@ -13,6 +14,7 @@ class PagedModesRequestDto extends PagedRequestDto {
   selector: 'app-modes',
   templateUrl: './modes.component.html',
   styleUrls: ['./modes.component.css'],
+  animations: [appModuleAnimation()],
   providers: [ModeServiceProxy]
 })
 export class ModesComponent extends PagedListingComponentBase<ModeListDto> {

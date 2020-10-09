@@ -40,11 +40,6 @@ export class RegisterComponent extends AppComponentBase implements OnInit, After
   }
 
   save(): void {
-
-
-
-
-
     this.saving = true;
     this._accountService
       .register(this.model)
@@ -59,7 +54,6 @@ export class RegisterComponent extends AppComponentBase implements OnInit, After
           this._router.navigate(['/login']);
           return;
         }
-
         // Autheticate
         this.saving = true;
         this.authService.authenticateModel.userNameOrEmailAddress = this.model.userName;

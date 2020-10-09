@@ -19,7 +19,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (!this._sessionService.tenantId  && this._sessionService.userId) {
+        if (!this._sessionService.tenantId && this._sessionService.userId) {
             this._router.navigate(['/host/dashboard']);
             return true;
         }
@@ -36,11 +36,11 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
             return true;
         }
 
-         this._router.navigate([this.selectBestRoute()]);
+        this._router.navigate([this.selectBestRoute()]);
         return false;
     }
 
-    canLoad(route: ActivatedRouteSnapshot) : boolean {
+    canLoad(route: ActivatedRouteSnapshot): boolean {
         if (!this._sessionService.tenantId && this._sessionService.userId) {
             this._router.navigate(['/host/dashboard']);
             return true;

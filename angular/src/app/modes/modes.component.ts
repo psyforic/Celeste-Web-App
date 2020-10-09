@@ -1,5 +1,5 @@
 import { EditModeDialogComponent } from './edit-mode/edit-mode-dialog.component';
-import { ModeListDto, ModeServiceProxy } from './../../shared/service-proxies/service-proxies';
+import { ModeListDto, ModeServiceProxy, IsTenantAvailableInput } from './../../shared/service-proxies/service-proxies';
 import { Component, Injector } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
@@ -22,6 +22,7 @@ class PagedModesRequestDto extends PagedRequestDto {
   providers: [ModeServiceProxy]
 })
 export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
+  p: number = 1;
   closeResult = '';
   currentOrientation = 'horizontal';
   isLoading = false;
@@ -71,7 +72,6 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
     this.isLoading = true;
     request.keyword = this.keyword;
     request.isActive = this.isActive;
-
     this._ModeService.getAll(request.maxResultCount, request.skipCount)
       .pipe(
         finalize(() => {

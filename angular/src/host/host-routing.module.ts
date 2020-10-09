@@ -15,9 +15,9 @@ import { AppRouteGuard } from '@shared/auth/auth-route-guard';
                 path: '',
                 component: HostComponent,
                 children: [
-                    { path: 'dashboard', component: HomeComponent, canLoad: [AppRouteGuard]  },
+                    { path: 'dashboard', component: HomeComponent, canLoad: [AppRouteGuard] },
                     { path: 'tenants', component: TenantsComponent, canLoad: [AppRouteGuard] },
-                    { path: 'modes', component: ModesComponent, canLoad: [AppRouteGuard]  },
+                    { path: 'modes', component: ModesComponent, canLoad: [AppRouteGuard] },
                     { path: 'tickets', component: TicketsComponent, canLoad: [AppRouteGuard] },
                 ]
             }

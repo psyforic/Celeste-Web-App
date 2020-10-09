@@ -1,5 +1,8 @@
 <div class="panel-header panel-header-sm"></div>
 <div class="main-content">
+        <div class="loading-spinner" *ngIf="isLoading">
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -8,7 +11,7 @@
                         <div class="col-sm-10 col-lg-10">
                             <h4 class="card-title">System Tenants</h4>
                         </div>
-                        <!---this is for -->
+                   
                     </div>
                 </div>
                 <div class="card-body">
@@ -20,14 +23,14 @@
                                 <th style="width: 310px">Action</th>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let tenant of tenants">
+                                <tr *ngFor="let tenant of tenants | paginate: { itemsPerPage: 5, currentPage: p}">
                                     <td>{{tenant.tenancyName}}</td>
                                     <td>{{tenant.firstName}} {{tenant.lastName}}</td>
                                     <td>
                                         <div ngbDropdown class="dropdown" placement="bottom-right">
                                             <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
-                        Select Action
-                      </button>
+                                                Select Action
+                                            </button>
                                             <div ngbDropdownMenu>
                                                 <a class="dropdown-item">Edit</a>
                                                 <a class="dropdown-item" href="#">Delete</a>
@@ -37,6 +40,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="row" style="display: flex; margin-left: 0cm;">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </div>
                 </div>
             </div>
