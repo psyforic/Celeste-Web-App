@@ -6,3 +6,22 @@
 .off-canvas-sidebar[data-color="#035F58"]:after {
     background-color: #035f58;
 }
+
+.sidebar[data-color="#035F58"]:before,
+.off-canvas-sidebar[data-color="#035F58"]:before {
+    background-color: #035f58;
+}
+
+.sidebar:before,
+.sidebar:after,
+.off-canvas-sidebar:before,
+.off-canvas-sidebar:after {
+    display: block;
+    content: "";
+    opacity: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}

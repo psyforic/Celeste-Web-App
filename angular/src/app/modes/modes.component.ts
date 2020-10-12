@@ -1,3 +1,4 @@
+import { AssignModeComponent } from './assign-mode/assign-mode.component';
 import { EditModeDialogComponent } from './edit-mode/edit-mode-dialog.component';
 import { ModeListDto, ModeServiceProxy, IsTenantAvailableInput } from './../../shared/service-proxies/service-proxies';
 import { Component, Injector } from '@angular/core';
@@ -5,7 +6,6 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { finalize } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CreateModeDialogComponent } from './create-mode/create-mode-dialog.component';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 
 
@@ -89,14 +89,14 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
     let createOrEditUserDialog: BsModalRef;
     if (!id) {
       createOrEditUserDialog = this._modalService.show(
-        CreateModeDialogComponent,
+        AssignModeComponent,
         {
           class: 'modal-lg',
         }
       );
     } else {
       createOrEditUserDialog = this._modalService.show(
-        EditModeDialogComponent,
+        AssignModeComponent,
         {
           class: 'modal-lg',
           initialState: {

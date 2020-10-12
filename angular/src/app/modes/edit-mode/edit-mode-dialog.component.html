@@ -1,147 +1,54 @@
 <form class="form-horizontal" autocomplete="off" #editModeModal="ngForm" (ngSubmit)="save()">
-  <abp-modal-header [title]="'List of Users' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
-  <div class="main-content">
-    <div class="loading-spinner" *ngIf="isLoading">
-      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-body">
-            <div class="table">
-              <table class="table">
-                <thead class=" text-primary">
-                  <th>
-                    Assign
-                  </th>
-                  <th>
-                    Username
-                  </th>
-                  <th>
-                    Full Name
-                  </th>
-                  <th>
-                    Email
-                  </th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p}; let i=index">
-                    <td>
-                      <input type="checkbox" [id]="'user_' +i" [checked]="isUserChecked(user.id)"/>
-                    </td>
-                    <td>
-                      {{user.userName}}
-                    </td>
-                    <td>
-                      {{user.fullName}}
-                    </td>
-                    <td>
-                      {{user.emailAddress}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-                <div class="row" class="content-end">
-                  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <abp-modal-header [title]="'List of Users' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="main-content">
+        <div class="loading-spinner" *ngIf="isLoading">
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Assign
+                                    </th>
+                                    <th>
+                                        Username
+                                    </th>
+                                    <th>
+                                        Full Name
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p}; let i=index">
+                                        <td>
+                                            <input type="checkbox" [id]="'user_' +i" [checked]="isUserChecked(user.id)" />
+                                        </td>
+                                        <td>
+                                            {{user.userName}}
+                                        </td>
+                                        <td>
+                                            {{user.fullName}}
+                                        </td>
+                                        <td>
+                                            {{user.emailAddress}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row" class="content-end">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-
-
-  <!-- <label class="col-md-3 col-form-label" for="name">
-            {{ "Mode Name" | localize }}
-          </label>
-          <div class="col-md-9">
-            <input
-              type="text"
-              class="form-control"
-              name="name"
-              id="name"
-              required
-              maxlength="32"
-              [(ngModel)]="mode.name"
-              #nameModel="ngModel"
-              #nameEl
-            />
-            <abp-validation-summary
-              [control]="nameModel"
-              [controlEl]="nameEl"
-            ></abp-validation-summary>
-          </div>
-        </div>
-        <div class="form-group row required">
-          <label class="col-md-3 col-form-label" for="command">
-            {{ "Command" | localize }}
-          </label>
-          <div class="col-md-9">
-            <input
-              type="text"
-              class="form-control"
-              name="command"
-              id="command"
-              required
-              maxlength="32"
-              [(ngModel)]="mode.command"
-              #commandModel="ngModel"
-              #commandEl
-            />
-            <abp-validation-summary
-              [control]="commandModel"
-              [controlEl]="commandEl"
-            ></abp-validation-summary>
-          </div>
-        </div>
-        <div class="form-group row required">
-          <label class="col-md-3 col-form-label" for="start">
-            {{ "StartTime" | localize }}
-          </label>
-          <div class="col-md-9">
-            <input
-              type="text"
-              class="form-control"
-              name="start"
-              id="start"
-              required
-              minlength="2"
-              maxlength="32"
-              [(ngModel)]="mode.startTime"
-              #startModel="ngModel"
-              #startEl
-            />
-            <abp-validation-summary
-              [control]="startModel"
-              [controlEl]="startEl"
-            ></abp-validation-summary>
-          </div>
-        </div>
-        <div class="loading-spinner" *ngIf="isLoading">
-          <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-      </div>
-        <div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="end">
-              {{ "EndTime" | localize }}
-            </label>
-            <div class="col-md-9">
-              <input
-                type="text"
-                class="form-control"
-                name="end"
-                id="end"
-                required
-                minlength="2"
-                maxlength="32"
-                [(ngModel)]="mode.endTime"
-                #endModel="ngModel"
-                #endEl
-              />
-              <abp-validation-summary
-                [control]="startModel"
-                [controlEl]="startEl"
-              ></abp-validation-summary>
-            </div> -->
-  <abp-modal-footer (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+    <abp-modal-footer (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

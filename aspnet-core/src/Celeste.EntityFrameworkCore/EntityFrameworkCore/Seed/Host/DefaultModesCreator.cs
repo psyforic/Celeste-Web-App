@@ -47,7 +47,6 @@ namespace Celeste.EntityFrameworkCore.Seed.Host
                       Name="Mid-Day",
                       StartTime="12:00",
                       EndTime="15:00",
-
                     },
                      new Mode
                     {
@@ -55,7 +54,6 @@ namespace Celeste.EntityFrameworkCore.Seed.Host
                       Name="Sunset",
                       StartTime="15:00",
                       EndTime="18:00",
-
                     },
                      new Mode
                     {

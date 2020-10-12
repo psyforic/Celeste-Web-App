@@ -11,18 +11,26 @@
     justify-content: center;
 }
 
-.content-end{
+.content-end {
     display: flex;
     justify-content: flex-end;
 }
-.content-center{
+
+.content-center {
     display: flex;
     justify-content: center;
 }
-.content-start{
+
+.content-start {
     display: flex;
     justify-content: flex-start;
 }
-.ngx-pagination .current{
+
+.ngx-pagination .current {
+    background: #035F58 !important;
+}
+
+.sidebar[data-color="#035F58"]:after,
+.off-canvas-sidebar[data-color="#035F58"]:after {
     background: #035F58 !important;
 }

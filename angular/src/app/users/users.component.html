@@ -50,17 +50,15 @@
                                             <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select
                                                 Action</button>
                                             <div ngbDropdownMenu>
-                                                <a href="javascript:void(0);" class="dropdown-item"
-                                                    (click)="editUser(user)">Edit</a>
-                                                <a href="javascript:void(0);" class="dropdown-item"
-                                                    (click)="delete(user)">Delete</a>
+                                                <a href="javascript:void(0);" class="dropdown-item" (click)="editUser(user)">Edit</a>
+                                                <a href="javascript:void(0);" class="dropdown-item" (click)="delete(user)">Delete</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="row" style="display: flex; margin-left: 0cm;">
+                        <div class="row" class="content-end">
                             <pagination-controls (pageChange)="p = $event"></pagination-controls>
                         </div>
                     </div>
@@ -78,16 +76,14 @@
     </div>
     <div class="modal-body">
 
-        <form *ngIf="active" #createUserForm="ngForm" [formGroup]="frm_create_user" id="frm_create_user" novalidate
-            (ngSubmit)="save()">
+        <form *ngIf="active" #createUserForm="ngForm" [formGroup]="frm_create_user" id="frm_create_user" novalidate (ngSubmit)="save()">
             <ngb-tabset type="pills" [orientation]="currentOrientation">
                 <ngb-tab title="Basic Info">
                     <ng-template ngbTabContent>
                         <div class="row" style="margin-top: 15px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Username" formControlName="userName"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="Username" formControlName="userName" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -95,8 +91,7 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Full Name" formControlName="fullName"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="Full Name" formControlName="fullName" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -104,8 +99,7 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Email" formControlName="emailAddress"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="Email" formControlName="emailAddress" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -113,8 +107,7 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Phone" formControlName="cellphoneNumber"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="Phone" formControlName="cellphoneNumber" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -126,8 +119,7 @@
                         <div class="row" style="margin-top: 15px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Street address" formControlName="address"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="Street address" formControlName="address" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -135,8 +127,7 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Suburb" formControlName="suburb"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="Suburb" formControlName="suburb" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -144,8 +135,7 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="City" formControlName="city"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="City" formControlName="city" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -153,16 +143,14 @@
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Postal Code" formControlName="postalCode"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="Postal Code" formControlName="postalCode" class="form-control" />
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="margin-top: 5px">
                             <div class="col-sm-10 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" value="" placeholder="Province" formControlName="province"
-                                        class="form-control" />
+                                    <input type="text" value="" placeholder="Province" formControlName="province" class="form-control" />
                                 </div>
                             </div>
                         </div>

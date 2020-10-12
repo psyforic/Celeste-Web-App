@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tickets.component.css']
 })
 export class TicketsComponent implements OnInit {
-
+  p: number = 1;
   constructor() { }
 
   ngOnInit() {

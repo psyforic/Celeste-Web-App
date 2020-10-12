@@ -1,3 +1,4 @@
+import { AssignModeComponent } from './modes/assign-mode/assign-mode.component';
 import { ChartsModule } from './home/charts/charts.module';
 import { EditModeDialogComponent } from './modes/edit-mode/edit-mode-dialog.component';
 import { CreateModeDialogComponent } from './modes/create-mode/create-mode-dialog.component';
@@ -66,6 +67,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     CreateModeDialogComponent,
     EditModeDialogComponent,
     ConfirmationDialogComponent,
+    AssignModeComponent,
+
     //
     HelpComponent,
     AdminLayoutComponent
@@ -103,6 +106,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     EditUserDialogComponent,
     ResetPasswordDialogComponent,
     ConfirmationDialogComponent,
+    AssignModeComponent
   ],
 })
 export class AppModule { }

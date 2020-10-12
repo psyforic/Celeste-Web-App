@@ -12,13 +12,13 @@
                             <h4 class="card-title">List of Modes</h4>
                         </div>
                         <div class="col-sm-2 col-lg-2">
-                            <button  type="button" class="btn btn-primary">New Mode</button>
+                            <button type="button" class="btn btn-primary">New Mode</button>
                         </div>
                     </div>
                 </div>
-              
+
                 <div class="card-body">
-                    
+
                     <div class="table">
                         <table class="table">
                             <thead class="text-primary">
@@ -41,6 +41,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="row content-end">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
                     </div>
                 </div>
             </div>

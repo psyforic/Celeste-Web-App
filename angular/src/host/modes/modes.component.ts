@@ -18,7 +18,7 @@ class PagedModesRequestDto extends PagedRequestDto {
   providers: [ModeServiceProxy]
 })
 export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
-
+  p: number = 1;
   closeResult = '';
   currentOrientation = 'horizontal';
   isLoading = false;
@@ -51,7 +51,7 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
   }
   protected list(
     request: PagedModesRequestDto,
-    pageNumber: number,
+    p: number,
     finishedCallback: Function
   ): void {
     this.isLoading = true;
@@ -68,7 +68,7 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
       .subscribe((result: any) => {
         this.modes = result.items;
         console.log(this.modes);
-        this.showPaging(result, pageNumber);
+        this.showPaging(result, p);
       });
   }
 
