@@ -1,15 +1,19 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Injector } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import Chart from 'chart.js';
+import { AppAuthService } from '@shared/auth/app-auth.service';
+import { UserDto, UserServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent extends AppComponentBase implements OnInit {
+    user: UserDto = new UserDto();
     private listTitles: any[];
     location: Location;
       mobile_menu_visible: any = 0;
@@ -18,11 +22,23 @@ export class NavbarComponent implements OnInit {
 
     public isCollapsed = true;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
-      this.location = location;
-          this.sidebarVisible = false;
-    }
+    // constructor(location: Location,  private element: ElementRef, private router: Router) {
+    //   this.location = location;
+    //       this.sidebarVisible = false;
+    // }
+  constructor(
+    location: Location,
+    private element: ElementRef,
+    private router: Router,
+    injector: Injector,
+    private _authService: AppAuthService,
+    private _userService: UserServiceProxy,
 
+  ) {
+    super(injector);
+    this.location = location;
+    this.sidebarVisible = false;
+  }
     ngOnInit(){
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
@@ -36,7 +52,17 @@ export class NavbarComponent implements OnInit {
          }
      });
     }
+  logout(): void {
+    this._authService.logout();
+  }
 
+  getUser() {
+    const id = this.appSession.userId;
+    this._userService.get(id).subscribe((result) => {
+      this.user = result;
+    });
+
+  }
     collapse(){
       this.isCollapsed = !this.isCollapsed;
       const navbar = document.getElementsByTagName('nav')[0];
@@ -66,7 +92,7 @@ export class NavbarComponent implements OnInit {
         html.classList.add('nav-open');
 
         this.sidebarVisible = true;
-    };
+    }
     sidebarClose() {
         const html = document.getElementsByTagName('html')[0];
         this.toggleButton.classList.remove('toggled');
@@ -79,7 +105,7 @@ export class NavbarComponent implements OnInit {
         }
         this.sidebarVisible = false;
         html.classList.remove('nav-open');
-    };
+    }
     sidebarToggle() {
         // const toggleButton = this.toggleButton;
         // const html = document.getElementsByTagName('html')[0];
@@ -136,7 +162,7 @@ export class NavbarComponent implements OnInit {
             this.mobile_menu_visible = 1;
 
         }
-    };
+    }
 
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());
