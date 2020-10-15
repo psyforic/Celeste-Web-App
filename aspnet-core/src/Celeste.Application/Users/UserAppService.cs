@@ -8,6 +8,7 @@ using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
+using Abp.Domain.Uow;
 using Abp.Extensions;
 using Abp.IdentityFramework;
 using Abp.Linq.Extensions;
@@ -127,8 +128,13 @@ namespace Celeste.Users
         }
         public async override Task<UserDto> GetAsync(EntityDto<long> input)
         {
-            var user = await _userRepository.GetAllIncluding(x => x.UserModes).FirstOrDefaultAsync(x => x.Id == input.Id);
-            return ObjectMapper.Map<UserDto>(user);
+            
+            var user = await _userRepository.GetAll().IgnoreQueryFilters().Include(x => x.Roles)
+            .Include(x => x.UserModes).ThenInclude(x=>x.Mode).FirstOrDefaultAsync(x => x.Id == input.Id);
+            var mappedUser = MapToEntityDto(user);
+            return mappedUser;
+            
+           
         }
         public override async Task<UserDto> UpdateAsync(UserDto input)
         {

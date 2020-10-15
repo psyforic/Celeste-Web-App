@@ -41,21 +41,21 @@ namespace Celeste.EntityFrameworkCore.Seed.Host
                       StartTime="09:00",
                       EndTime="12:00",
                     },
-                     new Mode
+                    new Mode
                     {
                       Command="<<300",
                       Name="Mid-Day",
                       StartTime="12:00",
                       EndTime="15:00",
                     },
-                     new Mode
+                    new Mode
                     {
                       Command="<<400",
                       Name="Sunset",
                       StartTime="15:00",
                       EndTime="18:00",
                     },
-                     new Mode
+                    new Mode
                     {
                       Command="<<f00",
                       Name="Therapy",

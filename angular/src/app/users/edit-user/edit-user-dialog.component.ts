@@ -66,9 +66,10 @@ export class EditUserDialogComponent extends AppComponentBase
     return _.includes(this.user.roleNames, normalizedName);
   }
   isModeChecked(modeId: string) {
-    if (this.user.userModes.length > 0) {
-      return this.user.userModes.findIndex(m => m.modeId === modeId) > 0 ? true : false;
+    if (this.user.userModes && this.user.userModes.length > 0) {
+      return this.user.userModes.filter(m => m.modeId === modeId).length > 0 ? true : false;
     }
+    return false;
   }
   onRoleChange(role: RoleDto, $event) {
     this.checkedRolesMap[role.normalizedName] = $event.target.checked;
@@ -96,7 +97,9 @@ export class EditUserDialogComponent extends AppComponentBase
     });
     return modes;
   }
-
+  checkAllModes(roles: string[])
+  {
+  }
   save(): void {
     this.saving = true;
     this.isLoading = true;
@@ -119,7 +122,7 @@ export class EditUserDialogComponent extends AppComponentBase
   getUser() {
     this._userService.get(this.id).subscribe((result) => {
       this.user = result;
-      console.log(this.user);
+      // console.log(this.user);
       this._userService.getRoles().subscribe((result2) => {
         this.roles = result2.items;
         this.setInitialRolesStatus();

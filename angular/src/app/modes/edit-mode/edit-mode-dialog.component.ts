@@ -86,7 +86,7 @@ export class EditModeDialogComponent extends AppComponentBase
 
   }
   isUserChecked() {
-
+/////This is for uploading ands ortuy
   }
 
 }

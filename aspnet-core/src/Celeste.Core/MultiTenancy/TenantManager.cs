@@ -9,8 +9,13 @@ using Abp.Runtime.Session;
 using Celeste.Authorization.Roles;
 using Celeste.Authorization.Users;
 using Celeste.Editions;
+using Celeste.Modes;
+using Celeste.UserModes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -26,6 +31,7 @@ namespace Celeste.MultiTenancy
         private readonly IWebHostEnvironment _environment;
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
+        private readonly IRepository<Mode, Guid> _modeRepository;
         public TenantManager(
 
             IRepository<Tenant> tenantRepository, 
@@ -37,6 +43,7 @@ namespace Celeste.MultiTenancy
             IWebHostEnvironment environment,
             UserManager userManager,
             IUnitOfWorkManager unitOfWorkManager,
+            IRepository<Mode, Guid> modeRepository,
             RoleManager roleManager) 
             : base(
                 tenantRepository, 
@@ -50,7 +57,7 @@ namespace Celeste.MultiTenancy
             _environment = environment;
             _userManager = userManager;
             _roleManager= roleManager;
-
+            _modeRepository = modeRepository;
 
         }
         public async Task<int> CreateWithAdminUserAsync(string tenancyName,
@@ -115,14 +122,33 @@ namespace Celeste.MultiTenancy
                     }
 
                     adminUser.Password = _passwordHasher.HashPassword(adminUser, adminPassword);
+                    var modes = await _modeRepository.GetAll().IgnoreQueryFilters().ToListAsync();
+                    List<UserMode> userModes = null;
+                    if(modes.Count > 0)
+                    {
+                        userModes = new List<UserMode>();
+                        foreach(var mode in modes)
+                        {
+                            userModes.Add(new UserMode
+                            {
+                                UserId = adminUser.Id,
+                                ModeId = mode.Id,
+                                TenantId = tenant.Id,
 
+                            });
+                        }
+                    }
+                    if(userModes != null)
+                    {
+                        adminUser.UserModes = userModes;
+                    }
                     CheckErrors(await _userManager.CreateAsync(adminUser));
                     await _unitOfWorkManager.Current.SaveChangesAsync(); //To get admin user's id
 
                     //Assign admin user to admin role!
                     CheckErrors(await _userManager.AddToRoleAsync(adminUser, userRole.Name));
 
-
+                   
         
                     await _unitOfWorkManager.Current.SaveChangesAsync();
 
