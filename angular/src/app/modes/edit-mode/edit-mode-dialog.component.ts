@@ -7,7 +7,7 @@ import {
   Output
 } from '@angular/core';
 import { AppComponentBase } from './../../../shared/app-component-base';
-import { finalize } from 'rxjs/operators';
+import { finalize, filter } from 'rxjs/operators';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import * as _ from 'lodash';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
@@ -51,6 +51,7 @@ export class EditModeDialogComponent extends AppComponentBase
 
     this.saving = true;
     this.isLoading = true;
+   
     this._modeService
       .update(this.mode)
       .pipe(
@@ -71,7 +72,7 @@ export class EditModeDialogComponent extends AppComponentBase
     });
   }
   getUsers() {
-    
+
     this.isLoading = true;
     this._userService.getAllUsers()
       .pipe(finalize(() => {
@@ -86,7 +87,6 @@ export class EditModeDialogComponent extends AppComponentBase
 
   }
   isUserChecked() {
-/////This is for uploading ands ortuy
   }
 
 }

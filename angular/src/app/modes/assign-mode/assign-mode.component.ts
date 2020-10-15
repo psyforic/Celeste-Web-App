@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { ITenantDto, UserModeListDto } from './../../../shared/service-proxies/service-proxies';
+import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { PagedRequestDto } from '@shared/paged-listing-component-base';
 import { ModeListDto, ModeServiceProxy, UserDto, UserServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { finalize } from 'rxjs/operators';
+import { finalize, filter } from 'rxjs/operators';
 class PagedUsersRequestDto extends PagedRequestDto {
   keyword: string;
   isActive: boolean | null;
@@ -15,7 +16,7 @@ class PagedUsersRequestDto extends PagedRequestDto {
   styleUrls: ['./assign-mode.component.scss'],
   providers: [ModeServiceProxy, UserServiceProxy]
 })
-export class AssignModeComponent extends AppComponentBase{
+export class AssignModeComponent extends AppComponentBase implements OnInit {
   p: number = 1;
   keyword = '';
   isActive: boolean | null;
@@ -23,8 +24,11 @@ export class AssignModeComponent extends AppComponentBase{
   saving = false;
   isLoading = false;
   mode = new ModeListDto();
+  modes = new UserModeListDto();
   id: any;
+  user = new UserDto();
   users: UserDto[] = [];
+  userIds: number[] = [];
   @Output() onSave = new EventEmitter<any>();
   constructor(
     injector: Injector,
@@ -40,7 +44,6 @@ export class AssignModeComponent extends AppComponentBase{
     this.getUsers();
   }
   save(): void {
-
     this.saving = true;
     this.isLoading = true;
     this._modeService
@@ -62,20 +65,53 @@ export class AssignModeComponent extends AppComponentBase{
       this.mode = result;
     });
   }
+  isUserChecked(userId: string) {
+    if (this.user.userModes && this.user.userModes.length > 0) {
+      return this.user.userModes.filter(m => m.modeId === userId).length > 0 ? true : false;
+    }
+    return false;
+  }
+  addToList(event, id: number) {
+    const index = this.userIds.findIndex(x => x === id);
+    if (event.target.checked) {
+      if (index === -1) {
+        this.userIds.push(id);
+      } else {
+        return;
+      }
+    } else {
+      if (index !== -1) {
+        this.userIds = this.userIds.filter(x => x !== id);
+      } else {
+        return;
+      }
+    }
+  }
+  /***
+   * Get Users and filter out the ones that already have this modes
+   * To get the ones that have the mode 
+   * this.users = result.items.filter(user => user.userModes.filter(m => m.modeId === this.id).length > 0);
+   */
   getUsers() {
-
     this.isLoading = true;
     this._userService.getAllUsers()
       .pipe(finalize(() => {
         this.isLoading = false;
       })
-      ).subscribe((result: any) => {
-        this.users = result.items;
-        console.log(this.users);
+      ).subscribe((result) => {
+        this.users = result.items.filter(user => user.userModes.filter(m => m.modeId !== this.id).length === 0);
+
       });
-  }
 
-  isUserChecked() {
-
+    // console.log(this.isUserChecked());
   }
+  show(mode: ModeListDto) {
+    this.getUsers();
+    this.getModes();
+  }
+  // isUserChecked() {
+
+  //   // let myUsers: UserDto[] = [];
+  //   // = return myUsers = this.users.filter(user => user.userModes.findIndex(x => x.id === this.mode.id));
+  // }
 }

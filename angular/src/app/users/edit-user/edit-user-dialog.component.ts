@@ -71,6 +71,7 @@ export class EditUserDialogComponent extends AppComponentBase
     }
     return false;
   }
+
   onRoleChange(role: RoleDto, $event) {
     this.checkedRolesMap[role.normalizedName] = $event.target.checked;
   }
@@ -89,17 +90,16 @@ export class EditUserDialogComponent extends AppComponentBase
   }
 
   getCheckedModes(): UserModeListDto[] {
-    const modes: UserModeListDto[] = [];
+    const modes = [];
     _.forEach(this.checkedModesMap, function (value, mode) {
       if (value) {
-        // modes.push(mode);
+        modes.push(mode);
       }
     });
+    console.log(modes);
     return modes;
   }
-  checkAllModes(roles: string[])
-  {
-  }
+
   save(): void {
     this.saving = true;
     this.isLoading = true;

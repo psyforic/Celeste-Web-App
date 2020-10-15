@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table">
-                    <table class="table">
+                    <table class="table table-responsive">
                         <thead class=" text-primary">
                             <th>
                                 Assign
@@ -25,7 +25,7 @@
                         <tbody>
                             <tr *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p}; let i=index">
                                 <td>
-                                    <input type="checkbox" [id]="'user_' +i" [checked]="isUserChecked(user.id)" />
+                                    <input type="checkbox" (change)="addToList($event,user.id)" [id]="'user_' +i" [checked]="isUserChecked(user.id)"/>
                                 </td>
                                 <td>
                                     {{user.userName}}

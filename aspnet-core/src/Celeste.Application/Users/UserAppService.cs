@@ -128,13 +128,13 @@ namespace Celeste.Users
         }
         public async override Task<UserDto> GetAsync(EntityDto<long> input)
         {
-            
+
             var user = await _userRepository.GetAll().IgnoreQueryFilters().Include(x => x.Roles)
-            .Include(x => x.UserModes).ThenInclude(x=>x.Mode).FirstOrDefaultAsync(x => x.Id == input.Id);
+            .Include(x => x.UserModes).ThenInclude(x => x.Mode).FirstOrDefaultAsync(x => x.Id == input.Id);
             var mappedUser = MapToEntityDto(user);
             return mappedUser;
-            
-           
+
+
         }
         public override async Task<UserDto> UpdateAsync(UserDto input)
         {
@@ -201,7 +201,7 @@ namespace Celeste.Users
         }
         public async Task<ListResultDto<UserDto>> GetAllUsers()
         {
-            var users = await _userRepository.GetAll().ToListAsync();
+            var users = await _userRepository.GetAllIncluding(m => m.UserModes).ToListAsync();
             return new ListResultDto<UserDto>(ObjectMapper.Map<List<UserDto>>(users));
         }
 
