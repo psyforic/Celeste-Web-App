@@ -267,6 +267,63 @@ export class ModeServiceProxy {
     }
 
     /**
+     * @param modeId (optional) 
+     * @param body (optional) 
+     * @return Success
+     */
+    assignModeToUsers(modeId: string | undefined, body: number[] | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Mode/AssignModeToUsers?";
+        if (modeId === null)
+            throw new Error("The parameter 'modeId' cannot be null.");
+        else if (modeId !== undefined)
+            url_ += "modeId=" + encodeURIComponent("" + modeId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAssignModeToUsers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAssignModeToUsers(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAssignModeToUsers(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -4957,6 +5014,7 @@ export class UserModeListDto implements IUserModeListDto {
     tenantId: number;
     modeId: string;
     userId: number;
+    mode: ModeListDto;
     id: string;
 
     constructor(data?: IUserModeListDto) {
@@ -4973,6 +5031,7 @@ export class UserModeListDto implements IUserModeListDto {
             this.tenantId = _data["tenantId"];
             this.modeId = _data["modeId"];
             this.userId = _data["userId"];
+            this.mode = _data["mode"] ? ModeListDto.fromJS(_data["mode"]) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -4989,6 +5048,7 @@ export class UserModeListDto implements IUserModeListDto {
         data["tenantId"] = this.tenantId;
         data["modeId"] = this.modeId;
         data["userId"] = this.userId;
+        data["mode"] = this.mode ? this.mode.toJSON() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -5005,6 +5065,7 @@ export interface IUserModeListDto {
     tenantId: number;
     modeId: string;
     userId: number;
+    mode: ModeListDto;
     id: string;
 }
 
@@ -5749,6 +5810,7 @@ export class GetUserModeOutput implements IGetUserModeOutput {
     tenantId: number;
     modeId: string;
     userId: number;
+    mode: ModeListDto;
     id: string;
 
     constructor(data?: IGetUserModeOutput) {
@@ -5765,6 +5827,7 @@ export class GetUserModeOutput implements IGetUserModeOutput {
             this.tenantId = _data["tenantId"];
             this.modeId = _data["modeId"];
             this.userId = _data["userId"];
+            this.mode = _data["mode"] ? ModeListDto.fromJS(_data["mode"]) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -5781,6 +5844,7 @@ export class GetUserModeOutput implements IGetUserModeOutput {
         data["tenantId"] = this.tenantId;
         data["modeId"] = this.modeId;
         data["userId"] = this.userId;
+        data["mode"] = this.mode ? this.mode.toJSON() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -5797,6 +5861,7 @@ export interface IGetUserModeOutput {
     tenantId: number;
     modeId: string;
     userId: number;
+    mode: ModeListDto;
     id: string;
 }
 

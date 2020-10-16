@@ -1536,8 +1536,8 @@ namespace Celeste.Migrations
                     b.Property<string>("Command")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("EndTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Icon")
                         .HasColumnType("nvarchar(max)");
@@ -1545,8 +1545,8 @@ namespace Celeste.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("StartTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1901,7 +1901,7 @@ namespace Celeste.Migrations
                         .IsRequired();
 
                     b.HasOne("Celeste.Authorization.Users.User", "User")
-                        .WithMany("Modes")
+                        .WithMany("UserModes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

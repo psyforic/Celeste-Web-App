@@ -47,7 +47,7 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
     this.saving = true;
     this.isLoading = true;
     this._modeService
-      .update(this.mode)
+      .assignModeToUsers(this.mode.id, this.userIds)
       .pipe(
         finalize(() => {
           this.saving = false;

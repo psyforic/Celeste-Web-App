@@ -57,11 +57,11 @@ namespace Celeste.EntityFrameworkCore.Seed.Host
                     },
                     new Mode
                     {
-                      Command="<<f00",
+                      Command="<<c00",
                       Name="Therapy",
                       StartTime="_",
                       EndTime="_",
-                    }
+                    },
                 };
                 _context.Modes.AddRange(modes);
                 _context.SaveChanges();
