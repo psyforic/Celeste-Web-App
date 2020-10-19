@@ -16,10 +16,11 @@
                     </div>
                 </div>
                 <div class="form-group row required">
-                    <label class="col-md-3 col-form-label" for="surname">
+                    <label>Email</label>
+                    <!-- <label class="col-md-3 col-form-label" for="surname">
                         {{ "Surname" | localize }}
-                    </label>
-                    <div class="col-md-9">
+                    </label> -->
+                    <div class="col-md-9 styled-input">
                         <input type="text" class="form-control" name="surname" id="surname" required maxlength="32" [(ngModel)]="user.surname" #surnameModel="ngModel" #surnameEl />
                         <abp-validation-summary [control]="surnameModel" [controlEl]="surnameEl">
                         </abp-validation-summary>
@@ -129,7 +130,7 @@
                     <ng-container *ngFor="let mode of modes; let i = index">
                         <div class="col-md-6">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" [id]="'mode_' + i" [checked]="isModeChecked(mode.id)" (change)="onModeChange(mode, $event)" />
+                                <input type="checkbox" class="custom-control-input" [id]="'mode_' + i" [checked]="isModeChecked(mode.id)" (change)="onChangedCheckbox(mode, $event)" />
                                 <label class="custom-control-label" [for]="'mode_' + i">
                                     {{ mode.name }}
                                 </label>
@@ -141,5 +142,6 @@
         </tabset>
 
     </div>
-    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editUserModal.form.valid || saving" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+    <abp-modal-footer (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+    <!-- <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editUserModal.form.valid || saving" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer> -->
 </form>

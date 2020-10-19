@@ -21,6 +21,7 @@ import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listin
 
 @Component({
   templateUrl: './edit-user-dialog.component.html',
+  styleUrls: ['./edit-user-dialog.scss'],
   providers: [ModeServiceProxy]
 })
 export class EditUserDialogComponent extends AppComponentBase
@@ -35,6 +36,7 @@ export class EditUserDialogComponent extends AppComponentBase
   isActive: boolean | null;
   checkedRolesMap: { [key: string]: boolean } = {};
   checkedModesMap: { mode: ModeListDto };
+  selectedModes: UserModeListDto[] = [];
   id: number;
 
   @Output() onSave = new EventEmitter<any>();
@@ -75,10 +77,19 @@ export class EditUserDialogComponent extends AppComponentBase
   onRoleChange(role: RoleDto, $event) {
     this.checkedRolesMap[role.normalizedName] = $event.target.checked;
   }
-  onModeChange(mode: ModeListDto, $event) {
-    this.checkedModesMap[mode.id] = $event.target.checked;
-    console.log(mode);
+
+  onChangedCheckbox(modeId: string, $event) {
+    const index = this.selectedModes.findIndex(x => x.modeId === modeId);
+    if ($event.target.checked && index === -1) {
+      const userMode: UserModeListDto = new UserModeListDto();
+      userMode.modeId = modeId;
+      this.selectedModes.push(userMode);
+    } else {
+      this.selectedModes.splice(index, 1);
+    }
+    // console.log(this.selectedModes);
   }
+
   getCheckedRoles(): string[] {
     const roles: string[] = [];
     _.forEach(this.checkedRolesMap, function (value, key) {
@@ -104,7 +115,8 @@ export class EditUserDialogComponent extends AppComponentBase
     this.saving = true;
     this.isLoading = true;
     this.user.roleNames = this.getCheckedRoles();
-    this.user.userModes = this.getCheckedModes();
+    this.user.userModes = this.selectedModes;
+    console.log(this.user);
     this._userService
       .update(this.user)
       .pipe(
@@ -122,7 +134,14 @@ export class EditUserDialogComponent extends AppComponentBase
   getUser() {
     this._userService.get(this.id).subscribe((result) => {
       this.user = result;
-      // console.log(this.user);
+      if (this.user.userModes.length > 0) {
+        this.selectedModes = this.user.userModes.map(mode => {
+          const newMode = new UserModeListDto();
+          newMode.id = mode.id;
+          newMode.modeId = mode.modeId;
+          return newMode;
+        });
+      }
       this._userService.getRoles().subscribe((result2) => {
         this.roles = result2.items;
         this.setInitialRolesStatus();

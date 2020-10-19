@@ -1,7 +1,7 @@
 import { AssignModeComponent } from './assign-mode/assign-mode.component';
 import { EditModeDialogComponent } from './edit-mode/edit-mode-dialog.component';
 import { ModeListDto, ModeServiceProxy, IsTenantAvailableInput } from './../../shared/service-proxies/service-proxies';
-import { Component, Injector, ViewChild } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { finalize } from 'rxjs/operators';
@@ -85,7 +85,6 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
         this.showPaging(result, pageNumber);
       });
   }
-
   private showCreateOrEditUserDialog(id?: any): void {
     let createOrEditUserDialog: BsModalRef;
     if (!id) {
@@ -96,7 +95,6 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
         }
       );
     } else {
-      console.log(id);
       createOrEditUserDialog = this._modalService.show(
         AssignModeComponent,
         {

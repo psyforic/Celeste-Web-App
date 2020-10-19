@@ -89,9 +89,9 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
   }
   /***
    * Get Users and filter out the ones that already have this modes
-   * To get the ones that have the mode 
+   * To get the ones that have the mode
    * this.users = result.items.filter(user => user.userModes.filter(m => m.modeId === this.id).length > 0);
-   * then 
+   * then
    */
   getUsers() {
     this.isLoading = true;

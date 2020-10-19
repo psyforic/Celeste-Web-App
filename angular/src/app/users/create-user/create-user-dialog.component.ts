@@ -41,11 +41,13 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
   user = new CreateUserDto();
   roles: RoleDto[] = [];
   ids: any[] = [];
+  role: any;
   selectedModes: ModeListDto[] = [];
   selectedUserModes: UserModeListDto[] = [];
   checkedRolesMap: { [key: string]: boolean } = {};
   defaultRoleCheckedStatus = false;
   defaultModeCheckedStatus = false;
+  allModesChecked = false;
   provinces = [
 
     { id: 'Eastern Cape', name: 'Eastern Cape' },
@@ -96,20 +98,31 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
     return this.defaultRoleCheckedStatus;
   }
   isModeChecked(normalizedName: string): boolean {
-    return this.defaultModeCheckedStatus;
+    return this.allModesChecked;
   }
 
   onRoleChange(role: RoleDto, $event) {
     this.checkedRolesMap[role.normalizedName] = $event.target.checked;
+    if (this.checkedRolesMap[role.normalizedName] && role.normalizedName === 'ADMIN') {
+      this.allModesChecked = true;
+      this.selectedModes = this.modes.map(mode => {
+        const newMode = new ModeListDto();
+        newMode.id = mode.id;
+        return newMode;
+      });
+    } else {
+      this.allModesChecked = false;
+      this.selectedModes = [];
+    }
   }
-
-  onChangedCheckox($event, mode: ModeListDto) {
+  onChangedCheckbox($event, mode: ModeListDto) {
     const index = this.selectedModes.findIndex(x => x === mode);
-    if (index === -1) {
+    if ($event.target.checked) {
       this.selectedModes.push(mode);
     } else {
-      this.selectedModes.splice(index, 1);
+      this.selectedModes.splice($event.target, 1);
     }
+    console.log(this.selectedModes);
   }
 
   getCheckedRoles(): string[] {
@@ -126,6 +139,7 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
     this.saving = true;
     this.isLoading = true;
     this.user.roleNames = this.getCheckedRoles();
+
     this.user.userModes = this.selectedModes.map(mode => {
       const userModeInput = new UserModeListDto();
       userModeInput.modeId = mode.id;

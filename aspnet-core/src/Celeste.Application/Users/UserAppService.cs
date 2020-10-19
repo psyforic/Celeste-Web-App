@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -36,6 +37,7 @@ namespace Celeste.Users
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
         private readonly UserModesManager _userModesManager;
+        private readonly IRepository<UserMode, Guid> _userModesRepository;
         private readonly IRepository<Role> _roleRepository;
         private readonly IRepository<User, long> _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
@@ -54,6 +56,7 @@ namespace Celeste.Users
             IAbpSession abpSession,
             IRepository<Tenant> tenantRepository,
         IWebHostEnvironment environment,
+        IRepository<UserMode, Guid> userModesRepository,
             LogInManager logInManager)
             : base(repository)
         {
@@ -67,6 +70,7 @@ namespace Celeste.Users
             _environment = environment;
             _userModesManager = userModesManager;
             _tenantRepository = tenantRepository;
+            _userModesRepository = userModesRepository;
         }
 
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
@@ -86,21 +90,6 @@ namespace Celeste.Users
             {
                 CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
             }
-
-            if (user.Id > 0)
-            {
-                if (input.UserModes != null && input.UserModes.Count > 0)
-                {
-                    foreach (var mode in input.UserModes)
-                    {
-                        var mappedMode = ObjectMapper.Map<UserMode>(mode);
-                        mappedMode.UserId = user.Id;
-                        await _userModesManager.CreateAsync(mappedMode);
-                    }
-                }
-            }
-
-
             CurrentUnitOfWork.SaveChanges();
 
             //send an email here
@@ -129,7 +118,7 @@ namespace Celeste.Users
         public async override Task<UserDto> GetAsync(EntityDto<long> input)
         {
 
-            var user = await _userRepository.GetAll().IgnoreQueryFilters().Include(x => x.Roles)
+            var user = await _userRepository.GetAll().Include(x => x.Roles)
             .Include(x => x.UserModes).ThenInclude(x => x.Mode).FirstOrDefaultAsync(x => x.Id == input.Id);
             var mappedUser = MapToEntityDto(user);
             return mappedUser;
@@ -139,19 +128,51 @@ namespace Celeste.Users
         public override async Task<UserDto> UpdateAsync(UserDto input)
         {
             CheckUpdatePermission();
-
             var user = await _userManager.GetUserByIdAsync(input.Id);
+            if (user != null)
+            {             
 
-            MapToEntity(input, user);
+                ObjectMapper.Map(input, user);
+                user.UserModes = null;
+                CheckErrors(await _userManager.UpdateAsync(user));
+                await CurrentUnitOfWork.SaveChangesAsync();
+                if (user.Id > 0)
+                {
 
-            CheckErrors(await _userManager.UpdateAsync(user));
+                    if (input.UserModes != null && input.UserModes.Count > 0)
+                    {
+                        foreach (var mode in input.UserModes)
+                        {
+                            if (await _userModesRepository.FirstOrDefaultAsync(x => x.Id.Equals(mode.Id)) == null)
+                            {
+                                var mappedMode = ObjectMapper.Map<UserMode>(mode);
+                                mappedMode.UserId = user.Id;
+                                await _userModesManager.CreateAsync(mappedMode);
+                            }
+                        }
+                    }
 
-            if (input.RoleNames != null)
-            {
-                CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
+                    var userModes = await _userModesRepository.GetAll().Where(X => X.UserId == user.Id).Select(x => x.Id).ToListAsync();
+                    if (userModes.Count > 0)
+                    {
+                        foreach (var userMode in userModes)
+                        {
+                            if (input.UserModes.Any(x => x.Id.Equals(userMode)))
+                            {
+                                await _userModesRepository.DeleteAsync(userMode);
+                            }
+                        }
+                    }
+                }
+
+                if (input.RoleNames != null)
+                {
+                    CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
+                }
+                return ObjectMapper.Map<UserDto>(user);
             }
-
-            return await GetAsync(input);
+            throw new UserFriendlyException("User Not Found");
+            
         }
 
         public override async Task DeleteAsync(EntityDto<long> input)
