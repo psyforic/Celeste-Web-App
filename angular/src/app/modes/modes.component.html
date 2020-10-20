@@ -32,7 +32,7 @@
                                     <td>{{ mode.command }}</td>
                                     <td>
                                         <div ngbDropdown class="dropdown" placement="bottom-right">
-                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle> Select Action</button>
+                                            <button class="btn btn-success dropdown-toggle" *ngIf="" ngbDropdownToggle>Select Action</button>
                                             <div ngbDropdownMenu>
                                                 <a href="javascript:void(0);" class="dropdown-item" (click)="editMode(mode)">Assign To User(s)</a>
                                                 <a href="javascript:void(0);" class="dropdown-item" (click)="delete(mode)">Delete</a>

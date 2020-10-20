@@ -1,8 +1,11 @@
-import { Component, Injector } from '@angular/core';
+// import { ForgotPasswordDialogComponent } from '../forgot-password-dialog/forgot-passwords.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Injector, ViewChild } from '@angular/core';
 import { AbpSessionService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   templateUrl: './login.component.html',
@@ -10,13 +13,16 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
   animations: [accountModuleAnimation()]
 })
 export class LoginComponent extends AppComponentBase {
+  // @ViewChild('forgotPasswordModal', { static: false }) showForgotPassword: ForgotPasswordDialogComponent;
   submitting = false;
   enabled = false;
   isLoading = false;
   constructor(
     injector: Injector,
     public authService: AppAuthService,
-    private _sessionService: AbpSessionService
+    private _sessionService: AbpSessionService,
+    private modalService: NgbModal,
+    private _modalService: BsModalService
   ) {
     super(injector);
   }
@@ -41,4 +47,8 @@ export class LoginComponent extends AppComponentBase {
       this.isLoading = false;
     });
   }
+  openModal() {
+   
+  }
+
 }

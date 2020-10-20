@@ -1,3 +1,4 @@
+
 import { AssignModeComponent } from './modes/assign-mode/assign-mode.component';
 import { ChartsModule } from './home/charts/charts.module';
 import { EditModeDialogComponent } from './modes/edit-mode/edit-mode-dialog.component';

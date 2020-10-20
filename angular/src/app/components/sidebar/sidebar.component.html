@@ -1,4 +1,3 @@
-
 <div class="logo top-background">
     <!-- <a href="https://celestedaylight.co.za/" class="simple-text logo-mini">
       <div class="logo-img">
@@ -12,7 +11,11 @@
 <div class="sidebar-wrapper">
     <ul class="nav">
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-            <a [routerLink]="[menuItem.path]">
+            <a [routerLink]="[menuItem.path]" *ngIf="menuItem.title !== 'Users'">
+                <i class="now-ui-icons {{menuItem.icon}}"></i>
+                <p style="font-weight:bolder;">{{menuItem.title}}</p>
+            </a>
+            <a [routerLink]="[menuItem.path]" *ngIf="menuItem.title === 'Users' && isGranted('Pages.Users')">
                 <i class="now-ui-icons {{menuItem.icon}}"></i>
                 <p style="font-weight:bolder;">{{menuItem.title}}</p>
             </a>

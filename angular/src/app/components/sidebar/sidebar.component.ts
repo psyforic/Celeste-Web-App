@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AppComponentBase } from '@shared/app-component-base';
+import { Component, Injector, OnInit } from '@angular/core';
 
 declare interface RouteInfo {
   path: string;
@@ -18,10 +19,12 @@ export const ROUTES: RouteInfo[] = [
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent extends AppComponentBase implements OnInit {
   menuItems: any[];
 
-  constructor() { }
+  constructor(injector: Injector) {
+    super(injector);
+  }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);

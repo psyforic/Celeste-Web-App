@@ -1,6 +1,6 @@
 import { AssignModeComponent } from './assign-mode/assign-mode.component';
 import { EditModeDialogComponent } from './edit-mode/edit-mode-dialog.component';
-import { ModeListDto, ModeServiceProxy, IsTenantAvailableInput } from './../../shared/service-proxies/service-proxies';
+import { ModeListDto, ModeServiceProxy, IsTenantAvailableInput, UserServiceProxy, UserDto, GetCurrentLoginInformationsOutput, GetRoleForEditOutput } from './../../shared/service-proxies/service-proxies';
 import { Component, Injector } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
@@ -28,18 +28,27 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
   isLoading = false;
   modes: ModeListDto[] = [];
   keyword = '';
+  users: UserDto[] = [];
   isActive: boolean | null;
   constructor(
     private modalService: NgbModal,
     private _modalService: BsModalService,
+    private _userService: UserServiceProxy,
     injector: Injector,
     private _ModeService: ModeServiceProxy
   ) {
     super(injector);
   }
+  getUserRole() {
+    this.isLoading = true;
+    // this._userService.GetCurrentLoginInformationsOutput(this.appSession.userId).subscribe(result => {
+    //   console.log(result);
+    // });
 
+    // console.log(this.isUserChecked());
+  }
   createMode(): void {
-    this.showCreateOrEditUserDialog();
+ //   this.showCreateOrEditUserDialog();
   }
 
   editMode(mode: ModeListDto): void {

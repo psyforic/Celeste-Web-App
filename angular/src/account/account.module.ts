@@ -1,4 +1,5 @@
 
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +33,7 @@ import { TenantLoginComponent } from './tenant-login/tenant-login.component';
         ServiceProxyModule,
         AccountRoutingModule,
         ModalModule.forChild()
+        
     ],
     declarations: [
         AccountComponent,
@@ -49,7 +51,7 @@ import { TenantLoginComponent } from './tenant-login/tenant-login.component';
     entryComponents: [
         // tenant
         TenantChangeDialogComponent
-    ]
+    ],
 })
 export class AccountModule {
 
