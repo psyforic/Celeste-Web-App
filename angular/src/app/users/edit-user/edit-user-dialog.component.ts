@@ -87,7 +87,7 @@ export class EditUserDialogComponent extends AppComponentBase
     } else {
       this.selectedModes.splice(index, 1);
     }
-    // console.log(this.selectedModes);
+
   }
 
   getCheckedRoles(): string[] {
@@ -107,7 +107,6 @@ export class EditUserDialogComponent extends AppComponentBase
         modes.push(mode);
       }
     });
-    console.log(modes);
     return modes;
   }
 
@@ -116,7 +115,6 @@ export class EditUserDialogComponent extends AppComponentBase
     this.isLoading = true;
     this.user.roleNames = this.getCheckedRoles();
     this.user.userModes = this.selectedModes;
-    console.log(this.user);
     this._userService
       .update(this.user)
       .pipe(
@@ -156,7 +154,6 @@ export class EditUserDialogComponent extends AppComponentBase
       })
       ).subscribe((result: any) => {
         this.modes = result.items;
-        console.log(this.modes);
       });
   }
   protected delete(entity: ModeListDto): void {

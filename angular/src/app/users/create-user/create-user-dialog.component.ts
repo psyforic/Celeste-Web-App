@@ -171,7 +171,6 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
     finishedCallback: Function
   ): void {
 
-    console.log(this.modes);
     request.keyword = this.keyword;
     request.isActive = this.isActive;
     this.user.isActive = true;

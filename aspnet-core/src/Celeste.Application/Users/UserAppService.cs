@@ -157,9 +157,9 @@ namespace Celeste.Users
                     {
                         foreach (var userMode in userModes)
                         {
-                            if (input.UserModes.Any(x => x.Id.Equals(userMode)))
+                            if (!input.UserModes.Any(x => x.Id.Equals(userMode)))
                             {
-                                await _userModesRepository.DeleteAsync(userMode);
+                                await _userModesRepository.HardDeleteAsync(x =>x.Id.Equals(userMode));
                             }
                         }
                     }
