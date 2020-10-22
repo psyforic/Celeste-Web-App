@@ -1,5 +1,7 @@
+import { UserDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { Component, Injector, OnInit } from '@angular/core';
+import { AbpSessionService } from 'abp-ng2-module';
 
 declare interface RouteInfo {
   path: string;
@@ -21,18 +23,21 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent extends AppComponentBase implements OnInit {
   menuItems: any[];
-
-  constructor(injector: Injector) {
+  user: any;
+  constructor(injector: Injector,
+    private _sessionService: AbpSessionService) {
     super(injector);
   }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
   }
+
   isMobileMenu() {
     if (window.innerWidth > 991) {
       return false;
     }
     return true;
-  };
+  }
+
 }

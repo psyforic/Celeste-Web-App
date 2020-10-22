@@ -21,6 +21,7 @@ import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
 import { RegisterTenantComponent } from './register-tenant/register-tenant.component';
 import { TenantLoginComponent } from './tenant-login/tenant-login.component';
+import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-password-dialog/forgot-password-dialog.component';
 
 @NgModule({
     imports: [
@@ -33,7 +34,6 @@ import { TenantLoginComponent } from './tenant-login/tenant-login.component';
         ServiceProxyModule,
         AccountRoutingModule,
         ModalModule.forChild()
-        
     ],
     declarations: [
         AccountComponent,
@@ -52,6 +52,7 @@ import { TenantLoginComponent } from './tenant-login/tenant-login.component';
         // tenant
         TenantChangeDialogComponent
     ],
+
 })
 export class AccountModule {
 

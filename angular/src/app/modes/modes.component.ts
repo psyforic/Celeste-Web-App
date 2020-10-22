@@ -1,12 +1,15 @@
+import { AppComponentBase } from '@shared/app-component-base';
+import { AbpSessionService } from 'abp-ng2-module';
 import { AssignModeComponent } from './assign-mode/assign-mode.component';
 import { EditModeDialogComponent } from './edit-mode/edit-mode-dialog.component';
-import { ModeListDto, ModeServiceProxy, IsTenantAvailableInput, UserServiceProxy, UserDto, GetCurrentLoginInformationsOutput, GetRoleForEditOutput } from './../../shared/service-proxies/service-proxies';
-import { Component, Injector } from '@angular/core';
+import { ModeListDto, ModeServiceProxy, IsTenantAvailableInput, UserServiceProxy, UserDto, GetCurrentLoginInformationsOutput, GetRoleForEditOutput, RoleDto } from './../../shared/service-proxies/service-proxies';
+import { Component, Injector, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
 import { finalize } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
+import { finished } from 'stream';
 
 
 class PagedModesRequestDto extends PagedRequestDto {
@@ -21,16 +24,22 @@ class PagedModesRequestDto extends PagedRequestDto {
   animations: [appModuleAnimation()],
   providers: [ModeServiceProxy]
 })
-export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
-  p: number = 1;
+export class ModesComponent extends PagedListingComponentBase<ModeListDto>{
+  p = 1;
   closeResult = '';
   currentOrientation = 'horizontal';
   isLoading = false;
+  isAdmin = false;
   modes: ModeListDto[] = [];
   keyword = '';
   users: UserDto[] = [];
+  user: UserDto;
+  currentUser: number;
+  roleNames: any[] = [];
+
   isActive: boolean | null;
   constructor(
+    private _sessionService: AbpSessionService,
     private modalService: NgbModal,
     private _modalService: BsModalService,
     private _userService: UserServiceProxy,
@@ -39,23 +48,41 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
   ) {
     super(injector);
   }
-  getUserRole() {
-    this.isLoading = true;
-    // this._userService.GetCurrentLoginInformationsOutput(this.appSession.userId).subscribe(result => {
-    //   console.log(result);
-    // });
-
-    // console.log(this.isUserChecked());
+  // ngOnInit() {
+  //   this.getUserId();
+  // }
+  isUserChecked(): any {
+    throw new Error('Method not implemented.');
   }
   createMode(): void {
- //   this.showCreateOrEditUserDialog();
+    //   this.showCreateOrEditUserDialog();
   }
-
+  getUserId(userId: number) {
+    console.log(userId);
+    this._userService
+      .get(this.currentUser)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe((result: UserDto) => {
+        this.roleNames = result.roleNames;
+        console.log(this.roleNames.toString());
+        if (this.roleNames.includes('ADMIN', 0)) {
+          this.isAdmin = true;
+          console.log(this.isAdmin);
+        } else {
+          this.isAdmin = false;
+          console.log(this.isAdmin);
+        }
+      });
+  }
   editMode(mode: ModeListDto): void {
     this.showCreateOrEditUserDialog(mode.id);
   }
   // tslint:disable-next-line: member-ordering
-  protected delete(entity: ModeListDto): void {
+  delete(entity: ModeListDto): void {
     abp.message.confirm(
       'You want to Delete ' + entity.name + '?', '',
       (result: boolean) => {
@@ -81,11 +108,14 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
     this.isLoading = true;
     request.keyword = this.keyword;
     request.isActive = this.isActive;
+    this.currentUser = this._sessionService.userId;
+    this.getUserId(this.currentUser);
     this._ModeService.getAll(request.maxResultCount, request.skipCount)
       .pipe(
         finalize(() => {
           finishedCallback();
           this.isLoading = false;
+          // console.log(this.currentUser);
         })
       )
       .subscribe((result: any) => {
@@ -119,6 +149,4 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto> {
       this.refresh();
     });
   }
-
-
 }

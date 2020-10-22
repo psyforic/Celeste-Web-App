@@ -38,7 +38,18 @@ export class EditUserDialogComponent extends AppComponentBase
   checkedModesMap: { mode: ModeListDto };
   selectedModes: UserModeListDto[] = [];
   id: number;
+  provinces = [
 
+    { id: 'Eastern Cape', name: 'Eastern Cape' },
+    { id: 'Free State', name: 'Free State' },
+    { id: 'Gauteng', name: 'Gauteng' },
+    { id: 'KwaZulu-Natal', name: 'KwaZulu-Natal' },
+    { id: 'Limpopo', name: 'Limpopo' },
+    { id: 'Mpumalanga', name: 'Mpumalanga' },
+    { id: 'Northern Cape', name: 'Northern Cape' },
+    { id: 'North West', name: 'North West' },
+    { id: 'Western Cape', name: 'Western Cape' },
+  ];
   @Output() onSave = new EventEmitter<any>();
 
   constructor(

@@ -1,3 +1,5 @@
+import { AccountModule } from './../account/account.module';
+import { ForgotPasswordDialogComponent } from 'account/forgot-password-dialog/forgot-password-dialog/forgot-password-dialog.component';
 
 import { AssignModeComponent } from './modes/assign-mode/assign-mode.component';
 import { ChartsModule } from './home/charts/charts.module';
@@ -69,6 +71,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     EditModeDialogComponent,
     ConfirmationDialogComponent,
     AssignModeComponent,
+    ForgotPasswordDialogComponent,
 
     //
     HelpComponent,
@@ -92,7 +95,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,
-    NgbModule
+    NgbModule,
+    AccountModule
   ],
   providers: [ConfirmationDialogService],
   entryComponents: [
@@ -108,6 +112,9 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     ResetPasswordDialogComponent,
     ConfirmationDialogComponent,
     AssignModeComponent
+  ],
+  exports: [
+    ForgotPasswordDialogComponent
   ],
 })
 export class AppModule { }

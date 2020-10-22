@@ -55,8 +55,6 @@ class PagedModesRequestDto extends PagedRequestDto {
           });
       }
 
-
-
       protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
       }
       protected delete(entity: ModeListDto): void {

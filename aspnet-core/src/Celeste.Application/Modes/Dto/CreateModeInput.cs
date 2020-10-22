@@ -14,5 +14,6 @@ namespace Celeste.Modes.Dto
         public string Name { get; set; }
         public string Command { get; set; }
         public string Icon { get; set; }
+        public DateTime CreationTime { get; set; }
     }
 }

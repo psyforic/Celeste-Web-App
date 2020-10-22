@@ -141,6 +141,120 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
+export class CelesteDashboardServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    getTotalUsers(): Observable<UserDto> {
+        let url_ = this.baseUrl + "/api/services/app/CelesteDashboard/GetTotalUsers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTotalUsers(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTotalUsers(<any>response_);
+                } catch (e) {
+                    return <Observable<UserDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UserDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetTotalUsers(response: HttpResponseBase): Observable<UserDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = UserDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UserDto>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    getWeeklyModes(): Observable<ModeStatsDtoListResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/CelesteDashboard/GetWeeklyModes";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetWeeklyModes(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetWeeklyModes(<any>response_);
+                } catch (e) {
+                    return <Observable<ModeStatsDtoListResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModeStatsDtoListResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetWeeklyModes(response: HttpResponseBase): Observable<ModeStatsDtoListResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModeStatsDtoListResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModeStatsDtoListResultDto>(<any>null);
+    }
+}
+
+@Injectable()
 export class ConfigurationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -305,6 +419,63 @@ export class ModeServiceProxy {
     }
 
     protected processAssignModeToUsers(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param tenantId (optional) 
+     * @param modeId (optional) 
+     * @return Success
+     */
+    addSelectedMode(tenantId: number | undefined, modeId: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Mode/AddSelectedMode?";
+        if (tenantId === null)
+            throw new Error("The parameter 'tenantId' cannot be null.");
+        else if (tenantId !== undefined)
+            url_ += "tenantId=" + encodeURIComponent("" + tenantId) + "&";
+        if (modeId === null)
+            throw new Error("The parameter 'modeId' cannot be null.");
+        else if (modeId !== undefined)
+            url_ += "modeId=" + encodeURIComponent("" + modeId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddSelectedMode(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddSelectedMode(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAddSelectedMode(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -3284,49 +3455,6 @@ export interface IRegisterOutput {
     canLogin: boolean;
 }
 
-export class ChangeUiThemeInput implements IChangeUiThemeInput {
-    theme: string;
-
-    constructor(data?: IChangeUiThemeInput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.theme = _data["theme"];
-        }
-    }
-
-    static fromJS(data: any): ChangeUiThemeInput {
-        data = typeof data === 'object' ? data : {};
-        let result = new ChangeUiThemeInput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["theme"] = this.theme;
-        return data; 
-    }
-
-    clone(): ChangeUiThemeInput {
-        const json = this.toJSON();
-        let result = new ChangeUiThemeInput();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IChangeUiThemeInput {
-    theme: string;
-}
-
 export class ModeListDto implements IModeListDto {
     startTime: string | undefined;
     endTime: string | undefined;
@@ -3388,6 +3516,333 @@ export interface IModeListDto {
     command: string | undefined;
     icon: string | undefined;
     id: string;
+}
+
+export class UserModeListDto implements IUserModeListDto {
+    tenantId: number;
+    modeId: string;
+    userId: number;
+    mode: ModeListDto;
+    id: string;
+
+    constructor(data?: IUserModeListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.tenantId = _data["tenantId"];
+            this.modeId = _data["modeId"];
+            this.userId = _data["userId"];
+            this.mode = _data["mode"] ? ModeListDto.fromJS(_data["mode"]) : <any>undefined;
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserModeListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserModeListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["tenantId"] = this.tenantId;
+        data["modeId"] = this.modeId;
+        data["userId"] = this.userId;
+        data["mode"] = this.mode ? this.mode.toJSON() : <any>undefined;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): UserModeListDto {
+        const json = this.toJSON();
+        let result = new UserModeListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserModeListDto {
+    tenantId: number;
+    modeId: string;
+    userId: number;
+    mode: ModeListDto;
+    id: string;
+}
+
+export class UserDto implements IUserDto {
+    userName: string;
+    name: string;
+    surname: string;
+    emailAddress: string;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+    roleNames: string[] | undefined;
+    address: string | undefined;
+    city: string | undefined;
+    province: string | undefined;
+    suburb: string | undefined;
+    postalCode: string | undefined;
+    cellphoneNumber: string | undefined;
+    userModes: UserModeListDto[] | undefined;
+    id: number;
+
+    constructor(data?: IUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userName = _data["userName"];
+            this.name = _data["name"];
+            this.surname = _data["surname"];
+            this.emailAddress = _data["emailAddress"];
+            this.isActive = _data["isActive"];
+            this.fullName = _data["fullName"];
+            this.lastLoginTime = _data["lastLoginTime"] ? moment(_data["lastLoginTime"].toString()) : <any>undefined;
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            if (Array.isArray(_data["roleNames"])) {
+                this.roleNames = [] as any;
+                for (let item of _data["roleNames"])
+                    this.roleNames.push(item);
+            }
+            this.address = _data["address"];
+            this.city = _data["city"];
+            this.province = _data["province"];
+            this.suburb = _data["suburb"];
+            this.postalCode = _data["postalCode"];
+            this.cellphoneNumber = _data["cellphoneNumber"];
+            if (Array.isArray(_data["userModes"])) {
+                this.userModes = [] as any;
+                for (let item of _data["userModes"])
+                    this.userModes.push(UserModeListDto.fromJS(item));
+            }
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["emailAddress"] = this.emailAddress;
+        data["isActive"] = this.isActive;
+        data["fullName"] = this.fullName;
+        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        if (Array.isArray(this.roleNames)) {
+            data["roleNames"] = [];
+            for (let item of this.roleNames)
+                data["roleNames"].push(item);
+        }
+        data["address"] = this.address;
+        data["city"] = this.city;
+        data["province"] = this.province;
+        data["suburb"] = this.suburb;
+        data["postalCode"] = this.postalCode;
+        data["cellphoneNumber"] = this.cellphoneNumber;
+        if (Array.isArray(this.userModes)) {
+            data["userModes"] = [];
+            for (let item of this.userModes)
+                data["userModes"].push(item.toJSON());
+        }
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): UserDto {
+        const json = this.toJSON();
+        let result = new UserDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserDto {
+    userName: string;
+    name: string;
+    surname: string;
+    emailAddress: string;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+    roleNames: string[] | undefined;
+    address: string | undefined;
+    city: string | undefined;
+    province: string | undefined;
+    suburb: string | undefined;
+    postalCode: string | undefined;
+    cellphoneNumber: string | undefined;
+    userModes: UserModeListDto[] | undefined;
+    id: number;
+}
+
+export class ModeStatsDto implements IModeStatsDto {
+    date: moment.Moment;
+    count: number;
+    day: number;
+
+    constructor(data?: IModeStatsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.date = _data["date"] ? moment(_data["date"].toString()) : <any>undefined;
+            this.count = _data["count"];
+            this.day = _data["day"];
+        }
+    }
+
+    static fromJS(data: any): ModeStatsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModeStatsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["date"] = this.date ? this.date.toISOString() : <any>undefined;
+        data["count"] = this.count;
+        data["day"] = this.day;
+        return data; 
+    }
+
+    clone(): ModeStatsDto {
+        const json = this.toJSON();
+        let result = new ModeStatsDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IModeStatsDto {
+    date: moment.Moment;
+    count: number;
+    day: number;
+}
+
+export class ModeStatsDtoListResultDto implements IModeStatsDtoListResultDto {
+    items: ModeStatsDto[] | undefined;
+
+    constructor(data?: IModeStatsDtoListResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(ModeStatsDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ModeStatsDtoListResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModeStatsDtoListResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ModeStatsDtoListResultDto {
+        const json = this.toJSON();
+        let result = new ModeStatsDtoListResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IModeStatsDtoListResultDto {
+    items: ModeStatsDto[] | undefined;
+}
+
+export class ChangeUiThemeInput implements IChangeUiThemeInput {
+    theme: string;
+
+    constructor(data?: IChangeUiThemeInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.theme = _data["theme"];
+        }
+    }
+
+    static fromJS(data: any): ChangeUiThemeInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ChangeUiThemeInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["theme"] = this.theme;
+        return data; 
+    }
+
+    clone(): ChangeUiThemeInput {
+        const json = this.toJSON();
+        let result = new ChangeUiThemeInput();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IChangeUiThemeInput {
+    theme: string;
 }
 
 export class ModeListDtoListResultDto implements IModeListDtoListResultDto {
@@ -3502,6 +3957,7 @@ export class CreateModeInput implements ICreateModeInput {
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
+    creationTime: moment.Moment;
     id: string;
 
     constructor(data?: ICreateModeInput) {
@@ -3520,6 +3976,7 @@ export class CreateModeInput implements ICreateModeInput {
             this.name = _data["name"];
             this.command = _data["command"];
             this.icon = _data["icon"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -3538,6 +3995,7 @@ export class CreateModeInput implements ICreateModeInput {
         data["name"] = this.name;
         data["command"] = this.command;
         data["icon"] = this.icon;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -3556,6 +4014,7 @@ export interface ICreateModeInput {
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
+    creationTime: moment.Moment;
     id: string;
 }
 
@@ -3565,6 +4024,8 @@ export class GetModeOutput implements IGetModeOutput {
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
+    fromDate: moment.Moment | undefined;
+    toDate: moment.Moment | undefined;
     id: string;
 
     constructor(data?: IGetModeOutput) {
@@ -3583,6 +4044,8 @@ export class GetModeOutput implements IGetModeOutput {
             this.name = _data["name"];
             this.command = _data["command"];
             this.icon = _data["icon"];
+            this.fromDate = _data["fromDate"] ? moment(_data["fromDate"].toString()) : <any>undefined;
+            this.toDate = _data["toDate"] ? moment(_data["toDate"].toString()) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -3601,6 +4064,8 @@ export class GetModeOutput implements IGetModeOutput {
         data["name"] = this.name;
         data["command"] = this.command;
         data["icon"] = this.icon;
+        data["fromDate"] = this.fromDate ? this.fromDate.toISOString() : <any>undefined;
+        data["toDate"] = this.toDate ? this.toDate.toISOString() : <any>undefined;
         data["id"] = this.id;
         return data; 
     }
@@ -3619,6 +4084,8 @@ export interface IGetModeOutput {
     name: string | undefined;
     command: string | undefined;
     icon: string | undefined;
+    fromDate: moment.Moment | undefined;
+    toDate: moment.Moment | undefined;
     id: string;
 }
 
@@ -5010,65 +5477,6 @@ export interface IExternalAuthenticateResultModel {
     waitingForActivation: boolean;
 }
 
-export class UserModeListDto implements IUserModeListDto {
-    tenantId: number;
-    modeId: string;
-    userId: number;
-    mode: ModeListDto;
-    id: string;
-
-    constructor(data?: IUserModeListDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.tenantId = _data["tenantId"];
-            this.modeId = _data["modeId"];
-            this.userId = _data["userId"];
-            this.mode = _data["mode"] ? ModeListDto.fromJS(_data["mode"]) : <any>undefined;
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): UserModeListDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserModeListDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["tenantId"] = this.tenantId;
-        data["modeId"] = this.modeId;
-        data["userId"] = this.userId;
-        data["mode"] = this.mode ? this.mode.toJSON() : <any>undefined;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): UserModeListDto {
-        const json = this.toJSON();
-        let result = new UserModeListDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUserModeListDto {
-    tenantId: number;
-    modeId: string;
-    userId: number;
-    mode: ModeListDto;
-    id: string;
-}
-
 export class CreateUserDto implements ICreateUserDto {
     userName: string;
     name: string;
@@ -5178,129 +5586,6 @@ export interface ICreateUserDto {
     cellphoneNumber: string | undefined;
     userModes: UserModeListDto[] | undefined;
     password: string;
-}
-
-export class UserDto implements IUserDto {
-    userName: string;
-    name: string;
-    surname: string;
-    emailAddress: string;
-    isActive: boolean;
-    fullName: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    creationTime: moment.Moment;
-    roleNames: string[] | undefined;
-    address: string | undefined;
-    city: string | undefined;
-    province: string | undefined;
-    suburb: string | undefined;
-    postalCode: string | undefined;
-    cellphoneNumber: string | undefined;
-    userModes: UserModeListDto[] | undefined;
-    id: number;
-
-    constructor(data?: IUserDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.userName = _data["userName"];
-            this.name = _data["name"];
-            this.surname = _data["surname"];
-            this.emailAddress = _data["emailAddress"];
-            this.isActive = _data["isActive"];
-            this.fullName = _data["fullName"];
-            this.lastLoginTime = _data["lastLoginTime"] ? moment(_data["lastLoginTime"].toString()) : <any>undefined;
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            if (Array.isArray(_data["roleNames"])) {
-                this.roleNames = [] as any;
-                for (let item of _data["roleNames"])
-                    this.roleNames.push(item);
-            }
-            this.address = _data["address"];
-            this.city = _data["city"];
-            this.province = _data["province"];
-            this.suburb = _data["suburb"];
-            this.postalCode = _data["postalCode"];
-            this.cellphoneNumber = _data["cellphoneNumber"];
-            if (Array.isArray(_data["userModes"])) {
-                this.userModes = [] as any;
-                for (let item of _data["userModes"])
-                    this.userModes.push(UserModeListDto.fromJS(item));
-            }
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): UserDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["userName"] = this.userName;
-        data["name"] = this.name;
-        data["surname"] = this.surname;
-        data["emailAddress"] = this.emailAddress;
-        data["isActive"] = this.isActive;
-        data["fullName"] = this.fullName;
-        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        if (Array.isArray(this.roleNames)) {
-            data["roleNames"] = [];
-            for (let item of this.roleNames)
-                data["roleNames"].push(item);
-        }
-        data["address"] = this.address;
-        data["city"] = this.city;
-        data["province"] = this.province;
-        data["suburb"] = this.suburb;
-        data["postalCode"] = this.postalCode;
-        data["cellphoneNumber"] = this.cellphoneNumber;
-        if (Array.isArray(this.userModes)) {
-            data["userModes"] = [];
-            for (let item of this.userModes)
-                data["userModes"].push(item.toJSON());
-        }
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): UserDto {
-        const json = this.toJSON();
-        let result = new UserDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUserDto {
-    userName: string;
-    name: string;
-    surname: string;
-    emailAddress: string;
-    isActive: boolean;
-    fullName: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    creationTime: moment.Moment;
-    roleNames: string[] | undefined;
-    address: string | undefined;
-    city: string | undefined;
-    province: string | undefined;
-    suburb: string | undefined;
-    postalCode: string | undefined;
-    cellphoneNumber: string | undefined;
-    userModes: UserModeListDto[] | undefined;
-    id: number;
 }
 
 export class RoleDtoListResultDto implements IRoleDtoListResultDto {

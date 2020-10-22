@@ -1,3 +1,5 @@
+import { AppAuthService } from '@shared/auth/app-auth.service';
+import { AbpSessionService } from 'abp-ng2-module';
 import { ITenantDto, UserModeListDto } from './../../../shared/service-proxies/service-proxies';
 import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
@@ -26,6 +28,7 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
   mode = new ModeListDto();
   modes = new UserModeListDto();
   id: any;
+  hasAccess: boolean;
   user = new UserDto();
   users: UserDto[] = [];
   userIds: number[] = [];
@@ -34,6 +37,8 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
     injector: Injector,
     public _modeService: ModeServiceProxy,
     private _userService: UserServiceProxy,
+    private _sessionService: AbpSessionService,
+    private auth: AppAuthService,
     public bsModalRef: BsModalRef
   ) {
     super(injector);
@@ -60,6 +65,7 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
         this.onSave.emit();
       });
   }
+
   getModes() {
     this._modeService.get(this.id).subscribe((result) => {
       this.mode = result;

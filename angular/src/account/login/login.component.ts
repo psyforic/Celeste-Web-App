@@ -6,6 +6,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { ForgotPasswordDialogComponent } from 'account/forgot-password-dialog/forgot-password-dialog/forgot-password-dialog.component';
 
 @Component({
   templateUrl: './login.component.html',
@@ -13,7 +14,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
   animations: [accountModuleAnimation()]
 })
 export class LoginComponent extends AppComponentBase {
-  // @ViewChild('forgotPasswordModal', { static: false }) showForgotPassword: ForgotPasswordDialogComponent;
+
   submitting = false;
   enabled = false;
   isLoading = false;
@@ -48,7 +49,14 @@ export class LoginComponent extends AppComponentBase {
     });
   }
   openModal() {
-   
+    this._modalService.show(
+      ForgotPasswordDialogComponent,
+      {
+        class: 'modal-lg',
+        initialState: {
+        },
+      }
+    );
   }
-
+  refresh() { }
 }
