@@ -1,10 +1,11 @@
 <div id="chart">
-    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis" [dataLabels]="chartOptions.dataLabels" [grid]="chartOptions.grid" [title]="chartOptions.title"></apx-chart>
+    <apx-chart [series]="chartOptions.series" [stroke]="chartOptions.stroke" [chart]="chartOptions.chart" [yaxis]="chartOptions.yaxis" [fill]="chartOptions.fill" [xaxis]="chartOptions.xaxis" [dataLabels]="chartOptions.dataLabels" [markers]="chartOptions.markers"
+        [grid]="chartOptions.grid" [title]="chartOptions.title"></apx-chart>
 
     <div class="col-lg-12 mt-4" *ngIf="modes.length == 0 && !isLoading">
         <div class="text-center text-primary">
             <i class="fa fa-hourglass-3 fa-5x">
-      </i>
+            </i>
             <h4 class="text-center">No Data</h4>
         </div>
     </div>

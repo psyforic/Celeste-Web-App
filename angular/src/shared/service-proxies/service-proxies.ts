@@ -3701,9 +3701,10 @@ export interface IUserDto {
 }
 
 export class ModeStatsDto implements IModeStatsDto {
+    name: string | undefined;
+    position: number;
     date: moment.Moment;
     count: number;
-    day: number;
 
     constructor(data?: IModeStatsDto) {
         if (data) {
@@ -3716,9 +3717,10 @@ export class ModeStatsDto implements IModeStatsDto {
 
     init(_data?: any) {
         if (_data) {
+            this.name = _data["name"];
+            this.position = _data["position"];
             this.date = _data["date"] ? moment(_data["date"].toString()) : <any>undefined;
             this.count = _data["count"];
-            this.day = _data["day"];
         }
     }
 
@@ -3731,9 +3733,10 @@ export class ModeStatsDto implements IModeStatsDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["position"] = this.position;
         data["date"] = this.date ? this.date.toISOString() : <any>undefined;
         data["count"] = this.count;
-        data["day"] = this.day;
         return data; 
     }
 
@@ -3746,9 +3749,10 @@ export class ModeStatsDto implements IModeStatsDto {
 }
 
 export interface IModeStatsDto {
+    name: string | undefined;
+    position: number;
     date: moment.Moment;
     count: number;
-    day: number;
 }
 
 export class ModeStatsDtoListResultDto implements IModeStatsDtoListResultDto {

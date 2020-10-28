@@ -48,7 +48,6 @@ export class EditModeDialogComponent extends AppComponentBase
   }
 
   save(): void {
-
     this.saving = true;
     this.isLoading = true;
    
@@ -71,7 +70,7 @@ export class EditModeDialogComponent extends AppComponentBase
       this.mode = result;
     });
   }
-  getUsers() {               
+  getUsers() {
 
     this.isLoading = true;
     this._userService.getAllUsers()

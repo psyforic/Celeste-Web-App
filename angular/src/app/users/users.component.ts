@@ -101,16 +101,23 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     this.showCreateOrEditUserDialog(user.id);
   }
   delete(user: UserDto): void {
-    this.confirmationDialog.confirm('Delete user', 'Are you sure you want to delete ' + user.fullName)
-      .then((confirmed) => {
-        if (confirmed) {
-          this._userService.delete(user.id).subscribe(() => {
-            _.remove(this.users, user);
-            this.refresh();
-          });
+    this.isLoading = true;
+    abp.message.confirm(
+      'You want to Delete ' + user.fullName + '?', '',
+      (result: boolean) => {
+        if (result) {
+          this._userService.delete(user.id)
+            .pipe(finalize(() => {
+              this.isLoading = false;
+            }))
+            .subscribe(() => {
+              _.remove(this.users, user);
+              abp.notify.success('Deleted Successfully');
+              this.refresh();
+            });
         }
-      });
-
+      }
+    );
   }
 
 

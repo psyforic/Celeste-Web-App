@@ -59,8 +59,6 @@ namespace Celeste.EntityFrameworkCore.Seed.Host
                     {
                       Command="<<f00",
                       Name="Therapy",
-                      StartTime="_",
-                      EndTime="_",
                     },
                 };
                 _context.Modes.AddRange(modes);

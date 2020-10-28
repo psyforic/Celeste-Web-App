@@ -149,4 +149,5 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto>{
       this.refresh();
     });
   }
+
 }

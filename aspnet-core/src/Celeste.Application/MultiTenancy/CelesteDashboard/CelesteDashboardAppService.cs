@@ -42,9 +42,10 @@ namespace Celeste.MultiTenancy.CelesteDashboard
         public async Task<ListResultDto<ModeStatsDto>> GetWeeklyModes()
         {
             List<ModeStatsDto> weekDay = new List<ModeStatsDto>();
-            for (int i = 0; i < 7; i++)
+            var modeNames = new string[] { "Sunrise", "Mid-Morning", "Mid-Day", "Sunset", "Therapy" };
+            for (int i = 0; i < modeNames.Length; i++)
             {
-                var day = new ModeStatsDto { Day = i };
+                var day = new ModeStatsDto { Name = modeNames[i] };
                 weekDay.Add(day);
             }
             var modeStats = await _modeStatsRepository.GetAll()
@@ -55,8 +56,8 @@ namespace Celeste.MultiTenancy.CelesteDashboard
             {
                 foreach (var item in modeStats)
                 {
-                    weekDay.FirstOrDefault(x => x.Day == (int)item.Time.DayOfWeek).Count += 1;
-                    weekDay.FirstOrDefault(x => x.Day == (int)item.Time.DayOfWeek).Date = item.Time;
+                    weekDay.FirstOrDefault(x => x.Name.Equals(item.Mode.Name)).Count += item.Count;
+                    weekDay.FirstOrDefault(x => x.Name.Equals(item.Mode.Name)).Date = item.Time;
                 }
             }
             return new ListResultDto<ModeStatsDto>(ObjectMapper.Map<List<ModeStatsDto>>(weekDay));
@@ -82,9 +83,6 @@ namespace Celeste.MultiTenancy.CelesteDashboard
         {
             throw new NotImplementedException();
         }
-
-
-
 
         /*  
            private async Task<List<ModeList>> GetModes()
