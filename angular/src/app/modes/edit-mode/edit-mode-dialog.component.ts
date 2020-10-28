@@ -48,23 +48,21 @@ export class EditModeDialogComponent extends AppComponentBase
   }
 
   save(): void {
-
     this.saving = true;
     this.isLoading = true;
-   
-    this._modeService
-      .update(this.mode)
-      .pipe(
-        finalize(() => {
-          this.saving = false;
-          this.isLoading = false;
-        })
-      )
-      .subscribe(() => {
-        this.notify.info(this.l('SavedSuccessfully'));
-        this.bsModalRef.hide();
-        this.onSave.emit();
-      });
+    // this._modeService
+    //   .update(this.mode)
+    //   .pipe(
+    //     finalize(() => {
+    //       this.saving = false;
+    //       this.isLoading = false;
+    //     })
+    //   )
+    //   .subscribe(() => {
+    //     this.notify.info(this.l('SavedSuccessfully'));
+    //     this.bsModalRef.hide();
+    //     this.onSave.emit();
+    //   });
   }
   getModes() {
     this._modeService.get(this.id).subscribe((result) => {
@@ -72,7 +70,6 @@ export class EditModeDialogComponent extends AppComponentBase
     });
   }
   getUsers() {
-
     this.isLoading = true;
     this._userService.getAllUsers()
       .pipe(finalize(() => {

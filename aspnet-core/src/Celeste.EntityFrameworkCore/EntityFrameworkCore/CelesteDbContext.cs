@@ -12,6 +12,7 @@ namespace Celeste.EntityFrameworkCore
     {
         /* Define a DbSet for each entity of the application */
         public DbSet<Mode> Modes { get; set; }
+        public DbSet<ModeStats> ModeStats { get; set; }
 
         public DbSet<UserMode> UserModes { get; set; }
         public CelesteDbContext(DbContextOptions<CelesteDbContext> options)
