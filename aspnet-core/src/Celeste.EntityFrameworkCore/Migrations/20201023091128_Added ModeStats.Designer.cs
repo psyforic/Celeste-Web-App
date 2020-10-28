@@ -4,14 +4,16 @@ using Celeste.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Celeste.Migrations
 {
     [DbContext(typeof(CelesteDbContext))]
-    partial class CelesteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201023091128_Added ModeStats")]
+    partial class AddedModeStats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
