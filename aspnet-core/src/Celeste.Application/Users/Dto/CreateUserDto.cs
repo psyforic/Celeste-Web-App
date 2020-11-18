@@ -42,9 +42,9 @@ namespace Celeste.Users.Dto
         public string CellphoneNumber { get; set; }
         public virtual List<UserModeListDto> UserModes { get; set; }
 
-        [Required]
-        [StringLength(AbpUserBase.MaxPlainPasswordLength)]
-        [DisableAuditing]
+        //[Required]
+        //[StringLength(AbpUserBase.MaxPlainPasswordLength)]
+        //[DisableAuditing]
         public string Password { get; set; }
 
         public void Normalize()

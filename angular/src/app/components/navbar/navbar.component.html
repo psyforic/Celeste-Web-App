@@ -47,12 +47,17 @@
         </li>
         <li class="nav-item" ngbDropdown>
           <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
+            <span>{{appSession.getShownLoginName()}}</span>
             <i class="now-ui-icons users_single-02"></i>
             <p>
               <span class="d-lg-none d-md-block">Account</span>
             </p>
           </a>
           <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a href="javascript:void(0)" class="dropdown-item" (click)="profile()">
+              <i class="fas fa-user" style="color: #035F58; right: 10%;"> </i>
+              <span>Profile</span>
+            </a>
             <div class="dropdown-divider"></div>
             <a href="javascript:void(0)" class="dropdown-item" (click)="logout()">
               <i class="fas fa-sign-out-alt" style="color: #035F58; right: 10%;"> </i>

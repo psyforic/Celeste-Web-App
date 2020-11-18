@@ -27,9 +27,9 @@ namespace Celeste.Authorization.Users
             var user = new User
             {
                 TenantId = tenantId,
-                UserName = AdminUserName,
-                Name = AdminUserName,
-                Surname = AdminUserName,
+                UserName = username,
+                Name = name,
+                Surname = surname,
                 EmailAddress = emailAddress,
                 Roles = new List<UserRole>()
             };

@@ -193,7 +193,7 @@
     & i{
       opacity: .5;
     }
-    
+
     @include transition-input-focus-color();
 
     .has-danger.input-group-focus &{

@@ -25,14 +25,21 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit 
     private fb: FormBuilder
   ) {
     super(injector);
+    this.initializeForm();
   }
 
   ngOnInit(): void {
-    this.initializeForm();
+    this.form_register.get('tenantName').valueChanges.subscribe(data => {
+      if (data) {
+          const domainControl = this.form_register.get('tenancyName');
+            data = data.trim();
+                domainControl.setValue(data.toString().replace(/ /g, '-').toLowerCase());
+            }
+        });
   }
   initializeForm() {
     this.form_register = this.fb.group({
-      name: ['', Validators.required],
+      tenantName: ['', Validators.required],
       tenancyName: ['', Validators.required],
       adminEmailAddress: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -55,7 +62,6 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit 
     };
   }
   save() {
-    // const tenancyName = (this.form_register.get('tenancyName').value).replace(/\s/g, '');
     this.saving = true;
     this.isLoading = true;
     this.tenant.email = this.form_register.get('adminEmailAddress').value;

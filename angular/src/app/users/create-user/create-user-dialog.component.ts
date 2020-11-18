@@ -48,17 +48,16 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
   defaultRoleCheckedStatus = false;
   defaultModeCheckedStatus = false;
   allModesChecked = false;
-  provinces = [
-
-    { id: 'Eastern Cape', name: 'Eastern Cape' },
-    { id: 'Free State', name: 'Free State' },
-    { id: 'Gauteng', name: 'Gauteng' },
-    { id: 'KwaZulu-Natal', name: 'KwaZulu-Natal' },
-    { id: 'Limpopo', name: 'Limpopo' },
-    { id: 'Mpumalanga', name: 'Mpumalanga' },
-    { id: 'Northern Cape', name: 'Northern Cape' },
-    { id: 'North West', name: 'North West' },
-    { id: 'Western Cape', name: 'Western Cape' },
+  provinces: string[] = [
+    'Eastern Cape',
+    'Free State',
+    'Gauteng',
+    'KwaZulu-Natal',
+    'Limpopo',
+    'Mpumalanga',
+    'Northern Cape',
+    'North West',
+    'Western Cape',
   ];
   passwordValidationErrors: Partial<AbpValidationError>[] = [
     {
@@ -143,9 +142,9 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
     this.user.userModes = this.selectedModes.map(mode => {
       const userModeInput = new UserModeListDto();
       userModeInput.modeId = mode.id;
-      console.log(mode);
       return userModeInput;
     });
+    this.user.password = '123qwe';
     this._userService
       .create(this.user)
       .pipe(
@@ -155,7 +154,7 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
         })
       )
       .subscribe(() => {
-        this.notify.info(this.l('SavedSuccessfully'));
+        this.notify.success(this.l('SavedSuccessfully'));
         this.bsModalRef.hide();
         this.onSave.emit();
       });

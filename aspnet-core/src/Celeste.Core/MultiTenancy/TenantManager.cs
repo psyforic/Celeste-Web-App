@@ -60,7 +60,8 @@ namespace Celeste.MultiTenancy
             _modeRepository = modeRepository;
 
         }
-        public async Task<int> CreateWithAdminUserAsync(string tenancyName,
+        public async Task<int> CreateWithAdminUserAsync(
+            string tenancyName,
             string name,
             string adminName,
             string adminSurname,
@@ -78,6 +79,10 @@ namespace Celeste.MultiTenancy
                 //Create tenant
                 var tenant = new Tenant(tenancyName, name)
                 {
+                    FirstName = adminName,
+                    LastName = adminSurname,
+                    Password = adminPassword,
+                    Email = adminEmailAddress,
                     Name = name,
                     IsActive = isActive,
                     ConnectionString = connectionString.IsNullOrWhiteSpace() ? null : SimpleStringCipher.Instance.Encrypt(connectionString)

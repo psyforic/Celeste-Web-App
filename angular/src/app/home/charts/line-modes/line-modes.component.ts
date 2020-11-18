@@ -41,7 +41,6 @@ export interface ChartOptions {
 export class LineModesComponent implements OnInit {
   @ViewChild('lineChart', { static: true }) chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   modeNames = [];
   modeCount = new Array<number>(5).fill(0, 0, 5);
   modes: ModeStatsDto[] = [];
@@ -59,10 +58,10 @@ export class LineModesComponent implements OnInit {
         }
       ],
       chart: {
-        height: 300,
+        height: 350,
         type: 'line',
         zoom: {
-          enabled: false
+          enabled: true
         }
       },
       dataLabels: {
@@ -81,7 +80,7 @@ export class LineModesComponent implements OnInit {
       markers: {
         size: 5,
         shape: 'circle',
-        colors:['#035F58', 'transparent']
+        colors: ['#035F58', 'transparent']
       },
       grid: {
         row: {
@@ -90,7 +89,8 @@ export class LineModesComponent implements OnInit {
         }
       },
       xaxis: {
-        categories: this.modeNames
+        type: 'category',
+        categories: this.modeNames,
       },
       yaxis: {
         min: 0
@@ -110,7 +110,7 @@ export class LineModesComponent implements OnInit {
           this.modes.forEach((mode, index) => {
             this.modeNames[index] = mode.name;
             this.modeCount[index] = mode.count;
-          })
+          });
         }
       });
   }

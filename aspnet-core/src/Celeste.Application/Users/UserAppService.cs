@@ -84,7 +84,7 @@ namespace Celeste.Users
             var tenant = await _tenantRepository.FirstOrDefaultAsync(user.TenantId.Value);
             await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
 
-            CheckErrors(await _userManager.CreateAsync(user, input.Password));
+            CheckErrors(await _userManager.CreateAsync(user,user.Password));
 
             if (input.RoleNames != null)
             {
@@ -109,7 +109,7 @@ namespace Celeste.Users
             body = body.Replace("#Link", link);
             if (tenant != null)
                 body = body.Replace("#Domain", tenant.TenancyName);
-            body = body.Replace("#Password", input.Password);
+            body = body.Replace("#Password", user.Password);
             body = body.Replace("#Username", input.UserName);
             Emailer.Send(to: input.EmailAddress, subject: "Celeste New Account!", body: body, isBodyHtml: true);
 

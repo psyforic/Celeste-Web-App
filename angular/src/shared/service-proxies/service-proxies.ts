@@ -4749,6 +4749,7 @@ export interface IApplicationInfoDto {
 export class UserLoginInfoDto implements IUserLoginInfoDto {
     name: string | undefined;
     surname: string | undefined;
+    roleNames: string[] | undefined;
     userName: string | undefined;
     emailAddress: string | undefined;
     id: number;
@@ -4766,6 +4767,11 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
         if (_data) {
             this.name = _data["name"];
             this.surname = _data["surname"];
+            if (Array.isArray(_data["roleNames"])) {
+                this.roleNames = [] as any;
+                for (let item of _data["roleNames"])
+                    this.roleNames.push(item);
+            }
             this.userName = _data["userName"];
             this.emailAddress = _data["emailAddress"];
             this.id = _data["id"];
@@ -4783,6 +4789,11 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
         data["surname"] = this.surname;
+        if (Array.isArray(this.roleNames)) {
+            data["roleNames"] = [];
+            for (let item of this.roleNames)
+                data["roleNames"].push(item);
+        }
         data["userName"] = this.userName;
         data["emailAddress"] = this.emailAddress;
         data["id"] = this.id;
@@ -4800,6 +4811,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
 export interface IUserLoginInfoDto {
     name: string | undefined;
     surname: string | undefined;
+    roleNames: string[] | undefined;
     userName: string | undefined;
     emailAddress: string | undefined;
     id: number;
@@ -5495,7 +5507,7 @@ export class CreateUserDto implements ICreateUserDto {
     postalCode: string | undefined;
     cellphoneNumber: string | undefined;
     userModes: UserModeListDto[] | undefined;
-    password: string;
+    password: string | undefined;
 
     constructor(data?: ICreateUserDto) {
         if (data) {
@@ -5589,7 +5601,7 @@ export interface ICreateUserDto {
     postalCode: string | undefined;
     cellphoneNumber: string | undefined;
     userModes: UserModeListDto[] | undefined;
-    password: string;
+    password: string | undefined;
 }
 
 export class RoleDtoListResultDto implements IRoleDtoListResultDto {

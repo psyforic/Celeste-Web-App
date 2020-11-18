@@ -1,49 +1,43 @@
 <form class="form-horizontal" autocomplete="off" #assignModeModal="ngForm" (ngSubmit)="save()">
-    <abp-modal-header [title]="'List of Users' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
-    <div class="main-content">
+    <abp-modal-header [title]="'Assign Mode to User(s)' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
         <div class="loading-spinner" *ngIf="isLoading">
             <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table">
-                    <table class="table table-responsive">
-                        <thead class=" text-primary">
-                            <th>
-                                Assign
-                            </th>
-                            <th>
-                                Username
-                            </th>
-                            <th>
-                                Full Name
-                            </th>
-                            <th>
-                                Email
-                            </th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p}; let i=index">
-                                <td>
-                                    <input type="checkbox" (change)="addToList($event,user.id)" [id]="'user_' +i" [checked]="isUserChecked(user.id)" />
-                                </td>
-                                <td>
-                                    {{user.userName}}
-                                </td>
-                                <td>
-                                    {{user.fullName}}
-                                </td>
-                                <td>
-                                    {{user.emailAddress}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="row content-end" *ngIf="p>1">
-                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                    </div>
-                </div>
-            </div>
+        <table class="table">
+            <thead class="row text-primary">
+                <th class="col-2">
+                    Assign
+                </th>
+                <th class="col-2">
+                    Username
+                </th>
+                <th class="col-4">
+                    Full Name
+                </th>
+                <th class="col-4">
+                    Email
+                </th>
+            </thead>
+            <tbody>
+                <tr class="row px-2" *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: p}; let i=index">
+                    <td class="col-2">
+                        <input type="checkbox" (change)="addToList($event,user.id)" [id]="'user_' +i" [checked]="isUserChecked(user.id)" />
+                    </td>
+                    <td class="col-2">
+                        {{user.userName}}
+                    </td>
+                    <td class="col-4">
+                        {{user.fullName}}
+                    </td>
+                    <td class="col-4">
+                        {{user.emailAddress}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row content-end" *ngIf="p>1">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
     <abp-modal-footer (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>

@@ -19,7 +19,7 @@ class PagedUsersRequestDto extends PagedRequestDto {
   providers: [ModeServiceProxy, UserServiceProxy]
 })
 export class AssignModeComponent extends AppComponentBase implements OnInit {
-  p: number = 1;
+  p = 1;
   keyword = '';
   isActive: boolean | null;
   active = false;
@@ -27,7 +27,7 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
   isLoading = false;
   mode = new ModeListDto();
   modes = new UserModeListDto();
-  id: any;
+  id: string;
   hasAccess: boolean;
   user = new UserDto();
   users: UserDto[] = [];
@@ -47,6 +47,10 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
   ngOnInit() {
     this.getModes();
     this.getUsers();
+    if (this.bsModalRef.content && this.bsModalRef.content.id) {
+      this.id = this.bsModalRef.content.id;
+    }
+
   }
   save(): void {
     this.saving = true;
@@ -106,7 +110,15 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
         this.isLoading = false;
       })
       ).subscribe((result) => {
-        this.users = result.items.filter(user => user.userModes.filter(m => m.modeId !== this.id).length === 0);
+        if (this.id) {
+          // result.items.forEach(x => {
+          //  console.log(x.userModes.map(m => {
+          //     return m.modeId;
+          //   }));
+          // });
+          // console.log(this.id);
+          this.users = result.items.filter(user => user.userModes.filter(m => m.modeId === this.id).length === 0);
+        }
 
       });
 

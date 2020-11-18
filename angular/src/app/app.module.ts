@@ -1,3 +1,4 @@
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { AccountModule } from './../account/account.module';
 import { ForgotPasswordDialogComponent } from 'account/forgot-password-dialog/forgot-password-dialog/forgot-password-dialog.component';
 
@@ -65,6 +66,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     EditUserDialogComponent,
     ChangePasswordComponent,
     ResetPasswordDialogComponent,
+    UserProfileComponent,
     // Modes
     ModesComponent,
     CreateModeDialogComponent,

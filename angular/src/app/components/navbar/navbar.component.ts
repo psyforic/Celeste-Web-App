@@ -55,7 +55,9 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
   logout(): void {
     this._authService.logout();
   }
-
+  profile(): void {
+    this.router.navigate(['app/users', this.appSession.userId]);
+  }
   getUser() {
     const id = this.appSession.userId;
     this._userService.get(id).subscribe((result) => {
@@ -66,7 +68,6 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
   collapse() {
     this.isCollapsed = !this.isCollapsed;
     const navbar = document.getElementsByTagName('nav')[0];
-    console.log(navbar);
     if (!this.isCollapsed) {
       navbar.classList.remove('navbar-transparent');
       navbar.classList.add('bg-white');

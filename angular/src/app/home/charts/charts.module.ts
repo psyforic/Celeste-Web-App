@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ChartsComponent } from './charts.component';
 import { LineModesComponent } from './line-modes/line-modes.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     NgApexchartsModule
   ],
   declarations: [

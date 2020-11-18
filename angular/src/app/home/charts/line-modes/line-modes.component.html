@@ -1,4 +1,7 @@
 <div id="chart">
+    <div class="loading-spinner" *ngIf="isLoading">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+      </div>
     <apx-chart [series]="chartOptions.series" [stroke]="chartOptions.stroke" [chart]="chartOptions.chart" [yaxis]="chartOptions.yaxis" [fill]="chartOptions.fill" [xaxis]="chartOptions.xaxis" [dataLabels]="chartOptions.dataLabels" [markers]="chartOptions.markers"
         [grid]="chartOptions.grid" [title]="chartOptions.title"></apx-chart>
 

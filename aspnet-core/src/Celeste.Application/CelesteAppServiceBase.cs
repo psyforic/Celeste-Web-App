@@ -6,6 +6,7 @@ using Abp.IdentityFramework;
 using Abp.Runtime.Session;
 using Celeste.Authorization.Users;
 using Celeste.MultiTenancy;
+using Celeste.Authorization.Roles;
 
 namespace Celeste
 {
@@ -15,7 +16,7 @@ namespace Celeste
     public abstract class CelesteAppServiceBase : ApplicationService
     {
         public TenantManager TenantManager { get; set; }
-
+        public RoleManager RolesManager { get; set; }
         public UserManager UserManager { get; set; }
 
         protected CelesteAppServiceBase()

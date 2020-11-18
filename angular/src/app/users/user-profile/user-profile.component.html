@@ -1,0 +1,286 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="loading-spinner" *ngIf="isLoading">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    </div>
+    <form
+  class="form-horizontal"
+  autocomplete="off"
+  #createUserModal="ngForm"
+  (ngSubmit)="save()"
+>
+<div class="row">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-header">
+              <div class="row">
+                  <div class="col-10">
+                      <h4 class="card-title">Profile of {{user?.fullName}}</h4>
+                  </div>
+
+              </div>
+          </div>
+          <div class="card-body">
+            <tabset [justified]="'center'">
+              <tab [heading]="'UserDetails' | localize" class="pt-3 px-2">
+                <div class="col-12">
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <input
+                        placeholder="Name"
+                        type="text"
+                        class="form-control w-100"
+                        name="name"
+                        id="name"
+                        required
+                        maxlength="32"
+                        [(ngModel)]="user.name"
+                        #nameModel="ngModel"
+                        #nameEl
+                      />
+                      <abp-validation-summary
+                        [control]="nameModel"
+                        [controlEl]="nameEl"
+                      ></abp-validation-summary>
+                    </div>
+                  </div>
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <input
+                        placeholder="Surname"
+                        type="text"
+                        class="form-control w-100"
+                        name="surname"
+                        id="surname"
+                        required
+                        maxlength="32"
+                        [(ngModel)]="user.surname"
+                        #surnameModel="ngModel"
+                        #surnameEl
+                      />
+                      <abp-validation-summary
+                        [control]="surnameModel"
+                        [controlEl]="surnameEl"
+                      >
+                      </abp-validation-summary>
+                    </div>
+                  </div>
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <input
+                        placeholder="UserName"
+                        type="text"
+                        class="form-control w-100"
+                        name="userName"
+                        id="userName"
+                        required
+                        minlength="2"
+                        maxlength="32"
+                        [(ngModel)]="user.userName"
+                        #userNameModel="ngModel"
+                        #userNameEl
+                      />
+                      <abp-validation-summary
+                        [control]="userNameModel"
+                        [controlEl]="userNameEl"
+                      >
+                      </abp-validation-summary>
+                    </div>
+                  </div>
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <input
+                        placeholder="EmailAddress"
+                        type="email"
+                        class="form-control w-100"
+                        name="emailAddress"
+                        id="emailAddress"
+                        required
+                        maxlength="256"
+                        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
+                        [(ngModel)]="user.emailAddress"
+                        #emailAddressModel="ngModel"
+                        #emailAddressEl
+                      />
+                      <abp-validation-summary
+                        [control]="emailAddressModel"
+                        [controlEl]="emailAddressEl"
+                      >
+                      </abp-validation-summary>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab [heading]="'Address' | localize" class="pt-3 px-2">
+                <div class="col-12">
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <input
+                        placeholder="Street Address"
+                        type="text"
+                        class="form-control w-100"
+                        name="address"
+                        id="address"
+                        required
+                        maxlength="32"
+                        [(ngModel)]="user.address"
+                        #addressModel="ngModel"
+                        #addressEL
+                      />
+                      <abp-validation-summary
+                        [control]="addressModel"
+                        [controlEl]="addressEL"
+                      >
+                      </abp-validation-summary>
+                    </div>
+                  </div>
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <input
+                        placeholder="Suburb"
+                        type="text"
+                        class="form-control w-100"
+                        name="suburb"
+                        id="suburb"
+                        required
+                        maxlength="32"
+                        [(ngModel)]="user.suburb"
+                        #suburbModel="ngModel"
+                        #suburbEl
+                      />
+                      <abp-validation-summary
+                        [control]="suburbModel"
+                        [controlEl]="suburbEl"
+                      ></abp-validation-summary>
+                    </div>
+                  </div>
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <input
+                        placeholder="City"
+                        type="text"
+                        class="form-control w-100"
+                        name="city"
+                        id="city"
+                        required
+                        maxlength="32"
+                        [(ngModel)]="user.city"
+                        #cityModel="ngModel"
+                        #cityEl
+                      />
+                      <abp-validation-summary
+                        [control]="cityModel"
+                        [controlEl]="cityEl"
+                      ></abp-validation-summary>
+                    </div>
+                  </div>
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <input
+                        placeholder="Postal Code"
+                        type="number"
+                        onwheel="this.blur()"
+                        class="form-control w-100"
+                        name="postalCode"
+                        id="postalCode"
+                        required
+                        maxlength="32"
+                        [(ngModel)]="user.postalCode"
+                        name="postalCode"
+                        #postalCodeModel="ngModel"
+                        #postalCodeEl
+                      />
+                      <abp-validation-summary
+                        [control]="postalCodeModel"
+                        [controlEl]="postalCodeEl"
+                      >
+                      </abp-validation-summary>
+                    </div>
+                  </div>
+                  <div class="form-group row required">
+                    <div class="col-12">
+                      <select
+                        class="form-control py-2 dropdown w-100"
+                        [(ngModel)]="user.province"
+                        name="province"
+                        #provinceModel="ngModel"
+                        #provinceEl
+                        id="province"
+                      >
+                        <option [ngValue]="''" selected>Please select province</option>
+                        <option
+                          *ngFor="let province of provinces"
+                          [ngValue]="province"
+                        >
+                          {{ province }}
+                        </option>
+                      </select>
+                      <abp-validation-summary
+                        [control]="provinceModel"
+                        [controlEl]="provinceEl"
+                      >
+                      </abp-validation-summary>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+              <tab [heading]="'UserRoles' | localize" class="pt-3 px-2">
+                <div class="col-12">
+                    <div class="form-group row mb-0">
+                        <ng-container *ngFor="let role of roleNames; let i = index">
+                          <div class="col-md-6">
+                            <div class="custom-control custom-checkbox">
+                              <!-- <input
+                                type="checkbox"
+                                class="custom-control-input"
+                                [id]="'role_' + i"
+                                [checked]="isRoleChecked(role.normalizedName)"
+                                (change)="onRoleChange(role, $event)"
+                              /> -->
+                              <label class="custom-control-label" [for]="'role_' + i">
+                                {{ role }}
+                              </label>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+                </div>
+
+              </tab>
+              <tab [heading]="'Modes' | localize" class="pt-3 px-2">
+                  <div class="col-12">
+                    <div class="form-group row mb-0">
+                        <ng-container *ngFor="let userMode of modes; let i = index">
+                          <div class="col-md-6">
+                            <div class="custom-control custom-checkbox">
+                              <!-- <input
+                                type="checkbox"
+                                class="custom-control-input"
+                                [id]="'mode_' + i"
+                                [checked]="isModeChecked(mode.command)"
+                                (change)="onChangedCheckbox($event, mode)"
+                              /> -->
+                              <label class="custom-control-label" [for]="'mode_' + i">
+                                {{ userMode.mode.name }}
+                              </label>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+                  </div>
+
+              </tab>
+            </tabset>
+          </div>
+          <div class="card-footer">
+            <div class="col-12 text-right">
+                <button class="btn btn-primary" type="submit" >Update</button>
+            </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</form>
+
+</div>

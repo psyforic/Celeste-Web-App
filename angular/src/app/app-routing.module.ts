@@ -1,3 +1,4 @@
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { ModesComponent } from './modes/modes.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -20,6 +21,8 @@ import { HelpComponent } from './help/help.component';
                 children: [
                     { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard], canLoad: [AppRouteGuard] },
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard],
+                    canLoad: [AppRouteGuard] },
+                    { path: 'users/:id', component: UserProfileComponent, canActivate: [AppRouteGuard],
                     canLoad: [AppRouteGuard] },
                     { path: 'help', component: HelpComponent,  canLoad: [AppRouteGuard]  },
                     { path: 'modes', component: ModesComponent, canLoad: [AppRouteGuard]  },

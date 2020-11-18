@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Auditing;
 using Celeste.Sessions.Dto;
@@ -27,6 +28,18 @@ namespace Celeste.Sessions
 
             if (AbpSession.UserId.HasValue)
             {
+                var user = await GetCurrentUserAsync();
+                List<string> roles = new List<string>();
+                if (user.Roles != null)
+                {
+                    var roleIds = user.Roles.Select(x => x.RoleId).ToArray();
+                    roles = RolesManager.Roles.Where(r => roleIds.Contains(r.Id)).Select(r => r.NormalizedName).ToList(); ;
+                }
+
+
+                output.User = ObjectMapper.Map<UserLoginInfoDto>(user);
+                output.User.RoleNames = roles;
+
                 output.User = ObjectMapper.Map<UserLoginInfoDto>(await GetCurrentUserAsync());
             }
 
