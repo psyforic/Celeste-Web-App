@@ -1,3 +1,4 @@
+import { RegisterTenantSuccessComponent } from './register-tenant/register-tenant-success/register-tenant-success.component';
 import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-password-dialog/forgot-password-dialog.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -17,6 +18,7 @@ import { TenantLoginComponent } from './tenant-login/tenant-login.component';
                     { path: 'login', component: LoginComponent },
                     { path: 'register', component: RegisterComponent },
                     { path: 'register-tenant', component: RegisterTenantComponent },
+                    {path: 'register-tenant-success', component: RegisterTenantSuccessComponent },
                     { path: 'tenant-login', component: TenantLoginComponent },
                     { path: 'forgot-password', component: ForgotPasswordDialogComponent }
                 ]

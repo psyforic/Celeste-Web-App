@@ -4,7 +4,7 @@
         <div class="loading-spinner" *ngIf="isLoading">
             <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
         </div>
-        <table class="table">
+        <table class="table" *ngIf="users.length > 0">
             <thead class="row text-primary">
                 <th class="col-2">
                     Assign
@@ -36,6 +36,7 @@
                 </tr>
             </tbody>
         </table>
+        <app-not-found *ngIf="users.length == 0" message="Users Not Found"></app-not-found>
         <div class="row content-end" *ngIf="p>1">
             <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>

@@ -1,3 +1,4 @@
+import { TicketsComponent } from './help/tickets/tickets.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { ModesComponent } from './modes/modes.component';
 import { NgModule } from '@angular/core';
@@ -11,6 +12,7 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { HelpComponent } from './help/help.component';
+import { ViewTicketComponent } from '@shared/components/view-ticket/view-ticket.component';
 
 @NgModule({
     imports: [
@@ -25,6 +27,8 @@ import { HelpComponent } from './help/help.component';
                     { path: 'users/:id', component: UserProfileComponent, canActivate: [AppRouteGuard],
                     canLoad: [AppRouteGuard] },
                     { path: 'help', component: HelpComponent,  canLoad: [AppRouteGuard]  },
+                    { path: 'help/tickets', component: TicketsComponent,  canLoad: [AppRouteGuard]  },
+                    { path: 'help/tickets/:id', component: ViewTicketComponent, canLoad: [AppRouteGuard] },
                     { path: 'modes', component: ModesComponent, canLoad: [AppRouteGuard]  },
                 ]
             }

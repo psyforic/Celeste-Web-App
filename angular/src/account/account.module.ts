@@ -1,3 +1,4 @@
+import { RegisterTenantSuccessComponent } from './register-tenant/register-tenant-success/register-tenant-success.component';
 
 
 import { CommonModule } from '@angular/common';
@@ -46,7 +47,8 @@ import { ForgotPasswordDialogComponent } from './forgot-password-dialog/forgot-p
         TenantChangeComponent,
         TenantChangeDialogComponent,
         RegisterTenantComponent,
-        TenantLoginComponent
+        TenantLoginComponent,
+        RegisterTenantSuccessComponent
     ],
     entryComponents: [
         // tenant

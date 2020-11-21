@@ -1,0 +1,110 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  #createModeModal="ngForm"
+  (ngSubmit)="save()"
+>
+  <abp-modal-header
+    [title]="'New Mode' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+        <div class="form-group row required">
+          <!-- <label class="col-md-3 col-form-label" for="name">
+            {{ "Mode Name" | localize }}
+          </label> -->
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="name"
+              required
+              maxlength="32"
+              [(ngModel)]="mode.name"
+              #nameModel="ngModel"
+              #nameEl
+            />
+            <abp-validation-summary
+              [control]="nameModel"
+              [controlEl]="nameEl"
+            ></abp-validation-summary>
+          </div>
+        </div>
+        <div class="form-group row required">
+          <!-- <label class="col-md-3 col-form-label" for="command">
+            {{ "Command" | localize }}
+          </label> -->
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control"
+              name="command"
+              id="command"
+              required
+              maxlength="32"
+              [(ngModel)]="mode.command"
+              #commandModel="ngModel"
+              #commandEl
+            />
+            <abp-validation-summary
+              [control]="commandModel"
+              [controlEl]="commandEl"
+            ></abp-validation-summary>
+          </div>
+        </div>
+        <div class="form-group row required">
+          <!-- <label class="col-md-3 col-form-label" for="start">
+            {{ "StartTime" | localize }}
+          </label> -->
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control"
+              name="start"
+              id="start"
+              required
+              minlength="2"
+              maxlength="32"
+              [(ngModel)]="mode.startTime"
+              #startModel="ngModel"
+              #startEl
+            />
+            <abp-validation-summary
+              [control]="startModel"
+              [controlEl]="startEl"
+            ></abp-validation-summary>
+          </div>
+        </div>
+        <div class="loading-spinner" *ngIf="isLoading">
+          <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+      </div>
+        <div class="form-group row required">
+            <!-- <label class="col-md-3 col-form-label" for="end">
+              {{ "EndTime" | localize }}
+            </label> -->
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control"
+                name="end"
+                id="end"
+                required
+                minlength="2"
+                maxlength="32"
+                [(ngModel)]="mode.endTime"
+                #endModel="ngModel"
+                #endEl
+              />
+              <abp-validation-summary
+                [control]="startModel"
+                [controlEl]="startEl"
+              ></abp-validation-summary>
+            </div>
+          </div>
+  </div>
+  <abp-modal-footer
+     (onCancelClick)="bsModalRef.hide()"
+     [saveDisabled]="createModeModal.invalid || saving"
+  ></abp-modal-footer>
+</form>

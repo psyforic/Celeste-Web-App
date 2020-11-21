@@ -59,7 +59,7 @@
           <div class="form-group row">
             <div class="col-12 styled-input">
               <input
-                placeholder="UserName"
+                placeholder="Username"
                 type="text"
                 class="form-control w-100"
                 name="userName"
@@ -81,7 +81,7 @@
           <div class="form-group row">
             <div class="col-12 styled-input">
               <input
-                placeholder="EmailAddress"
+                placeholder="Email Address"
                 type="email"
                 class="form-control w-100"
                 name="emailAddress"
@@ -275,6 +275,6 @@
       </tab>
     </tabset>
   </div>
-  <abp-modal-footer (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+  <abp-modal-footer [saveDisabled]="editUserModal.invalid || saving" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
   <!-- <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!editUserModal.form.valid || saving" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer> -->
 </form>

@@ -25,7 +25,7 @@ class PagedModesRequestDto extends PagedRequestDto {
 }
 @Component({
   templateUrl: './create-user-dialog.component.html',
-  styleUrls: ['./create-user-dialog.css'],
+  styleUrls: ['./create-user-dialog.scss'],
   providers: [ModeServiceProxy]
 })
 export class CreateUserDialogComponent extends PagedListingComponentBase<ModeListDto>
@@ -58,19 +58,6 @@ export class CreateUserDialogComponent extends PagedListingComponentBase<ModeLis
     'Northern Cape',
     'North West',
     'Western Cape',
-  ];
-  passwordValidationErrors: Partial<AbpValidationError>[] = [
-    {
-      name: 'pattern',
-      localizationKey:
-        'PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber',
-    },
-  ];
-  confirmPasswordValidationErrors: Partial<AbpValidationError>[] = [
-    {
-      name: 'validateEqual',
-      localizationKey: 'PasswordsDoNotMatch',
-    },
   ];
 
   @Output() onSave = new EventEmitter<any>();

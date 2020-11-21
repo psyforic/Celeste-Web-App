@@ -59,7 +59,7 @@
           <div class="form-group row required">
             <div class="col-12">
               <input
-                placeholder="UserName"
+                placeholder="Username"
                 type="text"
                 class="form-control w-100"
                 name="userName"
@@ -82,7 +82,7 @@
           <div class="form-group row required">
             <div class="col-12">
               <input
-                placeholder="EmailAddress"
+                placeholder="Email Address"
                 type="email"
                 class="form-control w-100"
                 name="emailAddress"
@@ -163,6 +163,7 @@
               <abp-validation-summary
                 [control]="cityModel"
                 [controlEl]="cityEl"
+
               ></abp-validation-summary>
             </div>
           </div>
@@ -264,5 +265,5 @@
       </tab>
     </tabset>
   </div>
-  <abp-modal-footer (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+  <abp-modal-footer [saveDisabled]="createUserModal.invalid || saving" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

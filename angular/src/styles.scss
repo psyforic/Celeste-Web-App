@@ -1,3 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+body,
+input,
+select,
+textarea,
+body * {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
 .loading-spinner {
     position: absolute;
     top: 0;

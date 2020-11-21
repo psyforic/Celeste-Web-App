@@ -42,23 +42,51 @@ namespace Celeste.MultiTenancy.CelesteDashboard
         public async Task<ListResultDto<ModeStatsDto>> GetWeeklyModes()
         {
             List<ModeStatsDto> weekDay = new List<ModeStatsDto>();
-            var modeNames = new string[] { "Sunrise", "Mid-Morning", "Mid-Day", "Sunset", "Therapy" };
-            for (int i = 0; i < modeNames.Length; i++)
+            if (AbpSession.TenantId != null)
             {
-                var day = new ModeStatsDto { Name = modeNames[i] };
-                weekDay.Add(day);
-            }
-            var modeStats = await _modeStatsRepository.GetAll()
-                .Where(x => x.Time.AddDays(7) >= DateTime.Now)
-                .Include(m => m.Mode)
-                .ToListAsync();
-            if (modeStats != null && modeStats.Count > 0)
-            {
-                foreach (var item in modeStats)
+                var modeNames = new string[] { "Sunrise", "Mid-Morning", "Mid-Day", "Sunset", "Therapy" };
+                for (int i = 0; i < modeNames.Length; i++)
                 {
-                    weekDay.FirstOrDefault(x => x.Name.Equals(item.Mode.Name)).Count += item.Count;
-                    weekDay.FirstOrDefault(x => x.Name.Equals(item.Mode.Name)).Date = item.Time;
+                    var day = new ModeStatsDto { Name = modeNames[i] };
+                    weekDay.Add(day);
                 }
+                var modeStats = await _modeStatsRepository.GetAll()
+                    .Where(x => x.Time.AddDays(7) >= DateTime.Now)
+                    .Include(m => m.Mode)
+                    .ToListAsync();
+                if (modeStats != null && modeStats.Count > 0)
+                {
+                    foreach (var item in modeStats)
+                    {
+                        weekDay.FirstOrDefault(x => x.Name.Equals(item.Mode.Name)).Count += item.Count;
+                        weekDay.FirstOrDefault(x => x.Name.Equals(item.Mode.Name)).Date = item.Time;
+                    }
+                }
+            } 
+            else
+            {
+                using(CurrentUnitOfWork.DisableFilter(AbpDataFilters.MustHaveTenant, AbpDataFilters.MayHaveTenant))
+                {
+                    var modeNames = new string[] { "Sunrise", "Mid-Morning", "Mid-Day", "Sunset", "Therapy" };
+                    for (int i = 0; i < modeNames.Length; i++)
+                    {
+                        var day = new ModeStatsDto { Name = modeNames[i] };
+                        weekDay.Add(day);
+                    }
+                    var modeStats = await _modeStatsRepository.GetAll()
+                        .Where(x => x.Time.AddDays(7) >= DateTime.Now)
+                        .Include(m => m.Mode)
+                        .ToListAsync();
+                    if (modeStats != null && modeStats.Count > 0)
+                    {
+                        foreach (var item in modeStats)
+                        {
+                            weekDay.FirstOrDefault(x => x.Name.Equals(item.Mode.Name)).Count += item.Count;
+                            weekDay.FirstOrDefault(x => x.Name.Equals(item.Mode.Name)).Date = item.Time;
+                        }
+                    }
+                }
+                
             }
             return new ListResultDto<ModeStatsDto>(ObjectMapper.Map<List<ModeStatsDto>>(weekDay));
 

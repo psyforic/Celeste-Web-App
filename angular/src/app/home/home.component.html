@@ -8,8 +8,10 @@
       <div class="card-header">
       </div>
       <div class="card-body">
-
-        <app-line-modes></app-line-modes>
+        <div class="loading-spinner" *ngIf="isLoading">
+          <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        </div>
+        <app-line-modes *ngIf="modeNames.length > 0" [modes]="modes" [modeNames]="modeNames" [modeCount]="modeCount"></app-line-modes>
       </div>
       <div class="card-footer">
         <div class="stats">

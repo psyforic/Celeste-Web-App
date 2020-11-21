@@ -1,3 +1,6 @@
+import { EditTicketComponent } from './help/tickets/edit-ticket/edit-ticket.component';
+import { NewTicketComponent } from './help/tickets/new-ticket/new-ticket.component';
+import { TicketsComponent } from './help/tickets/tickets.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { AccountModule } from './../account/account.module';
 import { ForgotPasswordDialogComponent } from 'account/forgot-password-dialog/forgot-password-dialog/forgot-password-dialog.component';
@@ -24,8 +27,6 @@ import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
-import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
-import { EditTenantDialogComponent } from './tenants/edit-tenant/edit-tenant-dialog.component';
 // roles
 import { RolesComponent } from '@app/roles/roles.component';
 import { CreateRoleDialogComponent } from './roles/create-role/create-role-dialog.component';
@@ -47,6 +48,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { AbpModule } from 'abp-ng2-module';
 import { ConfirmationDialogService } from './confirmation-dialog/confirmation-dialog.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { EditTenantComponent } from 'host/tenants/edit-tenant/edit-tenant.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,8 +56,6 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     AboutComponent,
     // tenants
     TenantsComponent,
-    CreateTenantDialogComponent,
-    EditTenantDialogComponent,
     // roles
     RolesComponent,
     CreateRoleDialogComponent,
@@ -77,6 +77,9 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 
     //
     HelpComponent,
+    TicketsComponent,
+    NewTicketComponent,
+    EditTicketComponent,
     AdminLayoutComponent
 
   ],
@@ -102,9 +105,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
   ],
   providers: [ConfirmationDialogService],
   entryComponents: [
-    // tenants
-    CreateTenantDialogComponent,
-    EditTenantDialogComponent,
+
     // roles
     CreateRoleDialogComponent,
     EditRoleDialogComponent,

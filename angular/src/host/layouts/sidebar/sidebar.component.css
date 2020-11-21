@@ -6,6 +6,10 @@
 .off-canvas-sidebar[data-color="#035F58"]:after {
     background-color: #035f58;
 }
+.sidebar-wrapper {
+    background-color: #035f58;
+    height: 100%;
+}
 
 .sidebar[data-color="#035F58"]:before,
 .off-canvas-sidebar[data-color="#035F58"]:before {

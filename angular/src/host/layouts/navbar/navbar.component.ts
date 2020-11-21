@@ -1,3 +1,4 @@
+import { TopNavTitleService } from './../../../shared/services/top-nav-title.service';
 import { AppComponentBase } from '@shared/app-component-base';
 import { Component, OnInit, ElementRef, Injector } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
@@ -15,6 +16,7 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
 export class NavbarComponent extends AppComponentBase implements OnInit {
   user: UserDto = new UserDto();
   private listTitles: any[];
+  title: string;
   location: Location;
   mobile_menu_visible: any = 0;
   private toggleButton: any;
@@ -27,6 +29,7 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
     private element: ElementRef,
     private router: Router,
     injector: Injector,
+    private _topNavTitleService: TopNavTitleService,
     private _authService: AppAuthService,
     private _userService: UserServiceProxy,
 
@@ -34,19 +37,20 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
     super(injector);
     this.location = location;
     this.sidebarVisible = false;
+    this._topNavTitleService.getTitle().subscribe(appTitle => this.title = appTitle.toString());
   }
   ngOnInit() {
-    this.listTitles = ROUTES.filter(listTitle => listTitle);
-    const navbar: HTMLElement = this.element.nativeElement;
-    this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-    this.router.events.subscribe((event) => {
-      this.sidebarClose();
-      var $layer: any = document.getElementsByClassName('close-layer')[0];
-      if ($layer) {
-        $layer.remove();
-        this.mobile_menu_visible = 0;
-      }
-    });
+    // this.listTitles = ROUTES.filter(listTitle => listTitle);
+    // const navbar: HTMLElement = this.element.nativeElement;
+    // this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+    // this.router.events.subscribe((event) => {
+    //   this.sidebarClose();
+    //   var $layer: any = document.getElementsByClassName('close-layer')[0];
+    //   if ($layer) {
+    //     $layer.remove();
+    //     this.mobile_menu_visible = 0;
+    //   }
+    // });
   }
   logout(): void {
     this._authService.logout();
@@ -161,17 +165,6 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
   }
 
   getTitle() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if (titlee.charAt(0) === '#') {
-      titlee = titlee.slice(2);
-    }
-    titlee = titlee.split('/').pop();
-
-    for (var item = 0; item < this.listTitles.length; item++) {
-      if (this.listTitles[item].path === titlee) {
-        return this.listTitles[item].title;
-      }
-    }
-    return 'Dashboard';
+    return this._topNavTitleService.getTitle().subscribe();
   }
 }

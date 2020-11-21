@@ -8,14 +8,14 @@
                         <div class="col-10">
                             <h4 class="card-title">List of Modes Available</h4>
                         </div>
-                        <div *ngIf="isAdmin" class="col-2 text-right">
+                        <!-- <div *ngIf="isAdmin" class="col-2 text-right">
                             <button [disabled]="true" type="button" class="btn btn-primary" (click)="createMode()"> New Mode
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table col-12">
+                    <table class="table col-12" *ngIf="modes.length > 0">
                         <thead class="row px-2 text-primary">
                             <th class="col-7">Mode Name</th>
                             <th class="col-3">Active Times</th>
@@ -40,6 +40,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <app-not-found *ngIf="modes.length == 0" message="Modes Not Found"></app-not-found>
                     <div class="row" *ngIf="p>1" class="content-end">
                         <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </div>
@@ -49,88 +50,3 @@
         </div>
     </div>
 </div>
-<!-- <ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Configure Mode</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <ngb-tabset type="pills" [orientation]="currentOrientation">
-        <ngb-tab title="Mode Details">
-          <ng-template ngbTabContent>
-            <div class="row">
-              <div class="col-sm-10 col-lg-10">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    value=""
-                    placeholder="Mode Name"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="row" style="margin-top: 5px">
-              <div class="col-sm-10 col-lg-10">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    value=""
-                    placeholder="Mode Description"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab>
-          <ng-template ngbTabTitle>Assign Mode</ng-template>
-          <ng-template ngbTabContent>
-            <p style="margin-top: 20px">Assign mode to a user</p>
-            <div class="form-check" style="margin-top: 10px">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" />
-                Yanga Ntondini
-                <span class="form-check-sign"></span>
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" />
-                Sipho Ximbi
-                <span class="form-check-sign"></span>
-              </label>
-            </div>
-
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" value="" />
-                Lundi Mapundu
-                <span class="form-check-sign"></span>
-              </label>
-            </div>
-          </ng-template>
-        </ngb-tab>
-      </ngb-tabset>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-outline-light"
-      (click)="modal.close('Save click')"
-    >
-      Save
-    </button>
-  </div>
-</ng-template> -->

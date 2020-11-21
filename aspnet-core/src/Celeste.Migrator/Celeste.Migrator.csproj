@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Abp.Castle.Log4Net" Version="5.10.1" />
+    <PackageReference Include="Mailjet.Api" Version="1.2.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Celeste.Core\Celeste.Core.csproj" />

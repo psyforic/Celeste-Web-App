@@ -15,33 +15,31 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table">
-                        <table class="table">
-                            <thead class="text-primary">
-                                <th>Tenant Name</th>
-                                <th>Name</th>
-                                <th style="width: 310px">Action</th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let tenant of tenants | paginate: { itemsPerPage: 5, currentPage: p}">
-                                    <td>{{tenant.tenancyName}}</td>
-                                    <td>{{tenant.firstName}} {{tenant.lastName}}</td>
-                                    <td>
-                                        <div ngbDropdown class="dropdown" placement="bottom-right">
-                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
-                                                Select Action
-                                            </button>
-                                            <div ngbDropdownMenu>
-                                                <a class="dropdown-item">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
+                    <table class="table">
+                        <thead class="row px-2 text-primary">
+                            <th class="col-5">Tenant Name</th>
+                            <th class="col-5">Admin Name</th>
+                            <th class="col-2">Action</th>
+                        </thead>
+                        <tbody>
+                            <tr class="row px-2" *ngFor="let tenant of tenants | paginate: { itemsPerPage: 5, currentPage: p}">
+                                <td class="col-5">{{tenant.tenancyName}}</td>
+                                <td class="col-5">{{tenant.firstName}} {{tenant.lastName}}</td>
+                                <td class="col-2">
+                                    <div ngbDropdown class="dropdown" placement="bottom-right">
+                                        <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
+                                            Select Action
+                                        </button>
+                                        <div ngbDropdownMenu>
+                                            <button class="dropdown-item" href="" (click)="editTenant(tenant)">Edit</button>
+                                            <button class="dropdown-item" (click)="delete(tenant)">Delete</button>
                                         </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row content-end">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row content-end" *ngIf="tenants.length > 5">
                         <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </div>
                 </div>

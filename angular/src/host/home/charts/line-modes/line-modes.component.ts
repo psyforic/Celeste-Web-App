@@ -94,7 +94,7 @@ export class LineModesComponent implements OnInit {
     if (this.modes.length > 0) {
       this.modes.forEach(x => {
         this.modeCount[x.count] = x.count;
-        console.log(this.modeCount);
+        // console.log(this.modeCount);
       });
       this.initChart();
     }

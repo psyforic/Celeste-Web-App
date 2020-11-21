@@ -14,7 +14,8 @@ import { AppComponentBase } from '@shared/app-component-base';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AbpModalFooterComponent extends AppComponentBase {
-  @Input() cancelLabel = this.l('Cancel');
+  @Input() cancelLabel = this.l('Close');
+  @Input() cancelHidden: boolean;
   @Input() cancelDisabled: boolean;
   @Input() saveLabel = this.l('Save');
   @Input() saveDisabled: boolean;

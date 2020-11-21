@@ -1,5 +1,8 @@
 <div class="panel-header panel-header-sm"></div>
 <div class="main-content">
+    <div class="loading-spinner" *ngIf="isLoading">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -12,52 +15,38 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table">
-                        <table class="table">
-                            <thead class="text-primary">
-                                <th>Submitted by</th>
-                                <th>Priority</th>
-                                <th style="width: 310px">Action</th>
+                        <table class="table" *ngIf="tickets.length > 0">
+                            <thead class="row px-2 text-primary">
+                                <th class="col-4">Submitted by</th>
+                                <th class="col-4">Body</th>
+                                <th class="col-2">Status</th>
+                                <th class="col-2">Action</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Slack</td>
-                                    <td>Medium</td>
-                                    <td>
+                                <tr class="row px-2" *ngFor="let ticket of tickets;">
+                                    <td class="col-4">{{ticket.user?.fullName}}</td>
+                                    <td class="col-4" [innerHTML]="ticket.body"></td>
+                                    <td class="col-2">{{ticket.status | titlecase}}</td>
+                                    <td class="col-2">
                                         <div ngbDropdown class="dropdown" placement="bottom-right">
                                             <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
-                        Select Action
-                      </button>
+                                                Select Action
+                                            </button>
                                             <div ngbDropdownMenu>
-                                                <a class="dropdown-item">View</a>
-                                                <a class="dropdown-item" href="#">Update Status</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" (click)="view(ticket.id)">View</a>
+                                                <!-- <a class="dropdown-item" href="javascript:void(0);">Update Status</a> -->
+                                                <a class="dropdown-item" href="javascript:void(0);" (click)="delete(ticket)" href="javascript:void(0);">Delete</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>SAMSUNG</td>
-                                    <td>High</td>
-                                    <td>
-                                        <div ngbDropdown class="dropdown" placement="bottom-right">
-                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>
-                        Select Action
-                      </button>
-                                            <div ngbDropdownMenu>
-                                                <a class="dropdown-item">View</a>
-                                                <a class="dropdown-item" href="#">Update Status</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+
                             </tbody>
                         </table>
-                        <div class="row content-end">
+                        <app-not-found *ngIf="tickets.length == 0" message="Tickets Not Found"></app-not-found>
+                        <div *ngIf="totalItems > pageSize" class="row content-end">
                             <pagination-controls (pageChange)="p = $event"></pagination-controls>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

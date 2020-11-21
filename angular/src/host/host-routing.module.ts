@@ -1,3 +1,4 @@
+import { ViewTicketComponent } from './../shared/components/view-ticket/view-ticket.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -19,6 +20,7 @@ import { AppRouteGuard } from '@shared/auth/auth-route-guard';
                     { path: 'tenants', component: TenantsComponent, canLoad: [AppRouteGuard] },
                     { path: 'modes', component: ModesComponent, canLoad: [AppRouteGuard] },
                     { path: 'tickets', component: TicketsComponent, canLoad: [AppRouteGuard] },
+                    { path: 'tickets/:id', component: ViewTicketComponent, canLoad: [AppRouteGuard] },
                 ]
             }
         ])

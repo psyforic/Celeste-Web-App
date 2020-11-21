@@ -1,3 +1,4 @@
+import { TopNavTitleService } from './../../shared/services/top-nav-title.service';
 import { AppComponentBase } from '@shared/app-component-base';
 import { AbpSessionService } from 'abp-ng2-module';
 import { AssignModeComponent } from './assign-mode/assign-mode.component';
@@ -44,13 +45,14 @@ export class ModesComponent extends PagedListingComponentBase<ModeListDto>{
   isActive: boolean | null;
   constructor(
     private _sessionService: AbpSessionService,
-    private modalService: NgbModal,
     private _modalService: BsModalService,
     private _userService: UserServiceProxy,
+    private __topNavTitleService: TopNavTitleService,
     injector: Injector,
     private _ModeService: ModeServiceProxy
   ) {
     super(injector);
+    this.__topNavTitleService.setTitle('Modes');
   }
   // ngOnInit() {
   //   this.getUserId();

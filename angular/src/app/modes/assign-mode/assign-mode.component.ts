@@ -111,12 +111,6 @@ export class AssignModeComponent extends AppComponentBase implements OnInit {
       })
       ).subscribe((result) => {
         if (this.id) {
-          // result.items.forEach(x => {
-          //  console.log(x.userModes.map(m => {
-          //     return m.modeId;
-          //   }));
-          // });
-          // console.log(this.id);
           this.users = result.items.filter(user => user.userModes.filter(m => m.modeId === this.id).length === 0);
         }
 

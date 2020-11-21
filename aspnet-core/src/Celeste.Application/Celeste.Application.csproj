@@ -11,6 +11,9 @@
     <RootNamespace>Celeste</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Mailjet.Api" Version="1.2.2" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Celeste.Core\Celeste.Core.csproj" />
   </ItemGroup>
 </Project>

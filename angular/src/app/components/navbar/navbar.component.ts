@@ -1,3 +1,4 @@
+import { TopNavTitleService } from './../../../shared/services/top-nav-title.service';
 import { Component, OnInit, ElementRef, Injector } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
@@ -14,13 +15,13 @@ import { AppComponentBase } from '@shared/app-component-base';
 })
 export class NavbarComponent extends AppComponentBase implements OnInit {
   user: UserDto = new UserDto();
-  private listTitles: any[];
+  listTitles: any[];
   location: Location;
   mobile_menu_visible: any = 0;
-  private toggleButton: any;
-  private sidebarVisible: boolean;
-
-  public isCollapsed = true;
+  toggleButton: any;
+  sidebarVisible: boolean;
+  title: string;
+  isCollapsed = true;
 
   // constructor(location: Location,  private element: ElementRef, private router: Router) {
   //   this.location = location;
@@ -31,6 +32,7 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
     private element: ElementRef,
     private router: Router,
     injector: Injector,
+    private _topNavTitleService: TopNavTitleService,
     private _authService: AppAuthService,
     private _userService: UserServiceProxy,
 
@@ -38,6 +40,7 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
     super(injector);
     this.location = location;
     this.sidebarVisible = false;
+    this._topNavTitleService.getTitle().subscribe(appTitle => this.title = appTitle.toString());
   }
   ngOnInit() {
     this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -45,7 +48,7 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
     this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
     this.router.events.subscribe((event) => {
       this.sidebarClose();
-      var $layer: any = document.getElementsByClassName('close-layer')[0];
+      const $layer: any = document.getElementsByClassName('close-layer')[0];
       if ($layer) {
         $layer.remove();
         this.mobile_menu_visible = 0;
@@ -166,17 +169,6 @@ export class NavbarComponent extends AppComponentBase implements OnInit {
   }
 
   getTitle() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if (titlee.charAt(0) === '#') {
-      titlee = titlee.slice(2);
-    }
-    titlee = titlee.split('/').pop();
-
-    for (var item = 0; item < this.listTitles.length; item++) {
-      if (this.listTitles[item].path === titlee) {
-        return this.listTitles[item].title;
-      }
-    }
-    return 'Dashboard';
+    return this._topNavTitleService.getTitle();
   }
 }

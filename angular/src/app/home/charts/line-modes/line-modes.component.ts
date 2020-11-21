@@ -1,8 +1,9 @@
+import { AppComponentBase } from '@shared/app-component-base';
 import { browser } from 'protractor';
 import { animate } from '@angular/animations';
 import { UserModeListDto, UserDtoListResultDto, ModeStatsDto, CelesteDashboardServiceProxy } from './../../../../shared/service-proxies/service-proxies';
 import { ModeListDto, UserDto } from '@shared/service-proxies/service-proxies';
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Injector, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -36,25 +37,44 @@ export interface ChartOptions {
   selector: 'app-line-modes',
   templateUrl: './line-modes.component.html',
   styleUrls: ['./line-modes.component.scss'],
-  providers: [CelesteDashboardServiceProxy]
+
 })
-export class LineModesComponent implements OnInit {
+export class LineModesComponent extends AppComponentBase implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('lineChart', { static: true }) chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  public chartOptions: Partial<ChartOptions> ;
+  @Input()
   modeNames = [];
+  @Input()
   modeCount = new Array<number>(5).fill(0, 0, 5);
+  @Input()
   modes: ModeStatsDto[] = [];
   isLoading = false;
-  constructor(private dashBoardService: CelesteDashboardServiceProxy) { }
-  ngOnInit() {
-    this.getData();
+  constructor(
+    injector: Injector,
+  ) {
+    super(injector);
+
   }
-  initChart() {
+  ngAfterViewInit(): void {
+
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.modes.currentValue) {
+      this.modes = changes.modes.currentValue;
+    }
+  }
+  ngOnInit() {
+    if (this.modeNames.length > 0) {
+      // this.chartOptions.series[0].data = this.modeCount;
+      this.initChart(this.modeCount, this.modeNames);
+    }
+  }
+  initChart(dataset: number[], categories: string[]) {
     this.chartOptions = {
       series: [
         {
           name: 'Modes',
-          data: this.modeCount
+          data: dataset
         }
       ],
       chart: {
@@ -90,29 +110,12 @@ export class LineModesComponent implements OnInit {
       },
       xaxis: {
         type: 'category',
-        categories: this.modeNames,
+        categories: categories,
       },
       yaxis: {
         min: 0
       }
     };
-  }
-  getData() {
-    this.isLoading = true;
-    this.dashBoardService.getWeeklyModes()
-      .pipe(finalize(() => {
-        this.initChart();
-        this.isLoading = false;
-      }))
-      .subscribe((res) => {
-        this.modes = res.items;
-        if (this.modes.length > 0) {
-          this.modes.forEach((mode, index) => {
-            this.modeNames[index] = mode.name;
-            this.modeCount[index] = mode.count;
-          });
-        }
-      });
   }
 
 }

@@ -1,3 +1,4 @@
+import { TopNavTitleService } from './shared/services/top-nav-title.service';
 import { NgModule, APP_INITIALIZER, LOCALE_ID, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -59,6 +60,7 @@ export function getCurrentLanguage(): string {
       provide: LOCALE_ID,
       useFactory: getCurrentLanguage,
     },
+    TopNavTitleService
   ],
   bootstrap: [RootComponent],
 })

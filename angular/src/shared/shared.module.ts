@@ -1,3 +1,6 @@
+import { EditReplyComponent } from './components/view-ticket/edit-reply/edit-reply.component';
+import { ViewTicketComponent } from '@shared/components/view-ticket/view-ticket.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
@@ -19,32 +22,55 @@ import { LayoutStoreService } from './layout/layout-store.service';
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
 import { SpinnerComponent } from 'account/loading-spinner/loading-spinner.component';
+import { QuillModule } from 'ngx-quill';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        NgxPaginationModule
+        FormsModule,
+        NgxPaginationModule,
+        QuillModule.forRoot({
+            modules: {
+              syntax: false,
+              toolbar: [
+                ['bold', 'italic'],
+                [{ 'header': 1 }, { 'header': 2 }],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'indent': '-1' }, { 'indent': '+1' }],
+                [{ 'align': [] }],
+              ]
+            }
+          })
     ],
     declarations: [
         AbpPaginationControlsComponent,
         AbpValidationSummaryComponent,
         AbpModalHeaderComponent,
         AbpModalFooterComponent,
+        NotFoundComponent,
+        ViewTicketComponent,
+        EditReplyComponent,
         SpinnerComponent,
         LocalizePipe,
         BusyDirective,
         EqualValidator
     ],
     exports: [
+        FormsModule,
         AbpPaginationControlsComponent,
         AbpValidationSummaryComponent,
         AbpModalHeaderComponent,
         AbpModalFooterComponent,
+        NotFoundComponent,
+        ViewTicketComponent,
+        EditReplyComponent,
         SpinnerComponent,
         LocalizePipe,
         BusyDirective,
-        EqualValidator
+        EqualValidator,
+        QuillModule,
     ]
 })
 export class SharedModule {

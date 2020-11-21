@@ -4,12 +4,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CreateTenantDto, TenantDto, TenantRegistrationServiceProxy, TenantServiceProxy } from '@shared/service-proxies/service-proxies';
 import { finalize } from 'rxjs/operators';
+import { AbpValidationError } from '@shared/components/validation/abp-validation.api';
 
 @Component({
   selector: 'app-register-tenant',
   templateUrl: './register-tenant.component.html',
   providers: [TenantRegistrationServiceProxy],
-  styleUrls: ['./register-tenant.component.css']
+  styleUrls: ['./register-tenant.component.scss']
 })
 export class RegisterTenantComponent extends AppComponentBase implements OnInit {
   saving = false;
@@ -17,8 +18,15 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit 
   form_register: FormGroup;
   passwordPattern: '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}';
   tenant: CreateTenantDto = new CreateTenantDto();
+  passwordHidden = true;
   public _tenantService: TenantServiceProxy;
-
+  passwordValidationErrors: Partial<AbpValidationError>[] = [
+    {
+      name: 'pattern',
+      localizationKey:
+        'PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber',
+    },
+  ];
   constructor(injector: Injector,
     private _tenantRegistrationService: TenantRegistrationServiceProxy,
     private _router: Router,
@@ -37,6 +45,8 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit 
             }
         });
   }
+
+
   initializeForm() {
     this.form_register = this.fb.group({
       tenantName: ['', Validators.required],
@@ -82,7 +92,7 @@ export class RegisterTenantComponent extends AppComponentBase implements OnInit 
       .subscribe((result: TenantDto) => {
         this.saving = true;
         this.isLoading = false;
-        this._router.navigate(['account/tenant-login']);
+        this._router.navigate(['account/register-tenant-success']);
 
       });
   }

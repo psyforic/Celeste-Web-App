@@ -41,6 +41,10 @@ export class AbpValidationSummaryComponent extends AppComponentBase implements O
       name: 'validateEqual',
       localizationKey: 'PairsDoNotMatch',
     },
+    {
+      name: 'confirmPasswordMatch',
+      localizationKey: 'Passwords Dot Not Match',
+    },
   ];
   validationErrors = <AbpValidationError[]>this.defaultValidationErrors;
 

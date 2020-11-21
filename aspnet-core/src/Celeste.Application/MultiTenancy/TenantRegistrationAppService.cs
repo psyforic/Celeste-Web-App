@@ -50,7 +50,7 @@ namespace Celeste.MultiTenancy
                );
 
                 var tenant = await _tenantManager.GetByIdAsync(tenantId);
-            //   await _appNotifier.NewTenantRegisteredAsync(tenant);
+            // await _appNotifier.NewTenantRegisteredAsync(tenant);
 
             //send an email here
             string body = string.Empty;
@@ -64,7 +64,7 @@ namespace Celeste.MultiTenancy
                 body = reader.ReadToEnd();
             }
 
-            string link = "http://localhost:4200/";
+            string link = "http://celeste.developmenthub.co.za/";
             body = body.Replace("#Link", link);
             if (tenant != null)
                 body = body.Replace("#Domain", tenant.TenancyName);

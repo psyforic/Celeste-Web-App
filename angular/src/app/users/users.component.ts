@@ -1,3 +1,4 @@
+import { TopNavTitleService } from './../../shared/services/top-nav-title.service';
 import { Component, Injector } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -49,9 +50,11 @@ export class UsersComponent extends PagedListingComponentBase<UserDto> {
     private _modalService: BsModalService,
     private modalService: NgbModal,
     private confirmationDialog: ConfirmationDialogService,
+    private _topNavTitleService: TopNavTitleService,
     private fb: FormBuilder
   ) {
     super(injector);
+    this._topNavTitleService.setTitle('Users');
   }
 
   open(content) {

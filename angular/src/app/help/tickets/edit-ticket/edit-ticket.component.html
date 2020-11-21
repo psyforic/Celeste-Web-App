@@ -1,0 +1,60 @@
+<form
+  class="form-horizontal"
+  autocomplete="off"
+  #createTicketModal="ngForm"
+  (ngSubmit)="save()"
+>
+  <abp-modal-header
+    [title]="'Edit Ticket' | localize"
+    (onCloseClick)="bsModalRef.hide()"
+  ></abp-modal-header>
+  <div class="modal-body">
+    <div class="loading-spinner" *ngIf="saving">
+      <app-loading-spinner *ngIf="saving"></app-loading-spinner>
+    </div>
+
+    <div class="col-12">
+      <div class="form-group row required">
+        <div class="col-12">
+          <input
+            placeholder="Subject"
+            type="text"
+            class="form-control w-100"
+            name="subject"
+            id="subject"
+            required
+
+            [(ngModel)]="ticket.subject"
+            #nameModel="ngModel"
+            #nameEl
+          />
+          <abp-validation-summary
+            [control]="nameModel"
+            [controlEl]="nameEl"
+          ></abp-validation-summary>
+        </div>
+      </div>
+      <div class="form-group row required">
+        <div class="col-12">
+          <quill-editor [styles]="{height: '200px'}"
+            [sanitize]="true"
+            placeholder="Description"
+            name="body"
+            id="surname"
+            required
+            [(ngModel)]="ticket.body"
+            #surnameModel="ngModel"
+            #surnameEl>
+          </quill-editor>
+
+          <abp-validation-summary
+            [control]="surnameModel"
+            [controlEl]="surnameEl"
+          >
+          </abp-validation-summary>
+        </div>
+      </div>
+    </div>
+  </div>
+  <abp-modal-footer [saveDisabled]="createTicketModal.invalid || saving" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

@@ -8,43 +8,41 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-sm-10 col-lg-10">
+                        <div class="col-10">
                             <h4 class="card-title">List of Modes</h4>
                         </div>
-                        <div class="col-sm-2 col-lg-2">
-                            <button type="button" class="btn btn-primary">New Mode</button>
+                        <div class="col-2 text-right">
+                            <button type="button" class="btn btn-primary" (click)="createMode()">New Mode</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body">
-
-                    <div class="table">
-                        <table class="table">
-                            <thead class="text-primary">
-                                <th>Mode Name</th>
-                                <th>Mode Command</th>
-                                <th style="width: 310px">Action</th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let mode of modes">
-                                    <td>{{mode.name}}</td>
-                                    <td>{{mode.command}}</td>
-                                    <td>
-                                        <div ngbDropdown class="dropdown" placement="bottom-right">
-                                            <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
-                                            <div ngbDropdownMenu>
-                                                <a class="dropdown-item">Edit</a>
-                                            </div>
+                    <table class="table">
+                        <thead class="row px-2 text-primary">
+                            <th class="col-7">Mode Name</th>
+                            <th class="col-3">Mode Command</th>
+                            <th class="col-2">Action</th>
+                        </thead>
+                        <tbody>
+                            <tr class="row px-2" *ngFor="let mode of modes">
+                                <td class="col-7">{{mode.name}}</td>
+                                <td class="col-3">{{mode.command}}</td>
+                                <td class="col-2">
+                                    <div ngbDropdown class="dropdown" placement="bottom-right">
+                                        <button class="btn btn-success dropdown-toggle" ngbDropdownToggle>Select Action</button>
+                                        <div ngbDropdownMenu>
+                                            <a class="dropdown-item" (click)="editMode(mode)">Edit</a>
+                                            <a class="dropdown-item" (click)="delete(mode)">Delete</a>
                                         </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="row content-end">
-                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-                        </div>
-                    </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <div class="row content-end">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div> -->
                 </div>
             </div>
         </div>

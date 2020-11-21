@@ -109,7 +109,7 @@ namespace Celeste.Users
             body = body.Replace("#Link", link);
             if (tenant != null)
                 body = body.Replace("#Domain", tenant.TenancyName);
-            body = body.Replace("#Password", user.Password);
+            body = body.Replace("#Password", input.Password);
             body = body.Replace("#Username", input.UserName);
             Emailer.Send(to: input.EmailAddress, subject: "Celeste New Account!", body: body, isBodyHtml: true);
 

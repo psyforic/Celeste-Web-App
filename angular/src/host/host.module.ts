@@ -1,3 +1,9 @@
+import { EditTenantComponent } from './tenants/edit-tenant/edit-tenant.component';
+import { CreateTenantComponent } from './tenants/create-tenant/create-tenant-dialog.component';
+import { ModeServiceProxy } from '@shared/service-proxies/service-proxies';
+import { UserModesServiceProxy } from './../shared/service-proxies/service-proxies';
+import { NewModeComponent } from './modes/new-mode/new-mode.component';
+import { EditModeComponent } from './modes/edit-mode/edit-mode.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HostRoutingModule } from './host-routing.module';
 import { TicketsComponent } from './tickets/tickets.component';
@@ -47,8 +53,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HostComponent,
     HomeComponent,
     TenantsComponent,
+    CreateTenantComponent,
+    EditTenantComponent,
     ModesComponent,
+    EditModeComponent,
+    NewModeComponent,
     TicketsComponent
-  ]
+  ],
+  providers: [ModeServiceProxy]
 })
 export class HostModule { }

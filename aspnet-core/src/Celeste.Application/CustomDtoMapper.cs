@@ -2,6 +2,7 @@
 using Celeste.Authorization.Users;
 using Celeste.Modes;
 using Celeste.Modes.Dto;
+using Celeste.Tickets;
 using Celeste.UserModes;
 using Celeste.UserModes.Dto;
 using Celeste.Users.Dto;
@@ -42,6 +43,16 @@ namespace Celeste
 
             configuration.CreateMap<User, UpdateUserDto>();
             configuration.CreateMap<UpdateUserDto, User>();
+
+            // Tickets
+            configuration.CreateMap<CreateTicketInput, Ticket>();
+            configuration.CreateMap<Ticket, TicketDto>();
+            configuration.CreateMap<Ticket, TicketListDto>();
+            // Ticket Replies
+            configuration.CreateMap<CreateTicketReplyInput, TicketReply>();
+            configuration.CreateMap<TicketReply, TicketReplyDto>();
+            configuration.CreateMap<TicketReply, TicketReplyListDto>();
+            configuration.CreateMap<TicketReplyListDto, TicketReply>();
         }
     }
 }

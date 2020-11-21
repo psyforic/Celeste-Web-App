@@ -1,34 +1,115 @@
 <div class="wrapper">
-    <div class="overlay">
-        <div id="formContent">
-            <div class="loading-spinner" *ngIf="isLoading">
-                <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-            </div>
-            <h2 class="active">Sign Up</h2>
-            <form [formGroup]="form_register" (ngSubmit)="save()">
+  <div class="overlay">
+    <div id="formContent">
+      <div class="loading-spinner" *ngIf="isLoading">
+        <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+      </div>
+      <h2 class="active">Sign Up</h2>
+      <form [formGroup]="form_register" (ngSubmit)="save()">
 
-                <input  #tenantName type="text" formControlName="tenantName" class="fadeIn first form-control" name="login" placeholder="Organization" />
-                <abp-validation-summary [controlEl]="tenantName" [control]="form_register.get('tenantName')"></abp-validation-summary>
+        <input
+          #tenantName
+          type="text"
+          formControlName="tenantName"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Organization"
+        />
+        <abp-validation-summary
+          [controlEl]="tenantName"
+          [control]="form_register.get('tenantName')"
+        ></abp-validation-summary>
 
-                <input #firstName type="text" formControlName="firstName" class="fadeIn first form-control" name="login" placeholder="First Name" />
-                <abp-validation-summary [controlEl]="firstName" [control]="form_register.get('firstName')"></abp-validation-summary>
+        <input
+          #firstName
+          type="text"
+          formControlName="firstName"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="First Name"
+        />
+        <abp-validation-summary
+          [controlEl]="firstName"
+          [control]="form_register.get('firstName')"
+        ></abp-validation-summary>
 
-                <input #lastName type="text" formControlName="lastName" class="fadeIn first form-control" name="login" placeholder="Last Name" />
-                <abp-validation-summary [controlEl]="lastName" [control]="form_register.get('lastName')"></abp-validation-summary>
+        <input
+          #lastName
+          type="text"
+          formControlName="lastName"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Last Name"
+        />
+        <abp-validation-summary
+          [controlEl]="lastName"
+          [control]="form_register.get('lastName')"
+        ></abp-validation-summary>
 
-                <input #adminEmailAddress type="text" formControlName="adminEmailAddress" class="fadeIn first form-control" name="login" placeholder="Email address" />
-                <abp-validation-summary [controlEl]="adminEmailAddress" [control]="form_register.get('adminEmailAddress')"></abp-validation-summary>
+        <input
+          #adminEmailAddress
+          type="email"
+          formControlName="adminEmailAddress"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Email address"
+          maxlength="256" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$"
+        />
+        <abp-validation-summary
+          [controlEl]="adminEmailAddress"
+          [control]="form_register.get('adminEmailAddress')"
+        ></abp-validation-summary>
 
-                <input #password type="password" formControlName="password" class="fadeIn first form-control" name="login" placeholder="Password" />
-                <abp-validation-summary [controlEl]="password" [control]="form_register.get('password')"></abp-validation-summary>
+            <input
+            #password
+            [type]="passwordHidden ? 'password': 'text'"
+            formControlName="password"
+            class="fadeIn first form-control"
+            name="login"
+            placeholder="Password"
+            pattern="(?=^.{8,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z!@#$%^&*()]*$"
+          />
 
-                <input #confirmPassword type="password" formControlName="confirmPassword" class="fadeIn first form-control" name="login" placeholder="Confirm password" />
-                <abp-validation-summary [controlEl]="confirmPassword" [control]="form_register.get('confirmPassword')"></abp-validation-summary>
-                <button [disabled]="form_register.invalid" type="submit" class="btn btn-primary fadeIn fourth" value="Sign Up">Sign Up</button>
-            </form>
-            <div id="formFooter">
-                <a [routerLink]="['../tenant-login']" class="underlineHover" href="#">Already have an account?Login</a>
-            </div>
-        </div>
+          <abp-validation-summary
+            [controlEl]="password"
+            [control]="form_register.get('password')"
+            [customValidationErrors]="passwordValidationErrors"
+          ></abp-validation-summary>
+
+        <input
+          #confirmPassword
+          type="password"
+          formControlName="confirmPassword"
+          class="fadeIn first form-control"
+          name="login"
+          placeholder="Confirm password"
+        />
+        <!-- <span
+          class="is-invalid"
+          *ngIf="
+            form_register.get('confirmPassword').touched &&
+            form_register
+              .get('confirmPassword')
+              .hasError('confirmPasswordMatch')
+          "
+        >Passwords do not match</span> -->
+        <abp-validation-summary
+          [controlEl]="confirmPassword"
+          [control]="form_register.get('confirmPassword')"
+        ></abp-validation-summary>
+        <button
+          [disabled]="form_register.invalid"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Sign Up
+        </button>
+      </form>
+      <div id="formFooter">
+        <a [routerLink]="['../tenant-login']" class="underlineHover" href="#"
+          >Already have an account?Login</a
+        >
+      </div>
     </div>
+  </div>
 </div>
